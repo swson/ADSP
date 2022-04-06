@@ -1,4 +1,4 @@
-# ADSP
+# ETRI_test
 This script takes in files with floating point data and creates a copy with errors injected into them.  
 This script can specify the files to inject errors to, magnitude and frequency of the error, three different error metrics, and plot the comparison graph between original and error-injected data. This script also support DCT comparisons for the data.
 
@@ -10,7 +10,7 @@ Python
 - .csv (Comma Separated Values)  
 - .bin (BINary)  
 - .dat (DATa)  
-- .nc (Network Common data form) NOT IMPLEMENTED 
+- .nc (Network Common data form)  
 
 ## Supported Data Types
 Little-endian floating point numbers  
@@ -22,7 +22,7 @@ Input files by default are all files inside a folder named "data", set by global
 INPUT_DIR = "data"
 ````
 Default path can be changed by changing the variable.  
-User can also manually input the path to the files. Inputting files that does not meet the file requirements (incorrect file types) will be ignored.  
+User can also manually input the path to the files. Inputting files that do not meet the file requirements (incorrect file types) will be ignored.  
 .bin files and .dat files are read as 64 bit floating point numbers by default, but can be set to 32 bit (refers to optional argument section).  
 .nc files require a variable name since .nc files can have multiple sets of data with different variables.  
 
@@ -44,7 +44,7 @@ Value of the error, error rate and error metric determine the error bound for th
 ###Anomaly rate
 -a, --anomaly_rate  
 Frequency of the error injection, a number between 0 and 1. Number of errors is the product of anomaly type and total number of data points.
-###Error metric NOT IMPLEMENTED 
+###Error metric  
 -m, --error_metric  
 Error metric controls what kind of error bound, the range for the random error value. There are three types of error injection:
 - absolute - error bound is the value of the error rate
@@ -62,3 +62,5 @@ Title of the plot is the name of the original file followed by the order of erro
 ###DCT
 --dct
 If true computes the DCT of the original data and error data and compares them. Result will be printed on the log file.
+
+
