@@ -5,6 +5,7 @@ import sys
 import numpy as np
 import pandas as pd
 from netCDF4 import Dataset
+from numpy import ma
 
 
 def read_binary_file(file, data_type):
@@ -42,6 +43,7 @@ def read_nc_file(file, variable):
             dimension
     """
     data_var = Dataset(file, "r").variables[variable][:]
+    data_var.mask = ma.nomask
 
     return data_var.flatten(), data_var.shape
 
