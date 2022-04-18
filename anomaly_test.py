@@ -36,10 +36,11 @@ def anomaly_data_generator(error_rate, anomaly_type_num, anomaly_rate, err_metri
 
     # nc files are handled differently since they are more complex
     if file_extension == ".nc":
-        if variable is None:
-            print("WARNING: Variable is not given for nc files, error files will not be created")
+        try:
+            original, dimension = READ_FILE[file_extension](filename + file_extension, variable)
+        except TypeError:
+            # if there is a TypeError, read nc file fails due to problem with variables
             return
-        original, dimension = READ_FILE[file_extension](filename + file_extension, variable)
     else:
         original = READ_FILE[file_extension](filename + file_extension, data_type)
 

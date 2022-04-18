@@ -42,7 +42,18 @@ def read_nc_file(file, variable):
     output: list
             dimension
     """
-    data_var = Dataset(file, "r").variables[variable][:]
+    list_var = list(Dataset(file, "r").variables.keys())
+    if variable is None:
+        print(f"ERROR: variable for nc file is not specify, add \'-v <variable_name>\' to the command line")
+        print(f"List of variables available: {list_var}")
+        return
+
+    try:
+        data_var = Dataset(file, "r").variables[variable][:]
+    except KeyError:
+        print(f"ERROR: nc file variable \"{variable}\" does not exist")
+        print(f"List of variables available: {list_var}")
+        return
     data_var.mask = ma.nomask
 
     return data_var.flatten(), data_var.shape
@@ -90,14 +101,14 @@ def write_nc_file(series, org_file, file, var, shape):
                 name, (len(dimension) if not dimension.isunlimited() else None))
         # copy all file data except for the excluded
         for name, variable in src.variables.items():
+            # print(name)
+            # print(src[name].ncattrs())
+
+            dst.createVariable(name, variable.datatype, variable.dimensions)
+            # copy variable attributes all at once via dictionary
+            dst[name].setncatts(src[name].__dict__)
             if name == var:
-                dst.createVariable(name, variable.datatype, variable.dimensions)
                 dst[name][:] = np.reshape(series.tolist(), shape)
-                # copy variable attributes all at once via dictionary
-                dst[name].setncatts(src[name].__dict__)
             else:
-                dst.createVariable(name, variable.datatype, variable.dimensions)
                 dst[name][:] = src[name][:]
-                # copy variable attributes all at once via dictionary
-                dst[name].setncatts(src[name].__dict__)
     return
