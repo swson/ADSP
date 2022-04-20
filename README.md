@@ -1,6 +1,6 @@
 # ADSP
 This script takes in files with floating point data and creates a copy with errors injected into them.  
-This script can specify the files to inject errors to, magnitude and frequency of the error, three different error metrics, and plot the comparison graph between original and error-injected data. This script also support DCT comparisons for the data.
+This script can specify the files to inject errors to, magnitude and frequency of the error, three different error metrics, and plot the comparison graph between original and error-injected data. This script also supports comparisons for data characteristics based on DCT (discrete consine transform) coefficients.
 
 # Requirements
 ## Software
