@@ -2,8 +2,10 @@ import argparse
 import os
 import random
 import sys
+import time
 
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 from matplotlib import rcParams
 from scipy import fft
@@ -16,17 +18,17 @@ ANOMALY_TYPE_LIST = ["point", "collective"]
 READ_FILE = {".bin": handle_files.read_binary_file,
              ".dat": handle_files.read_binary_file,
              ".csv": handle_files.read_csv_file,
-             ".nc":  handle_files.read_nc_file}
+             ".nc": handle_files.read_nc_file}
 WRITE_FILE = {".bin": handle_files.write_binary_file,
               ".dat": handle_files.write_binary_file,
               ".csv": handle_files.write_csv_file,
-              ".nc":  handle_files.write_nc_file}
+              ".nc": handle_files.write_nc_file}
 plot_flag = False
 dct_flag = False
 PLOT_WINDOW_SIZE = 100
 # specific the energy percentage needed to represent
 # the DCT coefficients
-ENERGY_PERCENTAGE_LIST = [0.95, 0.99]
+ENERGY_PERCENTAGE_LIST = [0.90, 0.95, 0.99, 0.999]
 
 
 def anomaly_data_generator(error_rate, anomaly_type_num, anomaly_rate, err_metric,
@@ -166,23 +168,17 @@ def plot_dct(list_new, list_org):
 def get_dct(list_data, energy_percentage):
     """Run DCT on the data and output the number of coefficients
     needed for that energy percentage"""
-    # sum of (dct data points)^2
 
     list_dct = fft.dct(list_data, norm='ortho')
-    num = 0
-    dem = 0
-    cof_cnt = 0
 
-    for value in list_dct:
-        dem += value ** 2
+    # turns list into numpy array and then square them and sum them up
+    arr = np.array(list_dct)
+    arr2 = np.square(arr)
+    dem = np.sum(arr2)
 
-    for value in sorted(list_dct, reverse=True):
-        num += value ** 2
-        cof_cnt += 1
-        # print("num:", num, "dem:", dem, "n/d", num / dem, "value:", value)
-        # if (num / dem) ** 0.5 >= energy_percentage:
-        if (num / dem) >= energy_percentage:
-            return cof_cnt
+    arr2_sort_norm = (-np.sort(-arr2)) / dem
+
+    return (np.sqrt(np.cumsum(arr2_sort_norm)) <= energy_percentage).argmin() + 1
 
 
 def get_mse(list_org, list_new):
@@ -286,7 +282,6 @@ def get_error_list(anomaly_type, list_size, error_num):
 
 
 def test_anomaly_gen_hpcdata(usr_input):
-
     global plot_flag
     global dct_flag
     plot_flag = usr_input.plot
