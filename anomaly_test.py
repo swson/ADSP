@@ -9,6 +9,7 @@ import numpy as np
 import pandas as pd
 from matplotlib import rcParams
 from scipy import fft
+from prettytable import PrettyTable
 
 import handle_files
 
@@ -29,6 +30,8 @@ PLOT_WINDOW_SIZE = 100
 # specific the energy percentage needed to represent
 # the DCT coefficients
 ENERGY_PERCENTAGE_LIST = [0.90, 0.95, 0.99, 0.999]
+
+# 1 2 5 10 knee -a -e
 
 
 def anomaly_data_generator(error_rate, anomaly_type_num, anomaly_rate, err_metric,
@@ -62,13 +65,14 @@ def anomaly_data_generator(error_rate, anomaly_type_num, anomaly_rate, err_metri
     cnt = 1
 
     print("--------------------------------------------")
-    print("input filename:  " + filename + file_extension)
-    print("output filename:  " + output_file)
-    print("error type: ", anomaly_type)
-    print("error metrics: ", err_metric)
-    print("data size: ", data_size)
-    print("Number of errors: ", error_num)
-    print("Error list: ", error_list)
+    print("input filename:    " + filename + file_extension)
+    print("output filename:   " + output_file)
+    print("time:              " + time.asctime(time.localtime()))
+    print("error type:        " + anomaly_type)
+    print("error metrics:     " + err_metric)
+    print(f"data size:         {data_size:d}")
+    print(f"Number of errors:  {error_num:d}")
+    print(f"Error list:\n{*error_list,}")
 
     if error_num == 0:
         print("WARNING: Anomaly rate is too low, no errors is injected, an anomaly file will not be created")
@@ -79,33 +83,40 @@ def anomaly_data_generator(error_rate, anomaly_type_num, anomaly_rate, err_metri
         return
 
     if err_metric == "relative":
-        print("max", df_org.max(0), "min", df_org.min(0))
+        print("max point:", df_org.max(0), "min point:", df_org.min(0))
         err_para = (df_org.max(0) - df_org.min(0)) * error_rate
     else:
         err_para = error_rate
 
+    tic = time.time()
+    table = PrettyTable(["Error Number", "Location", "Original Value", "New Injected Value"])
+    table.align = "r"
     for error_index in error_list:
         df[error_index] = get_error(df[error_index], err_para, err_metric)
-        print("Error number ", cnt, " injected at ", error_index,
-              ", originally ", df_org[error_index], ", now ", df[error_index])
+        table.add_row([cnt, error_index, df_org[error_index], df[error_index]])
         cnt += 1
         mse += (df_org[error_index] - df[error_index]) ** 2
+    print(table)
 
+    toc = time.time()
+    # print("Time taken: ", toc-tic)
     mse /= df.size
     print("mean square error: ", mse)
 
     if dct_flag:
+        kneel = knee_locator(df_org.tolist())
+        print("Knee point is", kneel)
+        table = PrettyTable(["Original Concentration", "Error Concentration", "Energy Percentage", "Data Size"])
+        table.align = "r"
         for energy_percentage in ENERGY_PERCENTAGE_LIST:
-            print("Original data needs",
-                  get_dct(df_org.tolist(), energy_percentage),
-                  "coefficient to represent",
-                  energy_percentage, "% for a data size of",
-                  df_org.size)
-            print("Error injected data needs",
-                  get_dct(df.tolist(), energy_percentage),
-                  "coefficient to represent",
-                  energy_percentage, "% for a data size of",
-                  df.size)
+            original_energy = get_dct(df_org.tolist(), energy_percentage)
+            error_energy = get_dct(df.tolist(), energy_percentage)
+            table.add_row([original_energy, error_energy, energy_percentage * 100, df_org.size])
+        # kneel_perc = kneel/df_org.size
+        # original_energy = get_dct(df_org.tolist(), kneel)
+        # error_energy = get_dct(df.tolist(), kneel)
+        # table.add_row([original_energy, error_energy, "kneel", df_org.size])
+        print(table)
 
     if file_extension == ".nc":
         WRITE_FILE[file_extension](df, filename + file_extension, output_file, variable, dimension)
@@ -117,6 +128,51 @@ def anomaly_data_generator(error_rate, anomaly_type_num, anomaly_rate, err_metri
         plot_data(df_org, df, error_list, anomaly_type, filename)
 
     return
+
+
+def knee_locator(list_data):
+    data_length = len(list_data)
+    list_dct = fft.dct(list_data, norm='ortho')
+
+    # turns list into numpy array and then square them and sum them up
+    arr = np.array(list_dct)
+    arr2 = np.square(arr)
+    dem = np.sum(arr2)
+    arr2_sort_norm = (-np.sort(-arr2)) / dem
+
+    x_cdf = np.cumsum(arr2_sort_norm)
+
+    ymin = np.min(x_cdf)
+    ymax = np.max(x_cdf)
+    xmin = 0
+    xmax = data_length
+
+    Xsn = np.empty(data_length)
+    Ysn = np.empty(data_length)
+    Xd = np.empty(data_length)
+    Yd = np.empty(data_length)
+    xslope = np.empty(data_length, dtype=np.double)
+    yslope = np.empty(data_length, dtype=np.double)
+
+    for index in range(0, data_length):
+        Xsn[index] = (index - xmin) / (xmax - xmin)
+        Ysn[index] = (x_cdf[index] - ymin) / (ymax - ymin)
+        Xd[index] = Xsn[index]
+        Yd[index] = Ysn[index] - Xsn[index]
+
+    need = 0
+
+    # print(Ysn[0], Xsn[0])
+    # xslope[0] = Ysn[0] / Xsn[0]
+
+    for index in range(1, data_length):
+        # xslope[index - 1] = (Ysn[index] - Ysn[index - 1]) \
+        #                     / (Xsn[index] - Xsn[index - 1])
+        # yslope[index - 1] = (Yd[index] - Yd[index - 1]) \
+        #                     / (Xd[index] - Xd[index - 1])
+        if Yd[index] > Yd[index - 1] and Yd[index + 1] < Yd[index]:
+            need = index
+            return need
 
 
 def get_error(cur_val, para, err_metric):
@@ -178,7 +234,7 @@ def get_dct(list_data, energy_percentage):
 
     arr2_sort_norm = (-np.sort(-arr2)) / dem
 
-    return (np.sqrt(np.cumsum(arr2_sort_norm)) <= energy_percentage).argmin() + 1
+    return (np.sqrt(np.cumsum(arr2_sort_norm)) < energy_percentage).argmin() + 1
 
 
 def get_mse(list_org, list_new):
