@@ -8,10 +8,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from matplotlib import rcParams
-from scipy import fft
 from prettytable import PrettyTable
 
 import handle_files
+import dct
 
 INPUT_DIR = "data"
 OUTPUT_DIR = "result"
@@ -31,7 +31,8 @@ PLOT_WINDOW_SIZE = 100
 # the DCT coefficients
 ENERGY_PERCENTAGE_LIST = [0.90, 0.95, 0.99, 0.999]
 
-# 1 2 5 10 knee -a -e
+# mse
+# 94% for 10% error rate
 
 
 def anomaly_data_generator(error_rate, anomaly_type_num, anomaly_rate, err_metric,
@@ -56,13 +57,10 @@ def anomaly_data_generator(error_rate, anomaly_type_num, anomaly_rate, err_metri
     df_org = pd.Series(original)
     df = df_org.copy()
 
-    # mean square error to be reported at the end
-    mse = 0.0
     error_num = int(data_size * anomaly_rate)
     # get a list of random errors
     error_list = get_error_list(anomaly_type, data_size, error_num)
     error_list.sort()
-    cnt = 1
 
     print("--------------------------------------------")
     print("input filename:    " + filename + file_extension)
@@ -76,8 +74,6 @@ def anomaly_data_generator(error_rate, anomaly_type_num, anomaly_rate, err_metri
 
     if error_num == 0:
         print("WARNING: Anomaly rate is too low, no errors is injected, an anomaly file will not be created")
-        # sys.stderr.write("WARNING: Anomaly rate is too low, no errors is injected, "
-        #                  "an anomaly file will not be created\n")
         print("--------------------------------------------")
 
         return
@@ -91,31 +87,28 @@ def anomaly_data_generator(error_rate, anomaly_type_num, anomaly_rate, err_metri
     tic = time.time()
     table = PrettyTable(["Error Number", "Location", "Original Value", "New Injected Value"])
     table.align = "r"
-    for error_index in error_list:
+    for error_num, error_index in enumerate(error_list):
         df[error_index] = get_error(df[error_index], err_para, err_metric)
-        table.add_row([cnt, error_index, df_org[error_index], df[error_index]])
-        cnt += 1
-        mse += (df_org[error_index] - df[error_index]) ** 2
+        table.add_row([error_num, error_index, df_org[error_index], df[error_index]])
     print(table)
 
     toc = time.time()
-    # print("Time taken: ", toc-tic)
-    mse /= df.size
+    mse = get_mse(df_org.tolist(), df.tolist())
     print("mean square error: ", mse)
+    print("Time taken: ", toc-tic)
 
     if dct_flag:
-        kneel = knee_locator(df_org.tolist())
+        kneel = dct.knee_locator(df_org.tolist())
         print("Knee point is", kneel)
         table = PrettyTable(["Original Concentration", "Error Concentration", "Energy Percentage", "Data Size"])
         table.align = "r"
         for energy_percentage in ENERGY_PERCENTAGE_LIST:
-            original_energy = get_dct(df_org.tolist(), energy_percentage)
-            error_energy = get_dct(df.tolist(), energy_percentage)
+            original_energy = dct.get_coefficient(df_org.tolist(), energy_percentage)
+            error_energy = dct.get_coefficient(df.tolist(), energy_percentage)
             table.add_row([original_energy, error_energy, energy_percentage * 100, df_org.size])
-        # kneel_perc = kneel/df_org.size
-        # original_energy = get_dct(df_org.tolist(), kneel)
-        # error_energy = get_dct(df.tolist(), kneel)
-        # table.add_row([original_energy, error_energy, "kneel", df_org.size])
+        original_energy = dct.get_percentage(df_org.tolist(), kneel)
+        error_energy = dct.get_percentage(df.tolist(), kneel)
+        table.add_row([original_energy, error_energy, "kneel", df_org.size])
         print(table)
 
     if file_extension == ".nc":
@@ -128,51 +121,6 @@ def anomaly_data_generator(error_rate, anomaly_type_num, anomaly_rate, err_metri
         plot_data(df_org, df, error_list, anomaly_type, filename)
 
     return
-
-
-def knee_locator(list_data):
-    data_length = len(list_data)
-    list_dct = fft.dct(list_data, norm='ortho')
-
-    # turns list into numpy array and then square them and sum them up
-    arr = np.array(list_dct)
-    arr2 = np.square(arr)
-    dem = np.sum(arr2)
-    arr2_sort_norm = (-np.sort(-arr2)) / dem
-
-    x_cdf = np.cumsum(arr2_sort_norm)
-
-    ymin = np.min(x_cdf)
-    ymax = np.max(x_cdf)
-    xmin = 0
-    xmax = data_length
-
-    Xsn = np.empty(data_length)
-    Ysn = np.empty(data_length)
-    Xd = np.empty(data_length)
-    Yd = np.empty(data_length)
-    xslope = np.empty(data_length, dtype=np.double)
-    yslope = np.empty(data_length, dtype=np.double)
-
-    for index in range(0, data_length):
-        Xsn[index] = (index - xmin) / (xmax - xmin)
-        Ysn[index] = (x_cdf[index] - ymin) / (ymax - ymin)
-        Xd[index] = Xsn[index]
-        Yd[index] = Ysn[index] - Xsn[index]
-
-    need = 0
-
-    # print(Ysn[0], Xsn[0])
-    # xslope[0] = Ysn[0] / Xsn[0]
-
-    for index in range(1, data_length):
-        # xslope[index - 1] = (Ysn[index] - Ysn[index - 1]) \
-        #                     / (Xsn[index] - Xsn[index - 1])
-        # yslope[index - 1] = (Yd[index] - Yd[index - 1]) \
-        #                     / (Xd[index] - Xd[index - 1])
-        if Yd[index] > Yd[index - 1] and Yd[index + 1] < Yd[index]:
-            need = index
-            return need
 
 
 def get_error(cur_val, para, err_metric):
@@ -206,52 +154,15 @@ def get_error(cur_val, para, err_metric):
         quit()
 
 
-def plot_dct(list_new, list_org):
-    """plot the dct plot of the old and new data sets, UNUSED
-    input: list"""
-
-    dct_new_plot = fft.dct(list_new)
-    dct_org_plot = fft.dct(list_org)
-    plt.plot(dct_new_plot, c='r')
-    plt.plot(dct_org_plot, c='b')
-    plt.title("DCT comparison")
-    plt.xlabel("Index")
-    plt.ylabel("Value")
-
-    plt.show()
-
-
-def get_dct(list_data, energy_percentage):
-    """Run DCT on the data and output the number of coefficients
-    needed for that energy percentage"""
-
-    list_dct = fft.dct(list_data, norm='ortho')
-
-    # turns list into numpy array and then square them and sum them up
-    arr = np.array(list_dct)
-    arr2 = np.square(arr)
-    dem = np.sum(arr2)
-
-    arr2_sort_norm = (-np.sort(-arr2)) / dem
-
-    return (np.sqrt(np.cumsum(arr2_sort_norm)) < energy_percentage).argmin() + 1
-
-
 def get_mse(list_org, list_new):
     """Take in two lists of same length and then
     find the mse between them, UNUSED"""
 
-    if len(list_org) != len(list_new):
-        sys.stderr.write("ERROR: original list and error injected list data size mismatch\n")
-        exit()
+    arr_org = np.array(list_org)
+    arr_new = np.array(list_new)
+    mse = (np.square(arr_org-arr_new)).mean()
 
-    mse_loc = 0
-    for index in range(len(list_org)):
-        mse_loc += (list_org[index] - list_new[index]) ** 2
-
-    mse_loc /= len(list_org)
-
-    return mse_loc
+    return mse
 
 
 def plot_data(org_data, new_data, error_list, anomaly_type, data_name):
