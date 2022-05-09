@@ -29,9 +29,10 @@ dct_flag = False
 PLOT_WINDOW_SIZE = 100
 # specific the energy percentage needed to represent
 # the DCT coefficients
-ENERGY_PERCENTAGE_LIST = [0.90, 0.95, 0.99, 0.999]
+ENERGY_PERCENTAGE_LIST = [0.90, 0.91, 0.92, 0.93, 0.94, 0.95, 0.99, 0.999]
 
-# mse
+
+# masked mse
 # 94% for 10% error rate
 
 
@@ -84,7 +85,6 @@ def anomaly_data_generator(error_rate, anomaly_type_num, anomaly_rate, err_metri
     else:
         err_para = error_rate
 
-    tic = time.time()
     table = PrettyTable(["Error Number", "Location", "Original Value", "New Injected Value"])
     table.align = "r"
     for error_num, error_index in enumerate(error_list):
@@ -92,10 +92,8 @@ def anomaly_data_generator(error_rate, anomaly_type_num, anomaly_rate, err_metri
         table.add_row([error_num, error_index, df_org[error_index], df[error_index]])
     print(table)
 
-    toc = time.time()
     mse = get_mse(df_org.tolist(), df.tolist())
     print("mean square error: ", mse)
-    print("Time taken: ", toc-tic)
 
     if dct_flag:
         kneel = dct.knee_locator(df_org.tolist())
@@ -160,7 +158,8 @@ def get_mse(list_org, list_new):
 
     arr_org = np.array(list_org)
     arr_new = np.array(list_new)
-    mse = (np.square(arr_org-arr_new)).mean()
+
+    mse = np.nanmean(np.square(arr_org - arr_new))
 
     return mse
 
@@ -255,7 +254,7 @@ def test_anomaly_gen_hpcdata(usr_input):
     dct_flag = usr_input.dct
 
     sys.stdout = open('log.txt', 'w')
-    # NEED TO DO: put time and run directory into log file
+
     for f in usr_input.file:
         filename, file_extension = os.path.splitext(f)
         if not (READ_FILE.get(file_extension)):

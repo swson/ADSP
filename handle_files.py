@@ -54,7 +54,8 @@ def read_nc_file(file, variable):
         print(f"ERROR: nc file variable \"{variable}\" does not exist")
         print(f"List of variables available: {list_var}")
         return
-    data_var.mask = ma.nomask
+
+    # data_var.mask = ma.nomask
 
     return data_var.flatten(), data_var.shape
 
