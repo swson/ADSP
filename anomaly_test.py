@@ -29,11 +29,7 @@ dct_flag = False
 PLOT_WINDOW_SIZE = 100
 # specific the energy percentage needed to represent
 # the DCT coefficients
-ENERGY_PERCENTAGE_LIST = [0.90, 0.91, 0.92, 0.93, 0.94, 0.95, 0.99, 0.999]
-
-
-# masked mse
-# 94% for 10% error rate
+ENERGY_PERCENTAGE_LIST = [0.90, 0.95, 0.99, 0.999]
 
 
 def anomaly_data_generator(error_rate, anomaly_type_num, anomaly_rate, err_metric,
