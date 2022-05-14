@@ -32,7 +32,7 @@ PLOT_WINDOW_SIZE = 100
 ENERGY_PERCENTAGE_LIST = [0.90, 0.95, 0.99, 0.999]
 
 
-def anomaly_data_generator(error_rate, anomaly_type_num, anomaly_rate, err_metric,
+def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_metric,
                            filename, file_extension, data_type, variable):
     """inject errors into the original data file and then output the
     anomaly file along with information on error injection"""
@@ -48,13 +48,13 @@ def anomaly_data_generator(error_rate, anomaly_type_num, anomaly_rate, err_metri
         original = READ_FILE[file_extension](filename + file_extension, data_type)
 
     anomaly_type = ANOMALY_TYPE_LIST[anomaly_type_num]
-    output_file = output_file_name(OUTPUT_DIR, filename, anomaly_type, error_rate, anomaly_rate, file_extension)
+    output_file = output_file_name(OUTPUT_DIR, filename, anomaly_type, error_rate, injection_rate, file_extension)
     data_size = len(original)
 
     df_org = pd.Series(original)
     df = df_org.copy()
 
-    error_num = int(data_size * anomaly_rate)
+    error_num = int(data_size * injection_rate)
     # get a list of random errors
     error_list = get_error_list(anomaly_type, data_size, error_num)
     error_list.sort()
@@ -70,7 +70,7 @@ def anomaly_data_generator(error_rate, anomaly_type_num, anomaly_rate, err_metri
     print(f"Error list:\n{*error_list,}")
 
     if error_num == 0:
-        print("WARNING: Anomaly rate is too low, no errors is injected, an anomaly file will not be created")
+        print("WARNING: Injection rate is too low, no errors is injected, an error injected file will not be created")
         print("--------------------------------------------")
 
         return
@@ -86,7 +86,10 @@ def anomaly_data_generator(error_rate, anomaly_type_num, anomaly_rate, err_metri
     for error_num, error_index in enumerate(error_list):
         df[error_index] = get_error(df[error_index], err_para, err_metric)
         table.add_row([error_num, error_index, df_org[error_index], df[error_index]])
-    print(table)
+
+    # injection detail is not needed for DCT
+    if not dct_flag:
+        print(table)
 
     mse = get_mse(df_org.tolist(), df.tolist())
     print("mean square error: ", mse)
@@ -100,9 +103,9 @@ def anomaly_data_generator(error_rate, anomaly_type_num, anomaly_rate, err_metri
             original_energy = dct.get_coefficient(df_org.tolist(), energy_percentage)
             error_energy = dct.get_coefficient(df.tolist(), energy_percentage)
             table.add_row([original_energy, error_energy, energy_percentage * 100, df_org.size])
-        original_energy = dct.get_percentage(df_org.tolist(), kneel)
-        error_energy = dct.get_percentage(df.tolist(), kneel)
-        table.add_row([original_energy, error_energy, "kneel", df_org.size])
+        # original_energy = dct.get_percentage(df_org.tolist(), kneel)
+        # error_energy = dct.get_percentage(df.tolist(), kneel)
+        # table.add_row([original_energy, error_energy, "kneel", df_org.size])
         print(table)
 
     if file_extension == ".nc":
@@ -209,13 +212,13 @@ def plot_data(org_data, new_data, error_list, anomaly_type, data_name):
         plt.show()
 
 
-def output_file_name(folder_name, file_path, anomaly_type, error_rate, anomaly_rate, file_type):
+def output_file_name(folder_name, file_path, anomaly_type, error_rate, injection_rate, file_type):
     """create the output file name"""
 
     (path, file_name) = os.path.split(file_path)
 
     error_str = str(error_rate).replace(".", "p")
-    anomaly_str = str(anomaly_rate).replace(".", "p")
+    anomaly_str = str(injection_rate).replace(".", "p")
 
     return os.path.join(folder_name, file_name + "_" + anomaly_type + "_" + error_str + "_" + anomaly_str + file_type)
 
@@ -259,14 +262,14 @@ def test_anomaly_gen_hpcdata(usr_input):
 
         for t in usr_input.anomaly_type:
             for err in usr_input.error_rate:
-                for anomaly_rate in usr_input.anomaly_rate:
+                for injection_rate in usr_input.injection_rate:
                     for err_metric in usr_input.error_metric:
-                        anomaly_data_generator(err, t, anomaly_rate, err_metric,
+                        anomaly_data_generator(err, t, injection_rate, err_metric,
                                                filename, file_extension, usr_input.data_type, usr_input.variable)
 
 
-def input_anomaly_range(arg):
-    """ensure the input values to anomaly_rate are floating numbers between 0 and 1"""
+def input_injection_range(arg):
+    """ensure the input values to injection_rate are floating numbers between 0 and 1"""
 
     try:
         f = float(arg)
@@ -288,7 +291,7 @@ if __name__ == '__main__':
     parser.add_argument("-f", "--file", nargs="+", default=default_input_file(), help="select the file")
     parser.add_argument("-e", "--error_rate", type=float, nargs='+', required=True,
                         help="the value of the error")
-    parser.add_argument("-a", "--anomaly_rate", type=input_anomaly_range, nargs='+', required=True,
+    parser.add_argument("-a", "--injection_rate", type=input_injection_range, nargs='+', required=True,
                         help="the frequency of the error, between 0 and 1")
     parser.add_argument("-t", "--anomaly_type", type=int, nargs='+', choices=[0, 1], default=[0],
                         help="select types of error injected, point anomaly by default,"
