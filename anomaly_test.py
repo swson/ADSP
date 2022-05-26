@@ -9,6 +9,7 @@ import numpy as np
 import pandas as pd
 from matplotlib import rcParams
 from prettytable import PrettyTable
+from openpyxl.workbook import Workbook
 
 import handle_files
 import dct
@@ -29,7 +30,7 @@ dct_flag = False
 PLOT_WINDOW_SIZE = 100
 # specific the energy percentage needed to represent
 # the DCT coefficients
-ENERGY_PERCENTAGE_LIST = [0.90, 0.95, 0.99, 0.999]
+ENERGY_PERCENTAGE_LIST = [0.90, 0.95, 0.99, 0.999, 0.9999, 0.99999, 0.999999]
 
 
 def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_metric,
@@ -48,7 +49,7 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
         original = READ_FILE[file_extension](filename + file_extension, data_type)
 
     anomaly_type = ANOMALY_TYPE_LIST[anomaly_type_num]
-    output_file = output_file_name(OUTPUT_DIR, filename, anomaly_type, error_rate, injection_rate, file_extension)
+    output_file = output_file_name(OUTPUT_DIR, filename, err_metric, error_rate, injection_rate, file_extension)
     data_size = len(original)
 
     df_org = pd.Series(original)
@@ -97,16 +98,28 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
     if dct_flag:
         kneel = dct.knee_locator(df_org.tolist())
         print("Knee point is", kneel)
-        table = PrettyTable(["Original Concentration", "Error Concentration", "Energy Percentage", "Data Size"])
+        table = PrettyTable()
+        header = ["Original Concentration", "Error Concentration", "Energy Percentage (%)", "Compaction Ratio (%)"]
+        table.field_names = header
         table.align = "r"
+        df1 = pd.DataFrame(header)
+
         for energy_percentage in ENERGY_PERCENTAGE_LIST:
             original_energy = dct.get_coefficient(df_org.tolist(), energy_percentage)
             error_energy = dct.get_coefficient(df.tolist(), energy_percentage)
-            table.add_row([original_energy, error_energy, energy_percentage * 100, df_org.size])
-        # original_energy = dct.get_percentage(df_org.tolist(), kneel)
-        # error_energy = dct.get_percentage(df.tolist(), kneel)
-        # table.add_row([original_energy, error_energy, "kneel", df_org.size])
+            row_ele = [original_energy, error_energy, energy_percentage * 100, original_energy / df_org.size * 100]
+            table.add_row(row_ele)
+            df1 = pd.concat([df1, pd.Series(row_ele)], ignore_index=True, axis=1)
         print(table)
+
+        df1 = df1.T
+        (path, keyword) = os.path.split(filename)
+        try:
+            with pd.ExcelWriter(keyword + '_error.xlsx', mode='a') as writer:
+                df1.to_excel(writer, sheet_name=str(error_rate)+"_"+str(injection_rate), index=False, header=False)
+        except FileNotFoundError:
+            with pd.ExcelWriter(keyword + '_error.xlsx', mode='w') as writer:
+                df1.to_excel(writer, sheet_name=str(error_rate) + "_" + str(injection_rate), index=False, header=False)
 
     if file_extension == ".nc":
         WRITE_FILE[file_extension](df, filename + file_extension, output_file, variable, dimension)
@@ -134,6 +147,9 @@ def get_error(cur_val, para, err_metric):
                 cur_val-(max-min)*para and cur_val+(max-min)*para
     point    -  return a random floating point number between
                 cur_val-cur_val*para, cur_val+cur_val*para
+    gauss    -  return a random floating point number based
+                on a Gaussian distribution with a mean of cur_val
+                and standard deviation of para
     """
     # print(para)
     if err_metric == "absolute":
@@ -145,6 +161,8 @@ def get_error(cur_val, para, err_metric):
     elif err_metric == "point":
         # print("Range from", cur_val * (1 - para), "to", cur_val * (1 + para))
         return random.uniform(cur_val * (1 - para), cur_val * (1 + para))
+    elif err_metric == "gauss":
+        return random.gauss(cur_val, para)
     else:
         print("ERROR: Invalid error metrics")
         sys.stderr.write("ERROR: Invalid error metrics\n")
@@ -153,7 +171,7 @@ def get_error(cur_val, para, err_metric):
 
 def get_mse(list_org, list_new):
     """Take in two lists of same length and then
-    find the mse between them, UNUSED"""
+    find the mse between them"""
 
     arr_org = np.array(list_org)
     arr_new = np.array(list_new)
@@ -212,15 +230,17 @@ def plot_data(org_data, new_data, error_list, anomaly_type, data_name):
         plt.show()
 
 
-def output_file_name(folder_name, file_path, anomaly_type, error_rate, injection_rate, file_type):
-    """create the output file name"""
+def output_file_name(folder_name, file_path, err_metric, error_rate, injection_rate, file_type):
+    """create the name of output file"""
 
     (path, file_name) = os.path.split(file_path)
 
+    error_rate = '%.2f' % error_rate
+    injection_rate = '%.2f' % injection_rate
     error_str = str(error_rate).replace(".", "p")
-    anomaly_str = str(injection_rate).replace(".", "p")
+    injection_str = str(injection_rate).replace(".", "p")
 
-    return os.path.join(folder_name, file_name + "_" + anomaly_type + "_" + error_str + "_" + anomaly_str + file_type)
+    return os.path.join(folder_name, file_name + "_" + err_metric + "_" + error_str + "_" + injection_str + file_type)
 
 
 def get_error_list(anomaly_type, list_size, error_num):
@@ -247,10 +267,20 @@ def get_error_list(anomaly_type, list_size, error_num):
 
 
 def test_anomaly_gen_hpcdata(usr_input):
+    global OUTPUT_DIR
     global plot_flag
     global dct_flag
     plot_flag = usr_input.plot
     dct_flag = usr_input.dct
+
+    # set output folder if specified by user
+    if usr_input.output:
+        OUTPUT_DIR = usr_input.output
+
+    if not os.path.isdir(OUTPUT_DIR):
+        print("ERROR: \"" + OUTPUT_DIR + "\" folder does not exist, create the folder or "
+                                         "specify a different folder")
+        quit()
 
     sys.stdout = open('log.txt', 'w')
 
@@ -283,28 +313,34 @@ def input_injection_range(arg):
 
 def default_input_file():
     """get the file path of the input files in the data directory"""
-    return [os.path.join(INPUT_DIR, file) for file in os.listdir(INPUT_DIR)]
+    try:
+        return [os.path.join(INPUT_DIR, file) for file in os.listdir(INPUT_DIR)]
+    except FileNotFoundError:
+        # did not find folder INPUT_DIR, this escape is for user specified input file path
+        return
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='inject anomaly into files.')
-    parser.add_argument("-f", "--file", nargs="+", default=default_input_file(), help="select the file")
+    parser.add_argument("-f", "--file", nargs="+", default=default_input_file(),
+                        help="user-select the input file instead of using the default input folder")
+    parser.add_argument("-o", "--output", type=str, help="customize the location of output files")
     parser.add_argument("-e", "--error_rate", type=float, nargs='+', required=True,
                         help="the value of the error")
-    parser.add_argument("-a", "--injection_rate", type=input_injection_range, nargs='+', required=True,
+    parser.add_argument("-i", "--injection_rate", type=input_injection_range, nargs='+', required=True,
                         help="the frequency of the error, between 0 and 1")
     parser.add_argument("-t", "--anomaly_type", type=int, nargs='+', choices=[0, 1], default=[0],
                         help="select types of error injected, point anomaly by default,"
                              " INCOMPLETE")
     parser.add_argument("-m", "--error_metric", type=str, nargs='+', required=True,
-                        choices=['absolute', 'relative', 'point'],
+                        choices=['absolute', 'relative', 'point', 'gauss'],
                         help="determine the error injection metric")
     parser.add_argument("-p", "--plot", action="store_true",
                         help="plot the data if true")
     parser.add_argument("--dct", action="store_true",
                         help="run dct comparison if true")
     parser.add_argument("-d", "--data_type", type=str, default='f', choices=['f', 's'],
-                        help='indicates if the bin files are in double precision or'
+                        help='indicates if the bin files are in double precision or '
                              'single precision format, double precision by default')
     parser.add_argument("-v", "--variable", type=str,
                         help='used only for nc files, specify which variable to inject errors'
