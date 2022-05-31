@@ -1,4 +1,5 @@
 import argparse
+import math
 import os
 import random
 import sys
@@ -94,6 +95,9 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
 
     mse = get_mse(df_org.tolist(), df.tolist())
     print("mean square error: ", mse)
+    psnr = get_psnr(df_org, mse)
+    print("peak signal-to-noise ratio: ", psnr)
+
 
     if dct_flag:
         kneel = dct.knee_locator(df_org.tolist())
@@ -116,7 +120,7 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
         (path, keyword) = os.path.split(filename)
         try:
             with pd.ExcelWriter(keyword + '_error.xlsx', mode='a') as writer:
-                df1.to_excel(writer, sheet_name=str(error_rate)+"_"+str(injection_rate), index=False, header=False)
+                df1.to_excel(writer, sheet_name=str(error_rate) + "_" + str(injection_rate), index=False, header=False)
         except FileNotFoundError:
             with pd.ExcelWriter(keyword + '_error.xlsx', mode='w') as writer:
                 df1.to_excel(writer, sheet_name=str(error_rate) + "_" + str(injection_rate), index=False, header=False)
@@ -179,6 +183,13 @@ def get_mse(list_org, list_new):
     mse = np.nanmean(np.square(arr_org - arr_new))
 
     return mse
+
+
+def get_psnr(df_org, mse):
+    """Take in the original series and mse to
+    find the psnr"""
+
+    return 10 * math.log10(df_org.max() ** 2 / mse)
 
 
 def plot_data(org_data, new_data, error_list, anomaly_type, data_name):
