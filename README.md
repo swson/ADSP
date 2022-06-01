@@ -53,11 +53,12 @@ List of frequency of the error injection, a number between 0 and 1. Number of er
 ###Error metric  
 -m, --error_metric  
 List of error metric, controls what kind of error bound is used, the range for the random 
-error value. There are four types of error injection:
-- absolute - error bound is the value of the error rate, uniform random number generation is used
-- relative - error bound is the difference between max and min of the entire data set multiplied by error rate, uniform random number generation is used
-- point - error bound is the value of the data being injected multiplied by the error rate, uniform random number generation is used
-- gauss - error generated using gaussian distribution will the original data point being the mean and error_rate being the standard deviation
+error value. There are five types of error injection:
+- absolute_uni - error bound is the value of the error rate, uniform random number generation is used
+- relative_uni - error bound is the difference between max and min of the entire data set multiplied by error rate, uniform random number generation is used
+- point_uni - error bound is the value of the data being injected multiplied by the error rate, uniform random number generation is used
+- absolute_gauss - error generated using gaussian distribution with the original data point being 0 and error_rate being the standard deviation
+- point_gauss - error generated using gaussian distribution with the original data point being the mean and error_rate being the standard deviation
 
 ##Optional arguments
 

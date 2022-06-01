@@ -98,7 +98,6 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
     psnr = get_psnr(df_org, mse)
     print("peak signal-to-noise ratio: ", psnr)
 
-
     if dct_flag:
         kneel = dct.knee_locator(df_org.tolist())
         print("Knee point is", kneel)
@@ -145,28 +144,30 @@ def get_error(cur_val, para, err_metric):
     err_metric  -   type of error
 
     there are three error metric: absolute, relative, and point
-    absolute -  return a random floating point number between
-                cur_val-para and cur_val+para
-    relative -  return a random floating point number between
-                cur_val-(max-min)*para and cur_val+(max-min)*para
-    point    -  return a random floating point number between
-                cur_val-cur_val*para, cur_val+cur_val*para
-    gauss    -  return a random floating point number based
-                on a Gaussian distribution with a mean of cur_val
-                and standard deviation of para
+    absolute_uni   -    return a random floating point number between
+                        cur_val-para and cur_val+para
+    relative_uni   -    return a random floating point number between
+                        cur_val-(max-min)*para and cur_val+(max-min)*para
+    point_uni      -    return a random floating point number between
+                        cur_val-cur_val*para, cur_val+cur_val*para
+    absolute_gauss -    return a random floating point number based
+                        on a Gaussian distribution with a mean of 0
+                        and standard deviation of para
+    relative_gauss -    return a random floating point number based
+                        on a Gaussian distribution with a mean of cur_val
+                        and standard deviation of para
     """
     # print(para)
-    if err_metric == "absolute":
-        # print("Range from", cur_val - para, "to", cur_val + para)
+    if err_metric == "absolute_uni":
         return random.uniform(cur_val - para, cur_val + para)
-    elif err_metric == "relative":
-        # print("Range from", cur_val - para, "to", cur_val + para)
+    elif err_metric == "relative_uni":
         return random.uniform(cur_val - para, cur_val + para)
-    elif err_metric == "point":
-        # print("Range from", cur_val * (1 - para), "to", cur_val * (1 + para))
+    elif err_metric == "point_uni":
         return random.uniform(cur_val * (1 - para), cur_val * (1 + para))
-    elif err_metric == "gauss":
-        return random.gauss(cur_val, para)
+    elif err_metric == "absolute_gauss":
+        return cur_val + random.gauss(0, para)
+    elif err_metric == "point_gauss":
+        return cur_val + random.gauss(cur_val, para)
     else:
         print("ERROR: Invalid error metrics")
         sys.stderr.write("ERROR: Invalid error metrics\n")
@@ -189,7 +190,11 @@ def get_psnr(df_org, mse):
     """Take in the original series and mse to
     find the psnr"""
 
-    return 10 * math.log10(df_org.max() ** 2 / mse)
+    # if mse is 0, the two data are the same
+    if mse == 0:
+        return float('nan')
+
+    return 10 * math.log10((df_org.max() - df_org.min()) ** 2 / mse)
 
 
 def plot_data(org_data, new_data, error_list, anomaly_type, data_name):
@@ -344,7 +349,7 @@ if __name__ == '__main__':
                         help="select types of error injected, point anomaly by default,"
                              " INCOMPLETE")
     parser.add_argument("-m", "--error_metric", type=str, nargs='+', required=True,
-                        choices=['absolute', 'relative', 'point', 'gauss'],
+                        # choices=['absolute', 'relative', 'point', 'gauss'],
                         help="determine the error injection metric")
     parser.add_argument("-p", "--plot", action="store_true",
                         help="plot the data if true")
