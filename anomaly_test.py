@@ -8,6 +8,7 @@ import time
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from scipy import stats
 from matplotlib import rcParams
 from prettytable import PrettyTable
 from openpyxl.workbook import Workbook
@@ -97,6 +98,12 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
     print("mean square error: ", mse)
     psnr = get_psnr(df_org, mse)
     print("peak signal-to-noise ratio: ", psnr)
+    r_value = get_pearsonr(df_org, df)
+    print("pearson correlation: ", r_value)
+    ssim = get_ssim(df_org, df)
+    print("structural similarity: ", ssim)
+    # ssim = get_ssim(df, df)
+    # print("structural similarity-test: ", ssim)
 
     if dct_flag:
         kneel = dct.knee_locator(df_org.tolist())
@@ -195,6 +202,46 @@ def get_psnr(df_org, mse):
         return float('nan')
 
     return 10 * math.log10((df_org.max() - df_org.min()) ** 2 / mse)
+
+
+def get_pearsonr(df_org, df_new):
+    """Take in the original data and error injected
+    series to find the pearson correlation"""
+
+    r, p = stats.pearsonr(df_org, df_new)
+
+    return r
+
+
+def get_ssim(x, y):
+    """Take in the original data and error injected
+    series to find the structural similarity"""
+
+    x_ave = x.mean()
+    y_ave = y.mean()
+    x_var = x.var()
+    y_var = y.var()
+    xy = x.multiply(other=y)
+    xy_ave = xy.mean()
+    cov = xy_ave - x_ave * y_ave
+    k1 = 0.01
+    k2 = 0.03
+    # concatenate x and y to find maximum and minimum across x and y
+    concat_xy = pd.concat([x, y])
+    L = concat_xy.max() - concat_xy.min()
+    print("x_ave: ", x_ave)
+    print("y_ave: ", y_ave)
+    print("x_var: ", x_var)
+    print("y_var: ", y_var)
+    print("cov: ", cov)
+    print("max: ", concat_xy.max())
+    print("min: ", concat_xy.min())
+    print("L: ", L)
+    c1 = (k1 * L) ** 2
+    c2 = (k2 * L) ** 2
+
+    return ((2 * x_ave * y_ave + c1) * (2 * cov + c2)) / \
+           ((x_ave ** 2 + y_ave ** 2 + c1) * (x_var ** 2 + y_var ** 2 + c2))
 
 
 def plot_data(org_data, new_data, error_list, anomaly_type, data_name):
