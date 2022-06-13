@@ -12,6 +12,7 @@ from scipy import stats
 from matplotlib import rcParams
 from prettytable import PrettyTable
 from openpyxl.workbook import Workbook
+from skimage.metrics import structural_similarity
 
 import handle_files
 import dct
@@ -90,9 +91,8 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
         df[error_index] = get_error(df[error_index], err_para, err_metric)
         table.add_row([error_num, error_index, df_org[error_index], df[error_index]])
 
-    # injection detail is not needed for DCT
-    if not dct_flag:
-        print(table)
+    # print the error injection table
+    # print(table)
 
     mse = get_mse(df_org.tolist(), df.tolist())
     print("mean square error: ", mse)
@@ -102,8 +102,6 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
     print("pearson correlation: ", r_value)
     ssim = get_ssim(df_org, df)
     print("structural similarity: ", ssim)
-    # ssim = get_ssim(df, df)
-    # print("structural similarity-test: ", ssim)
 
     if dct_flag:
         kneel = dct.knee_locator(df_org.tolist())
@@ -204,11 +202,16 @@ def get_psnr(df_org, mse):
     return 10 * math.log10((df_org.max() - df_org.min()) ** 2 / mse)
 
 
-def get_pearsonr(df_org, df_new):
+def get_pearsonr(x, y):
     """Take in the original data and error injected
-    series to find the pearson correlation"""
+    series to find the pearson correlation
+    Following the formula from
+    https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.pearsonr.html
+    """
 
-    r, p = stats.pearsonr(df_org, df_new)
+    m_x = np.nanmean(x)
+    m_y = np.nanmean(y)
+    r = np.sum((x - m_x) * (y - m_y))/(np.sum((x - m_x) ** 2) * np.sum((y - m_y) ** 2)) ** 0.5
 
     return r
 
@@ -217,31 +220,7 @@ def get_ssim(x, y):
     """Take in the original data and error injected
     series to find the structural similarity"""
 
-    x_ave = x.mean()
-    y_ave = y.mean()
-    x_var = x.var()
-    y_var = y.var()
-    xy = x.multiply(other=y)
-    xy_ave = xy.mean()
-    cov = xy_ave - x_ave * y_ave
-    k1 = 0.01
-    k2 = 0.03
-    # concatenate x and y to find maximum and minimum across x and y
-    concat_xy = pd.concat([x, y])
-    L = concat_xy.max() - concat_xy.min()
-    print("x_ave: ", x_ave)
-    print("y_ave: ", y_ave)
-    print("x_var: ", x_var)
-    print("y_var: ", y_var)
-    print("cov: ", cov)
-    print("max: ", concat_xy.max())
-    print("min: ", concat_xy.min())
-    print("L: ", L)
-    c1 = (k1 * L) ** 2
-    c2 = (k2 * L) ** 2
-
-    return ((2 * x_ave * y_ave + c1) * (2 * cov + c2)) / \
-           ((x_ave ** 2 + y_ave ** 2 + c1) * (x_var ** 2 + y_var ** 2 + c2))
+    return structural_similarity(x, y, gaussian_weights=True, sigma=1.5, use_sample_covariance=False)
 
 
 def plot_data(org_data, new_data, error_list, anomaly_type, data_name):
