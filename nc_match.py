@@ -4,7 +4,7 @@ from numpy import ma
 
 """This is a development tool for nc file comparison"""
 
-root = "./."
+root = "C:/Users/Jeffrey/Downloads/swson"
 
 org_file = root+"/HadISST_sst.nc"
 file = root+"/HadISST_sst_point_2p0_0p1.nc"
@@ -31,21 +31,21 @@ new_nc = Dataset(file, "r")
 
 if old_nc.variables.keys() != new_nc.variables.keys():
     print("WRONG!")
-
-for key in old_nc.variables.keys():
-    print(key)
-    if old_nc[key].ncattrs() != new_nc[key].ncattrs():
-        print("WRONG!")
-    old_list = old_nc[key][:].flatten()
-    new_list = new_nc[key][:].flatten()
-    old_list.mask = ma.nomask
-    new_list.mask = ma.nomask
-
-    cnt = 0
-    for x in range(len(old_list)):
-        if old_list[x] != new_list[x]:
-            print("index", x, "old", old_list[x], "new", new_list[x])
-            cnt += 1
-
-    print(cnt)
+print(new_nc["sst"][:].shape)
+# for key in old_nc.variables.keys():
+#     print(key)
+#     if old_nc[key].ncattrs() != new_nc[key].ncattrs():
+#         print("WRONG!")
+#     old_list = old_nc[key][:].flatten()
+#     new_list = new_nc[key][:].flatten()
+#     old_list.mask = ma.nomask
+#     new_list.mask = ma.nomask
+#
+#     cnt = 0
+#     for x in range(len(old_list)):
+#         if old_list[x] != new_list[x]:
+#             print("index", x, "old", old_list[x], "new", new_list[x])
+#             cnt += 1
+#
+#     print(cnt)
 

@@ -27,6 +27,10 @@ def knee_locator(list_data):
     xslope = np.empty(data_length, dtype=np.double)
     yslope = np.empty(data_length, dtype=np.double)
 
+    if ymax == ymin:
+        print("division by zero")
+        return float('nan')
+
     for index in range(0, data_length):
         Xsn[index] = (index - xmin) / (xmax - xmin)
         Ysn[index] = (x_cdf[index] - ymin) / (ymax - ymin)

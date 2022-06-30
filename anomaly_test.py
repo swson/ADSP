@@ -12,7 +12,6 @@ from scipy import stats
 from matplotlib import rcParams
 from prettytable import PrettyTable
 from openpyxl.workbook import Workbook
-from skimage.metrics import structural_similarity
 
 import handle_files
 import dct
@@ -33,7 +32,7 @@ dct_flag = False
 PLOT_WINDOW_SIZE = 100
 # specific the energy percentage needed to represent
 # the DCT coefficients
-ENERGY_PERCENTAGE_LIST = [0.90, 0.95, 0.99, 0.999, 0.9999, 0.99999, 0.999999]
+ENERGY_PERCENTAGE_LIST = [0.90, 0.95, 0.99, 0.999, 0.9999]
 
 
 def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_metric,
@@ -71,7 +70,7 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
     print("error metrics:     " + err_metric)
     print(f"data size:         {data_size:d}")
     print(f"Number of errors:  {error_num:d}")
-    print(f"Error list:\n{*error_list,}")
+    # print(f"Error list:\n{*error_list,}")
 
     if error_num == 0:
         print("WARNING: Injection rate is too low, no errors is injected, an error injected file will not be created")
@@ -79,16 +78,10 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
 
         return
 
-    if err_metric == "relative":
-        print("max point:", df_org.max(0), "min point:", df_org.min(0))
-        err_para = (df_org.max(0) - df_org.min(0)) * error_rate
-    else:
-        err_para = error_rate
-
     table = PrettyTable(["Error Number", "Location", "Original Value", "New Injected Value"])
     table.align = "r"
     for error_num, error_index in enumerate(error_list):
-        df[error_index] = get_error(df[error_index], err_para, err_metric)
+        df[error_index] = get_error(df[error_index], error_rate, err_metric)
         table.add_row([error_num, error_index, df_org[error_index], df[error_index]])
 
     # print the error injection table
@@ -100,34 +93,57 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
     print("peak signal-to-noise ratio: ", psnr)
     r_value = get_pearsonr(df_org, df)
     print("pearson correlation: ", r_value)
-    ssim = get_ssim(df_org, df)
-    print("structural similarity: ", ssim)
 
     if dct_flag:
-        kneel = dct.knee_locator(df_org.tolist())
-        print("Knee point is", kneel)
-        table = PrettyTable()
-        header = ["Original Concentration", "Error Concentration", "Energy Percentage (%)", "Compaction Ratio (%)"]
-        table.field_names = header
-        table.align = "r"
-        df1 = pd.DataFrame(header)
 
-        for energy_percentage in ENERGY_PERCENTAGE_LIST:
-            original_energy = dct.get_coefficient(df_org.tolist(), energy_percentage)
-            error_energy = dct.get_coefficient(df.tolist(), energy_percentage)
-            row_ele = [original_energy, error_energy, energy_percentage * 100, original_energy / df_org.size * 100]
-            table.add_row(row_ele)
-            df1 = pd.concat([df1, pd.Series(row_ele)], ignore_index=True, axis=1)
-        print(table)
+        BLOCK_SIZE = 180
 
-        df1 = df1.T
-        (path, keyword) = os.path.split(filename)
-        try:
-            with pd.ExcelWriter(keyword + '_error.xlsx', mode='a') as writer:
-                df1.to_excel(writer, sheet_name=str(error_rate) + "_" + str(injection_rate), index=False, header=False)
-        except FileNotFoundError:
-            with pd.ExcelWriter(keyword + '_error.xlsx', mode='w') as writer:
-                df1.to_excel(writer, sheet_name=str(error_rate) + "_" + str(injection_rate), index=False, header=False)
+        block_num = df_org.size // BLOCK_SIZE
+        print("Separated into", block_num, "blocks")
+
+        df_org_list = df_org.tolist()
+        df_new_list = df.tolist()
+        for index in range(0, block_num):
+            list_start = index * BLOCK_SIZE
+            list_end = (index + 1) * BLOCK_SIZE
+
+            df_org_seg = df_org_list[list_start: list_end]
+            df_new_seg = df_new_list[list_start: list_end]
+
+            # print(df_org_list)
+            # print(df_new_list)
+            # print(df_org_seg)
+            # print(df_new_seg)
+
+            print("Block", index)
+            kneel = dct.knee_locator(df_org_seg)
+            print("Original Knee point is", kneel)
+            kneel = dct.knee_locator(df_new_seg)
+            print("New      Knee point is", kneel)
+
+            table = PrettyTable()
+            header = ["Original Concentration", "Error Concentration", "Energy Percentage (%)", "Compaction Ratio (%)"]
+            table.field_names = header
+            table.align = "r"
+            df1 = pd.DataFrame(header)
+
+            for energy_percentage in ENERGY_PERCENTAGE_LIST:
+                original_energy = dct.get_coefficient(df_org.tolist(), energy_percentage)
+                error_energy = dct.get_coefficient(df.tolist(), energy_percentage)
+                row_ele = [original_energy, error_energy, energy_percentage * 100, original_energy / df_org.size * 100]
+                table.add_row(row_ele)
+                df1 = pd.concat([df1, pd.Series(row_ele)], ignore_index=True, axis=1)
+            print(table)
+
+        # df1 = df1.T
+        # (path, keyword) = os.path.split(filename)
+        #
+        # try:
+        #     with pd.ExcelWriter(keyword + '_error.xlsx', mode='a', if_sheet_exists='replace') as writer:
+        #         df1.to_excel(writer, sheet_name=str(error_rate) + "_" + str(injection_rate), index=False, header=False)
+        # except FileNotFoundError:
+        #     with pd.ExcelWriter(keyword + '_error.xlsx', mode='w') as writer:
+        #         df1.to_excel(writer, sheet_name=str(error_rate) + "_" + str(injection_rate), index=False, header=False)
 
     if file_extension == ".nc":
         WRITE_FILE[file_extension](df, filename + file_extension, output_file, variable, dimension)
@@ -158,7 +174,7 @@ def get_error(cur_val, para, err_metric):
     absolute_gauss -    return a random floating point number based
                         on a Gaussian distribution with a mean of 0
                         and standard deviation of para
-    relative_gauss -    return a random floating point number based
+    point_gauss    -    return a random floating point number based
                         on a Gaussian distribution with a mean of cur_val
                         and standard deviation of para
     """
@@ -214,13 +230,6 @@ def get_pearsonr(x, y):
     r = np.sum((x - m_x) * (y - m_y))/(np.sum((x - m_x) ** 2) * np.sum((y - m_y) ** 2)) ** 0.5
 
     return r
-
-
-def get_ssim(x, y):
-    """Take in the original data and error injected
-    series to find the structural similarity"""
-
-    return structural_similarity(x, y, gaussian_weights=True, sigma=1.5, use_sample_covariance=False)
 
 
 def plot_data(org_data, new_data, error_list, anomaly_type, data_name):
