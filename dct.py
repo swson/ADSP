@@ -12,9 +12,8 @@ def knee_locator(list_data):
     arr2 = np.square(arr)
     dem = np.sum(arr2)
 
-    # if dem == 0:
-    #     # division by zero
-    #     return float('nan')
+    if dem == 0:
+        return float('nan')
 
     arr2_sort_norm = (-np.sort(-arr2)) / dem
 
@@ -33,7 +32,7 @@ def knee_locator(list_data):
     yslope = np.empty(data_length, dtype=np.double)
 
     if ymax == ymin:
-        # division by zero
+        # division by zero, no knee point
         return float('nan')
 
     for index in range(0, data_length):

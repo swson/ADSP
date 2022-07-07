@@ -70,7 +70,7 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
     print("error metrics:     " + err_metric)
     print(f"data size:         {data_size:d}")
     print(f"Number of errors:  {error_num:d}")
-    print(f"Error list:\n{*error_list,}")
+    # print(f"Error list:\n{*error_list,}")
 
     if error_num == 0:
         print("WARNING: Injection rate is too low, no errors is injected, an error injected file will not be created")
@@ -112,6 +112,7 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
             list_end = (index + 1) * BLOCK_SIZE
 
             df_org_seg = df_org_list[list_start: list_end]
+            # print(df_org_seg)
             df_new_seg = df_new_list[list_start: list_end]
 
             print("Block", index + 1)
@@ -124,12 +125,19 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
             else:
                 print("Knee MISMATCH")
 
-            org_k_val.append(kneel_org)
-            new_k_val.append(kneel_new)
+            if kneel_org != None:
+                org_k_val.append(kneel_org)
+            if kneel_new != None:
+                new_k_val.append(kneel_new)
 
-        plt.hist(org_k_val, bins=50)
-        plt.show()
-        plt.hist(new_k_val, bins=50)
+        print(org_k_val)
+        print(new_k_val)
+
+        org_k_val = np.asarray(org_k_val)
+        new_k_val = np.asarray(new_k_val)
+
+        plt.hist(org_k_val[~np.isnan(org_k_val)], bins=50, alpha=0.5, label='original')
+        plt.hist(new_k_val[~np.isnan(new_k_val)], bins=50, alpha=0.5, color='r', label='error')
         plt.show()
 
 
