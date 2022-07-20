@@ -96,7 +96,7 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
 
     if dct_flag:
 
-        BLOCK_SIZE = 240
+        BLOCK_SIZE = 180
 
         block_num = df_org.size // BLOCK_SIZE
         print("Separated into", block_num, "blocks")
@@ -138,6 +138,10 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
 
         plt.hist(org_k_val[~np.isnan(org_k_val)], bins=50, alpha=0.5, label='original')
         plt.hist(new_k_val[~np.isnan(new_k_val)], bins=50, alpha=0.5, color='r', label='error')
+        plt.title(filename + "_i" + str(injection_rate) + "_e" + str(error_rate))
+        plt.ylabel("k count")
+        plt.xlabel("k value")
+        plt.legend()
         plt.show()
 
 
