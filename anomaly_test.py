@@ -94,9 +94,23 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
     r_value = get_pearsonr(df_org, df)
     print("pearson correlation: ", r_value)
 
+    # df_org_list = df_org.tolist()
+    #
+    # if df_org_list[0] == float('nan'):
+    #     print("1 pass")
+    # if df_org_list[0] == 'nan':
+    #     print("2 pass")
+    # if df_org_list[0] == np.nan:
+    #     print("3 pass")
+    # if math.isnan(df_org_list[0]):
+    #     print("5 pass")
+    #
+    #
+    # print(df_org_list[0])
+
     if dct_flag:
 
-        BLOCK_SIZE = 180
+        BLOCK_SIZE = 29040
 
         block_num = df_org.size // BLOCK_SIZE
         print("Separated into", block_num, "blocks")
@@ -111,9 +125,15 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
             list_start = index * BLOCK_SIZE
             list_end = (index + 1) * BLOCK_SIZE
 
-            df_org_seg = df_org_list[list_start: list_end]
-            # print(df_org_seg)
-            df_new_seg = df_new_list[list_start: list_end]
+            # remove nan from the list
+            # print(df_org_list[list_start: list_end])
+            # print(list(filter(nan, df_org_list[list_start: list_end])))
+            df_org_seg = list(df_org_list[list_start: list_end])
+            df_org_seg = [x for x in df_org_seg if not math.isnan(x)]
+            print(df_org_seg)
+            print(type(df_org_seg[0]))
+            df_new_seg = list(df_new_list[list_start: list_end])
+            df_new_seg = [x for x in df_new_seg if not math.isnan(x)]
 
             print("Block", index + 1)
             kneel_org = dct.knee_locator(df_org_seg)
@@ -142,8 +162,8 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
         plt.ylabel("k count")
         plt.xlabel("k value")
         plt.legend()
-        plt.show()
-
+        plt.savefig(path + "i" + str(injection_rate) + "_e" + str(error_rate) + ".png")
+        # plt.show()
 
     if file_extension == ".nc":
         WRITE_FILE[file_extension](df, filename + file_extension, output_file, variable, dimension)
