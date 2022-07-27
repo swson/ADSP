@@ -7,16 +7,17 @@ def knee_locator(list_data):
     data_length = len(list_data)
     list_dct = fft.dct(list_data, norm='ortho')
 
-    # turns list into numpy array and then square them and sum them up
+    # turns list into numpy array and get the squared data and sum of all data values
     arr = np.array(list_dct)
     arr2 = np.square(arr)
     dem = np.sum(arr2)
 
+    # no knee point if all data is 0
     if dem == 0:
         return float('nan')
 
+    # sort the data in ascending order and get the CDF
     arr2_sort_norm = (-np.sort(-arr2)) / dem
-
     x_cdf = np.cumsum(arr2_sort_norm)
 
     ymin = np.min(x_cdf)
@@ -28,29 +29,21 @@ def knee_locator(list_data):
     Ysn = np.empty(data_length)
     Xd = np.empty(data_length)
     Yd = np.empty(data_length)
-    xslope = np.empty(data_length, dtype=np.double)
-    yslope = np.empty(data_length, dtype=np.double)
 
+    # no knee point if data is a straight line
     if ymax == ymin:
-        # division by zero, no knee point
         return float('nan')
 
+    # get the normalized data and 'difference data'
     for index in range(0, data_length):
         Xsn[index] = (index - xmin) / (xmax - xmin)
         Ysn[index] = (x_cdf[index] - ymin) / (ymax - ymin)
+
         Xd[index] = Xsn[index]
         Yd[index] = Ysn[index] - Xsn[index]
 
-    need = 0
-
-    # print(Ysn[0], Xsn[0])
-    # xslope[0] = Ysn[0] / Xsn[0]
-
+    # iterate through the list
     for index in range(1, data_length):
-        # xslope[index - 1] = (Ysn[index] - Ysn[index - 1]) \
-        #                     / (Xsn[index] - Xsn[index - 1])
-        # yslope[index - 1] = (Yd[index] - Yd[index - 1]) \
-        #                     / (Xd[index] - Xd[index - 1])
         if Yd[index] > Yd[index - 1] and Yd[index + 1] < Yd[index]:
             need = index
             return need
