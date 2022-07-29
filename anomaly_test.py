@@ -55,7 +55,7 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
     data_size = len(original)
 
     df_org = pd.Series(original)
-    df = df_org.copy()
+    df_new = df_org.copy()
 
     error_num = int(data_size * injection_rate)
     # get a list of random errors
@@ -82,34 +82,46 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
     table.align = "r"
     for error_num, error_index in enumerate(error_list):
         # do not inject errors if original data is nan
-        if not math.isnan(df[error_index]):
-            df[error_index] = get_error(df[error_index], error_rate, err_metric)
-            table.add_row([error_num, error_index, df_org[error_index], df[error_index]])
+        if not math.isnan(df_org[error_index]):
+            df_new[error_index] = get_error(df_org[error_index], error_rate, err_metric)
+            table.add_row([error_num, error_index, df_org[error_index], df_new[error_index]])
         else:
             table.add_row([error_num, error_index, df_org[error_index], "--"])
 
     # print the error injection table
     # print(table)
 
-    mse = get_mse(df_org.tolist(), df.tolist())
+    mse = get_mse(df_org.tolist(), df_new.tolist())
     print("mean square error: ", mse)
     psnr = get_psnr(df_org, mse)
     print("peak signal-to-noise ratio: ", psnr)
-    r_value = get_pearsonr(df_org, df)
+    r_value = get_pearsonr(df_org, df_new)
     print("pearson correlation: ", r_value)
 
     if dct_flag:
 
-        BLOCK_SIZE = 121
+        BLOCK_SIZE = 240
+
+        # for comparisons with only positive and negative error injection
+        df_pos = df_org.copy()
+        df_neg = df_org.copy()
+        for error_num, error_index in enumerate(error_list):
+            if not math.isnan(df_org[error_index]):
+                df_pos[error_index] = random.uniform(df_org[error_index], df_org[error_index] * (1 + error_rate))
+                df_neg[error_index] = random.uniform(df_org[error_index] * (1 - error_rate), df_org[error_index])
 
         block_num = df_org.size // BLOCK_SIZE
         print("Separated into", block_num, "blocks")
 
         df_org_list = df_org.tolist()
-        df_new_list = df.tolist()
+        df_new_list = df_new.tolist()
+        df_pos_list = df_pos.tolist()
+        df_neg_list = df_neg.tolist()
 
         org_k_val = []
         new_k_val = []
+        pos_k_val = []
+        neg_k_val = []
 
         for index in range(0, block_num):
             list_start = index * BLOCK_SIZE
@@ -121,13 +133,22 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
             df_new_seg = list(df_new_list[list_start: list_end])
             df_new_seg = [x for x in df_new_seg if not math.isnan(x)]
 
+            df_pos_seg = list(df_pos_list[list_start: list_end])
+            df_pos_seg = [x for x in df_pos_seg if not math.isnan(x)]
+
+            df_neg_seg = list(df_neg_list[list_start: list_end])
+            df_neg_seg = [x for x in df_neg_seg if not math.isnan(x)]
+
             print("Block", index + 1)
 
             kneel_org = dct.knee_locator(df_org_seg)
             print("Original Knee point is", kneel_org)
-
             kneel_new = dct.knee_locator(df_new_seg)
             print("New      Knee point is", kneel_new)
+            kneel_pos = dct.knee_locator(df_pos_seg)
+            print("Positive Knee point is", kneel_pos)
+            kneel_neg = dct.knee_locator(df_neg_seg)
+            print("Negative Knee point is", kneel_neg)
 
             if kneel_org == kneel_new:
                 print("Knee MATCH")
@@ -138,30 +159,62 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
                 org_k_val.append(kneel_org)
             if kneel_new != None:
                 new_k_val.append(kneel_new)
-
-        # print(org_k_val)
-        # print(new_k_val)
+            if kneel_pos != None:
+                pos_k_val.append(kneel_pos)
+            if kneel_neg != None:
+                neg_k_val.append(kneel_neg)
 
         org_k_val = np.asarray(org_k_val)
+        org_k_val = org_k_val[~np.isnan(org_k_val)]
         new_k_val = np.asarray(new_k_val)
+        new_k_val = new_k_val[~np.isnan(new_k_val)]
+        pos_k_val = np.asarray(pos_k_val)
+        pos_k_val = pos_k_val[~np.isnan(pos_k_val)]
+        neg_k_val = np.asarray(neg_k_val)
+        neg_k_val = neg_k_val[~np.isnan(neg_k_val)]
 
-        plt.hist(org_k_val[~np.isnan(org_k_val)], bins=50, alpha=0.5, label='original')
-        plt.hist(new_k_val[~np.isnan(new_k_val)], bins=50, alpha=0.5, color='r', label='error')
-        plt.title(filename + "_i" + str(injection_rate) + "_e" + str(error_rate))
-        plt.ylabel("k count")
-        plt.xlabel("k value")
-        plt.legend()
+        fig, (ax1, ax2, ax3) = plt.subplots(3, sharex=True)
+        fig.suptitle(filename + "_i" + str(injection_rate) + "_e" + str(error_rate) + "_box" + str(BLOCK_SIZE))
+
+        ax1.hist(org_k_val, bins=50, alpha=0.5, label='original')
+        ax1.hist(new_k_val, bins=50, alpha=0.5, color='r', label='error')
+        ax1.set_title('Dual error bound')
+
+        ax2.hist(org_k_val, bins=50, alpha=0.5, label='original')
+        ax2.hist(pos_k_val, bins=50, alpha=0.5, color='r', label='error')
+        ax2.set_title('Positive error bound')
+
+        ax3.hist(org_k_val, bins=50, alpha=0.5, label='original')
+        ax3.hist(neg_k_val, bins=50, alpha=0.5, color='r', label='error')
+        ax3.set_title('Negative error bound')
+
+        ax1.set(ylabel='k count')
+        ax2.set(ylabel='k count')
+        ax3.set(xlabel='k value', ylabel='k count')
+        ax1.legend()
+        ax2.legend()
+        ax3.legend()
         # plt.savefig(path + "i" + str(injection_rate) + "_e" + str(error_rate) + ".png")
+
         plt.show()
 
+        # plt.hist(org_k_val[~np.isnan(org_k_val)], bins=50, alpha=0.5, label='original')
+        # plt.hist(new_k_val[~np.isnan(new_k_val)], bins=50, alpha=0.5, color='r', label='error')
+        # plt.title(filename + "_i" + str(injection_rate) + "_e" + str(error_rate))
+        # plt.ylabel("k count")
+        # plt.xlabel("k value")
+        # plt.legend()
+        # # plt.savefig(path + "i" + str(injection_rate) + "_e" + str(error_rate) + ".png")
+        # plt.show()
+
     if file_extension == ".nc":
-        WRITE_FILE[file_extension](df, filename + file_extension, output_file, variable, dimension)
+        WRITE_FILE[file_extension](df_new, filename + file_extension, output_file, variable, dimension)
     else:
-        WRITE_FILE[file_extension](df, output_file, data_type)
+        WRITE_FILE[file_extension](df_new, output_file, data_type)
     print("--------------------------------------------")
 
     if plot_flag:
-        plot_data(df_org, df, error_list, anomaly_type, filename)
+        plot_data(df_org, df_new, error_list, anomaly_type, filename)
 
     return
 
@@ -236,7 +289,7 @@ def get_pearsonr(x, y):
 
     m_x = np.nanmean(x)
     m_y = np.nanmean(y)
-    r = np.sum((x - m_x) * (y - m_y))/(np.sum((x - m_x) ** 2) * np.sum((y - m_y) ** 2)) ** 0.5
+    r = np.sum((x - m_x) * (y - m_y)) / (np.sum((x - m_x) ** 2) * np.sum((y - m_y) ** 2)) ** 0.5
 
     return r
 

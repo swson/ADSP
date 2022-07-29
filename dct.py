@@ -4,7 +4,11 @@ import numpy as np
 
 
 def knee_locator(list_data):
+
     data_length = len(list_data)
+    if data_length == 0:
+        return float('nan')
+
     list_dct = fft.dct(list_data, norm='ortho')
 
     # turns list into numpy array and get the squared data and sum of all data values
@@ -43,10 +47,12 @@ def knee_locator(list_data):
         Yd[index] = Ysn[index] - Xsn[index]
 
     # iterate through the list
-    for index in range(1, data_length):
+    for index in range(1, data_length - 1):
         if Yd[index] > Yd[index - 1] and Yd[index + 1] < Yd[index]:
             need = index
             return need
+
+    return float('nan')
 
 
 def plot_dct(list_new, list_org):
