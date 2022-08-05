@@ -99,8 +99,10 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
     print("pearson correlation: ", r_value)
 
     if dct_flag:
-
-        BLOCK_SIZE = 240
+        # precip|lon=144|lat=72|10368
+        # sst|lat=180|lon=360|64800
+        # soil|lon=240|lat=121|29040
+        BLOCK_SIZE = 10368
 
         # for comparisons with only positive and negative error injection
         df_pos = df_org.copy()
@@ -139,21 +141,21 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
             df_neg_seg = list(df_neg_list[list_start: list_end])
             df_neg_seg = [x for x in df_neg_seg if not math.isnan(x)]
 
-            print("Block", index + 1)
-
             kneel_org = dct.knee_locator(df_org_seg)
-            print("Original Knee point is", kneel_org)
             kneel_new = dct.knee_locator(df_new_seg)
-            print("New      Knee point is", kneel_new)
             kneel_pos = dct.knee_locator(df_pos_seg)
-            print("Positive Knee point is", kneel_pos)
             kneel_neg = dct.knee_locator(df_neg_seg)
-            print("Negative Knee point is", kneel_neg)
 
-            if kneel_org == kneel_new:
-                print("Knee MATCH")
-            else:
-                print("Knee MISMATCH")
+            # print("Block", index + 1)
+            # print("Original Knee point is", kneel_org)
+            # print("New      Knee point is", kneel_new)
+            # print("Positive Knee point is", kneel_pos)
+            # print("Negative Knee point is", kneel_neg)
+
+            # if kneel_org == kneel_new:
+            #     print("Knee MATCH")
+            # else:
+            #     print("Knee MISMATCH")
 
             if kneel_org != None:
                 org_k_val.append(kneel_org)
@@ -173,27 +175,30 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
         neg_k_val = np.asarray(neg_k_val)
         neg_k_val = neg_k_val[~np.isnan(neg_k_val)]
 
-        fig, (ax1, ax2, ax3) = plt.subplots(3, sharex=True)
+        print_hist(org_k_val, "Original")
+        print_hist(new_k_val, "New     ")
+        print_hist(pos_k_val, "Positive")
+        print_hist(neg_k_val, "Negative")
+
+        fig, axs = plt.subplots(3, sharex=True)
         fig.suptitle(filename + "_i" + str(injection_rate) + "_e" + str(error_rate) + "_box" + str(BLOCK_SIZE))
 
-        ax1.hist(org_k_val, bins=50, alpha=0.5, label='original')
-        ax1.hist(new_k_val, bins=50, alpha=0.5, color='r', label='error')
-        ax1.set_title('Dual error bound')
+        axs[0].hist(org_k_val, bins=50, alpha=0.5, label='original')
+        axs[0].hist(new_k_val, bins=50, alpha=0.5, color='r', label='error')
+        axs[0].set_title('Dual error bound')
 
-        ax2.hist(org_k_val, bins=50, alpha=0.5, label='original')
-        ax2.hist(pos_k_val, bins=50, alpha=0.5, color='r', label='error')
-        ax2.set_title('Positive error bound')
+        axs[1].hist(org_k_val, bins=50, alpha=0.5, label='original')
+        axs[1].hist(pos_k_val, bins=50, alpha=0.5, color='r', label='error')
+        axs[1].set_title('Positive error bound')
 
-        ax3.hist(org_k_val, bins=50, alpha=0.5, label='original')
-        ax3.hist(neg_k_val, bins=50, alpha=0.5, color='r', label='error')
-        ax3.set_title('Negative error bound')
+        axs[2].hist(org_k_val, bins=50, alpha=0.5, label='original')
+        axs[2].hist(neg_k_val, bins=50, alpha=0.5, color='r', label='error')
+        axs[2].set_title('Negative error bound')
 
-        ax1.set(ylabel='k count')
-        ax2.set(ylabel='k count')
-        ax3.set(xlabel='k value', ylabel='k count')
-        ax1.legend()
-        ax2.legend()
-        ax3.legend()
+        plt.setp(axs, ylabel='k count')
+        plt.grid(visible=True, which='both', axis='both')
+        axs[2].set(xlabel='k value')
+        plt.legend()
         # plt.savefig(path + "i" + str(injection_rate) + "_e" + str(error_rate) + ".png")
 
         plt.show()
@@ -292,6 +297,12 @@ def get_pearsonr(x, y):
     r = np.sum((x - m_x) * (y - m_y)) / (np.sum((x - m_x) ** 2) * np.sum((y - m_y) ** 2)) ** 0.5
 
     return r
+
+
+def print_hist(np_array, name):
+    print(name, "mean k is      ", np.mean(np_array))
+    # print(name, "max k count is ", np.bincount(np_array).argmax())
+    print(name, "k range is     ", np.amin(np_array), "to", np.amax(np_array))
 
 
 def plot_data(org_data, new_data, error_list, anomaly_type, data_name):
