@@ -102,7 +102,7 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
         # precip|lon=144|lat=72|10368
         # sst|lat=180|lon=360|64800
         # soil|lon=240|lat=121|29040
-        BLOCK_SIZE = 10368
+        BLOCK_SIZE = 64800
 
         # for comparisons with only positive and negative error injection
         df_pos = df_org.copy()
@@ -180,28 +180,35 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
         print_hist(pos_k_val, "Positive")
         print_hist(neg_k_val, "Negative")
 
-        fig, axs = plt.subplots(3, sharex=True)
-        fig.suptitle(filename + "_i" + str(injection_rate) + "_e" + str(error_rate) + "_box" + str(BLOCK_SIZE))
+        plt.figure()
 
-        axs[0].hist(org_k_val, bins=50, alpha=0.5, label='original')
-        axs[0].hist(new_k_val, bins=50, alpha=0.5, color='r', label='error')
-        axs[0].set_title('Dual error bound')
+        ax1 = plt.subplot(311)
+        plt.hist(org_k_val, bins=50, alpha=0.5, label='original')
+        plt.hist(new_k_val, bins=50, alpha=0.5, color='r', label='error')
+        plt.ylabel('k count')
+        plt.grid(visible=True, which='both')
+        plt.title('Dual error bound')
 
-        axs[1].hist(org_k_val, bins=50, alpha=0.5, label='original')
-        axs[1].hist(pos_k_val, bins=50, alpha=0.5, color='r', label='error')
-        axs[1].set_title('Positive error bound')
+        plt.subplot(312, sharex=ax1)
+        plt.hist(org_k_val, bins=50, alpha=0.5, label='original')
+        plt.hist(pos_k_val, bins=50, alpha=0.5, color='r', label='error')
+        plt.ylabel('k count')
+        plt.grid(visible=True, which='both')
+        plt.title('Positive error bound')
 
-        axs[2].hist(org_k_val, bins=50, alpha=0.5, label='original')
-        axs[2].hist(neg_k_val, bins=50, alpha=0.5, color='r', label='error')
-        axs[2].set_title('Negative error bound')
+        plt.subplot(313, sharex=ax1)
+        plt.hist(org_k_val, bins=50, alpha=0.5, label='original')
+        plt.hist(neg_k_val, bins=50, alpha=0.5, color='r', label='error')
+        plt.ylabel('k count')
+        plt.grid(visible=True, which='both')
+        plt.xlabel('k value')
+        plt.title('Negative error bound')
 
-        plt.setp(axs, ylabel='k count')
-        plt.grid(visible=True, which='both', axis='both')
-        axs[2].set(xlabel='k value')
+        plt.suptitle(filename + "_i" + str(injection_rate) + "_e" + str(error_rate) + "_box" + str(BLOCK_SIZE))
         plt.legend()
         # plt.savefig(path + "i" + str(injection_rate) + "_e" + str(error_rate) + ".png")
 
-        plt.show()
+        # plt.show()
 
         # plt.hist(org_k_val[~np.isnan(org_k_val)], bins=50, alpha=0.5, label='original')
         # plt.hist(new_k_val[~np.isnan(new_k_val)], bins=50, alpha=0.5, color='r', label='error')
@@ -209,7 +216,8 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
         # plt.ylabel("k count")
         # plt.xlabel("k value")
         # plt.legend()
-        # # plt.savefig(path + "i" + str(injection_rate) + "_e" + str(error_rate) + ".png")
+        plt.savefig("..\\hist\\8-08\\sst1\\"
+                    + "sst" + "_i" + str(injection_rate) + "_e" + str(error_rate) + "_box" + str(BLOCK_SIZE) + ".png")
         # plt.show()
 
     if file_extension == ".nc":
