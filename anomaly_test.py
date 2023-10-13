@@ -216,7 +216,13 @@ def anomaly_data_generator(error_rate, anomaly_type_num, injection_rate, err_met
         # plt.ylabel("k count")
         # plt.xlabel("k value")
         # plt.legend()
-        plt.savefig("..\\hist\\8-08\\sst1\\"
+
+        # add fig directory
+        hist_output_dir = "..\\ADSP\\result\\plot\\hist\\" 
+        # checking if the dir exists 
+        os.makedirs(hist_output_dir, exist_ok=True)
+        
+        plt.savefig(hist_output_dir
                     + "sst" + "_i" + str(injection_rate) + "_e" + str(error_rate) + "_box" + str(BLOCK_SIZE) + ".png")
         # plt.show()
 
@@ -308,10 +314,12 @@ def get_pearsonr(x, y):
 
 
 def print_hist(np_array, name):
-    print(name, "mean k is      ", np.mean(np_array))
-    # print(name, "max k count is ", np.bincount(np_array).argmax())
-    print(name, "k range is     ", np.amin(np_array), "to", np.amax(np_array))
-
+    if np_array.size > 0:
+        print(name, "mean k is      ", np.mean(np_array))
+        # print(name, "max k count is ", np.bincount(np_array).argmax())
+        print(name, "k range is     ", np.amin(np_array), "to", np.amax(np_array))
+    else:
+        print(name, "Array is empty")
 
 def plot_data(org_data, new_data, error_list, anomaly_type, data_name):
     """plot original data and anomaly data together for comparison"""
@@ -333,33 +341,45 @@ def plot_data(org_data, new_data, error_list, anomaly_type, data_name):
             plot_start = index - PLOT_WINDOW_SIZE
             plot_end = index + PLOT_WINDOW_SIZE
             if plot_start < 0:
-                plot_start = 0
-                plot_end = PLOT_WINDOW_SIZE * 2
+               plot_start = 0
+               plot_end = PLOT_WINDOW_SIZE * 2
             if plot_end > new_data.size:
-                plot_start = new_data.size - PLOT_WINDOW_SIZE * 2
-                plot_end = new_data.size
+               plot_start = new_data.size - PLOT_WINDOW_SIZE * 2
+               plot_end = new_data.size
             ax = new_data[plot_start:plot_end].plot(color='r', linewidth=0.5)
             ax.set_title(data_name + " | Error " + str(count + 1))
             org_data[plot_start:plot_end].plot(ax=ax, linewidth=0.5)
 
             plt.legend()
-            plt.show()
+            # add fig directory
+            plot_output_dir = "..\\ADSP\\result\\plot\\CollectiveError\\"
+            # checking if the dir exists 
+            os.makedirs(plot_output_dir, exist_ok=True)
+            plt.savefig(f"{plot_output_dir}/{data_name}_CollectiveError.png")
+            plt.close()
+
     elif anomaly_type == "collective":
         plot_start = error_list[0] - PLOT_WINDOW_SIZE
         plot_end = error_list[-1] + PLOT_WINDOW_SIZE
         if plot_start < 0:
-            plot_start = 0
-            plot_end = PLOT_WINDOW_SIZE * 2
+           plot_start = 0
+           plot_end = PLOT_WINDOW_SIZE * 2000
         if plot_end > new_data.size:
-            plot_start = new_data.size - PLOT_WINDOW_SIZE * 2
-            plot_end = new_data.size
+           plot_start = new_data.size - PLOT_WINDOW_SIZE * 2
+           plot_end = new_data.size
 
         ax = new_data[plot_start:plot_end].plot(color='r', linewidth=0.5)
         ax.set_title(data_name + " | Collective Error")
         org_data[plot_start:plot_end].plot(ax=ax, linewidth=0.5)
 
+
         plt.legend()
-        plt.show()
+        # add fig directory
+        plot_output_dir = "..\\ADSP\\result\\plot\\CollectiveError\\" 
+        # checking if the dir exists 
+        os.makedirs(plot_output_dir, exist_ok=True)
+        plt.savefig(f"{plot_output_dir}/{data_name}_CollectiveError.png")
+        plt.close()
 
 
 def output_file_name(folder_name, file_path, err_metric, error_rate, injection_rate, file_type):
