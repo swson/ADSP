@@ -363,7 +363,7 @@ def plot_data(org_data, new_data, error_list, anomaly_type, data_name):
         plot_end = error_list[-1] + PLOT_WINDOW_SIZE
         if plot_start < 0:
            plot_start = 0
-           plot_end = PLOT_WINDOW_SIZE * 2000
+           plot_end = PLOT_WINDOW_SIZE * 2
         if plot_end > new_data.size:
            plot_start = new_data.size - PLOT_WINDOW_SIZE * 2
            plot_end = new_data.size
