@@ -1,0 +1,35 @@
+# started on Wed Oct 11 08:55:24 2023
+
+
+ Performance counter stats for 'system wide':
+
+             1,567      fp_arith_inst_retired.128b_packed_double                                     (14.61%)
+            60,596      fp_arith_inst_retired.128b_packed_single                                     (14.69%)
+                13      fp_arith_inst_retired.256b_packed_double                                     (14.76%)
+           100,378      fp_arith_inst_retired.256b_packed_single                                     (14.83%)
+            46,367      fp_arith_inst_retired.scalar_double                                     (14.85%)
+            30,885      fp_arith_inst_retired.scalar_single                                     (14.83%)
+       539,558,236      cycle_activity.cycles_l3_miss                                     (14.85%)
+       503,247,889      cycle_activity.stalls_l3_miss                                     (14.83%)
+                 0      hle_retired.aborted_events                                     (14.85%)
+                 0      hle_retired.aborted_mem                                       (14.86%)
+                13      hle_retired.aborted_memtype                                     (14.85%)
+                40      hle_retired.aborted_timer                                     (14.86%)
+                40      hle_retired.aborted_unfriendly                                     (14.85%)
+                33      hle_retired.commit                                            (14.87%)
+                 6      hle_retired.start                                             (14.83%)
+           897,758      machine_clears.memory_ordering                                     (14.87%)
+                26      mem_trans_retired.load_latency_gt_128                                     (14.85%)
+            12,104      hw_interrupts.received                                        (14.84%)
+       103,943,184      arith.divider_active                                          (14.87%)
+     4,463,841,320      br_inst_retired.all_branches                                     (14.83%)
+     4,430,751,176      br_inst_retired.all_branches_pebs                                     (14.88%)
+     1,640,719,093      br_inst_retired.cond_ntaken                                     (14.85%)
+     1,635,958,130      br_inst_retired.cond_ntaken                                     (14.85%)
+     1,617,155,872      br_inst_retired.cond_ntaken                                     (14.86%)
+     2,698,599,199      br_inst_retired.conditional                                     (14.77%)
+           270,250      br_inst_retired.far_branch                                     (14.71%)
+       329,351,878      br_inst_retired.near_call                                     (14.63%)
+
+       4.631033887 seconds time elapsed
+

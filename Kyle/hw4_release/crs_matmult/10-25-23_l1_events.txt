@@ -1,0 +1,19 @@
+# started on Wed Oct 25 06:33:41 2023
+
+
+ Performance counter stats for './crs_matmult_omp':
+
+         1,763,105      l1d.replacement                                               (30.29%)
+           182,634      l1d_pend_miss.fb_full                                         (41.23%)
+        68,496,056      l1d_pend_miss.pending                                         (65.53%)
+        32,192,758      l1d_pend_miss.pending_cycles                                     (94.78%)
+        52,384,895      l1d_pend_miss.pending_cycles_any                                     (89.80%)
+         9,613,409      mem_load_retired.l1_hit                                       (68.21%)
+           279,886      mem_load_retired.l1_miss                                      (43.18%)
+
+       0.021520598 seconds time elapsed
+
+       0.128069000 seconds user
+       0.008004000 seconds sys
+
+

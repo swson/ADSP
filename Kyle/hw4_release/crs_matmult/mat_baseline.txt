@@ -1,0 +1,14 @@
+# started on Tue Oct 10 15:06:05 2023
+
+
+ Performance counter stats for './crs_matmult' (5 runs):
+
+                 0      fp_arith_inst_retired.128b_packed_double                                     (16.86%)
+                 0      fp_arith_inst_retired.128b_packed_single                                     (62.79%)
+                 0      fp_arith_inst_retired.256b_packed_double                                   
+                 0      fp_arith_inst_retired.256b_packed_single                                   
+                 0      fp_arith_inst_retired.scalar_double                                     (83.14%)
+                 0      fp_arith_inst_retired.scalar_single                                     (37.21%)
+
+           0.02044 +- 0.00337 seconds time elapsed  ( +- 16.50% )
+
