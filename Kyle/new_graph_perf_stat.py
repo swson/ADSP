@@ -40,10 +40,6 @@ def make_arrays_same_lenght(array_1,array_2):
 
 
 
-
-
-
-
 x_values=[]
 
 y_values=[]
@@ -103,62 +99,7 @@ with open(file_to_graph_corrupted) as f:
 
 
 
-
-
-#n = np.arrange(441664, 219296, 11313300, 5503670, 13023188, 837823, 40880, 4220932, 108957, 139700, 85588, 567724, 932818, 2060527, 8257130, 4627980)
-
-#c = np.arrange(735244, 214816, 8244074, 5442930, 10804861, 696188, 11134, 1937030, 82437, 127761, 55588, 326410, 709999, 1848923, 8142112, 797703, 16453, 135505, 148414)
-
-"""
-
-plt.figure()
-
-plt.subplot(211)
-
-plt.barh( y_values,x_values )
-
-#plt.barh(y_values,x_values_corrupted)
-
-plt.xscale('log')
-
-#plt.title("Baseline matmult.c 494_bus compared to 494_bus_gauss_0p01_0p01_sym_nonzero.crs")
-
-plt.title("Baseline matmult.c 494_bus")
-
-plt.tick_params(axis='y', which='major', labelsize=8)
-
-plt.tight_layout()
-
-
-plt.subplot(212)
-
-plt.barh(y_values_corrupted,x_values_corrupted)
-
-plt.xscale('log')
-
-plt.title("494_bus_gauss_0p01_0p01_sym_nonzero.crs")
-
-plt.tick_params(axis='y', which='major', labelsize=8)
-
-plt.tight_layout()
-
-
-plt.show()
-
-"""
-
-
-
-
-
-
-
-
-
 x_values,x_values_corrupted = make_arrays_same_lenght(x_values,x_values_corrupted)
-
-
-
 
 
 
@@ -223,83 +164,6 @@ for i in range(len(index)-1):
 
 
 
-
-
-#[441664, 219296, 11313300, 5503670, 13023188, 837823, 40880, 4220932, 108957, 139700, 85588, 567724, 932818, 2060527, 8257130, 462798]
-
-#[735244, 214816, 8244074, 5442930, 10804861, 696188, 11134, 1937030, 82437, 127761, 55588, 326410, 709999, 1848923, 8142112, 797703, 16453, 135505, 148414]
-
-
-
-
-"""
-print(x_values)
-print()
-print(x_values_corrupted)
-
-
-
-#[441664, 219296, 11313300, 5503670, 13023188, 837823, 40880, 4220932, 108957, 139700, 85588, 567724, 932818, 2060527, 8257130, 462798]
-
-
-
-
-# Numbers of pairs of bars you want
-N = 16
-
-# Data on X-axis
-
-# Specify the values of blue bars (height)
-blue_bar = x_values
-# Specify the values of orange bars (height)
-orange_bar = x_values_corrupted
-
-# Position of bars on x-axis
-ind = np.arange(N)
-
-# Figure size
-plt.figure(figsize=(10,5))
-
-# Width of a bar 
-width = 0.3       
-
-# Plotting
-plt.barh(ind, blue_bar , width, label='Blue bar label')
-plt.barh(ind + width, orange_bar, width, label='Orange bar label')
-
-plt.xlabel('Here goes x-axis label')
-plt.ylabel('Here goes y-axis label')
-plt.title('Here goes title of the plot')
-
-# xticks()
-# First argument - A list of positions at which ticks should be placed
-# Second argument -  A list of labels to place at the given locations
-#plt.xticks(ind + width / 2, ('Xtick1', 'Xtick3', 'Xtick3'))
-
-# Finding the best position for legends and putting it
-plt.legend(loc='best')
-plt.show()
-
-
-
-
-
-
-df = pd.DataFrame(data={'original': x_values, 'corrupted': x_values_corrupted }, index=2)
-
-ax = df.plot(kind='barh', ylabel='Date', title='My Plot', figsize=(5, 4))
-
-ax.set(xlabel='Value')
-for c in ax.containers:
-    # set the bar label
-    ax.bar_label(c, fmt='%.0f', label_type='edge')
-    
-ax.margins(x=0.1)
-
-# move the legend out of the plot
-ax.legend(title='Columns', bbox_to_anchor=(1, 1.02), loc='upper left')
-
-"""
 
 
 
