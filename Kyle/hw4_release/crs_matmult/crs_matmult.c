@@ -41,7 +41,7 @@ int main(void) {
 	
 
 	
-	fptr = fopen("/home/kchai/Documents/current/current_research/professor_Son_research/hw4_release/corrupted_matricies/crs/non_zero/494_bus_gauss_0p10_0p10_sym_nonzero.crs","r");	// Kyle edit REPLACE FIRST STRING WITH THE PATH TO THE CRS FILE YOU WANT TO RUN
+	fptr = fopen( "/home/kchai/Documents/current/current_research/professor_Son_research/hw4_release/corrupted_matricies/crs/non_zero/494_bus_gauss_0p01_0p01_sym_nonzero.crs","r");	// Kyle edit REPLACE FIRST STRING WITH THE PATH TO THE CRS FILE YOU WANT TO RUN
 	if(!fptr) {
 		perror("fopen():");
 		return -1;

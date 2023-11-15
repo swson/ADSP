@@ -1,6 +1,6 @@
 ELF := crs_matmult
 
-SRC := crs_matmult.c
+SRC := new_crs_matmult.c
 COMMON := cpu matops crs_matrix timeaux vector
 
 SRC += $(addprefix ../common/,$(addsuffix .c,$(COMMON)))
