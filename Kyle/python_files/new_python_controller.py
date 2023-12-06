@@ -147,18 +147,26 @@ def run_matmult_process_perf_stat(matrix_file_names_list, event_name_string):
 		#Run commands that are needed for executable
 		
 		subprocess.run( ["make clean"], shell = True)
+		
+		time.sleep(2)
 
 		subprocess.run( ["make openmp"],shell = True)
+		
+		time.sleep(2)
 		
 		#subprocess.run( ["make"], shell = True)
 		
 		
 	
-		subprocess.run( ["sudo taskset -c0 perf stat -x , -o " + matrix_file_names_list[i] + ".csv" + " -e " + event_name_string + " ./crs_matmult_omp --matrix "+ matrix_file_names_list[i]], shell = True) #crs_matmult_omp
+		subprocess.run( ["sudo taskset -c 0 perf stat -x , -o " + matrix_file_names_list[i] + ".csv" + " -e " + event_name_string + " ./crs_matmult_omp --matrix "+ matrix_file_names_list[i]], shell = True) #crs_matmult_omp
+		
+		time.sleep(2)
 		
 		# move the csv file generated into csv files directory 
 		
 		subprocess.run( ["mv -f "+ matrix_file_names_list[i] + ".csv" + " " + path_to_data ] , shell = True)
+		
+		time.sleep(2)
 		
 		# remove copy of the matrix in exe directory once you are done using it.
 		
@@ -171,7 +179,7 @@ def run_matmult_process_perf_stat(matrix_file_names_list, event_name_string):
 			print("file path can not be removed")
 	
 
-
+		time.sleep(2)
 
 
 
