@@ -11,7 +11,7 @@ def get_uarch_list_intel() -> dict[tuple[int, int]: SimpleNamespace]:
 	return {
 			(0x06, 0xb7): make_data('meteorlake', "Meteor Lake"),
 			(0x06, 0x8e): make_data('skylake', "Kaby Lake (Y, U)"),
-			(0x06, 0x56): make_data('broadwell', "Broadwell (Server)")
+			(0x06, 0x56): make_data('broadwellde', "Broadwell (Server)")
 		}
 
 def get_microarchitecture() -> SimpleNamespace:

@@ -13,13 +13,12 @@ if __name__ == '__main__':
 	args = parser.parse_args()
 
 	programs = get_programs()
-	if args.program not in programs.keys():
+	if args.program == 'help' or args.program not in programs.keys():
 		print(f"usage: {parser.prog} <command> [command_args]")
 		print("\ncommand is one of:")
 		for p in programs.items():
 			print(f'    {p[0]}    {p[1].description}')
 		exit(1)
 
-	print(f'[I] running {args.program}...')
 	prog = programs[args.program](args.prog_args)
 

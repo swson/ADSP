@@ -31,19 +31,41 @@ class matrix_downloader(program.program):
 @program.register_program
 class examine_cpu(program.program):
 	def __init__(self):
-		args = []
+		args = [
+			('--pmu-events', {
+					'dest':		'pmu_events',
+					'default':	False,
+					'action':	'store_true'
+				}),
+			('--show-uarch', {
+					'dest':		'show_uarch',
+					'default':	False,
+					'action':	'store_true'
+				})
+			]
 		super().__init__(args, desc='show CPU name and data')
 
 	def run(self, args):
 		args = self.arguments(args)
 		import cpuid
 		print(cpuid.get_cpu_name())
-		pmu_features = cpuid.get_pmu_features()
-		print(	f"PMU Architectural Version: {pmu_features.version_id}\n" \
-				f"GP PMCs:                   {pmu_features.gp_pmu}\n" \
-				f"GP PMCs width:             {pmu_features.gp_width}\n" \
-				f"Fixed counters:            {pmu_features.f_counters}\n" \
-				f"Fixed counters width:      {pmu_features.f_width}")
+		if args.pmu_events:
+			pmu_features = cpuid.get_pmu_features()
+			print(	f"PMU Architectural Version: {pmu_features.version_id}\n" \
+					f"GP PMCs:                   {pmu_features.gp_pmu}\n" \
+					f"GP PMCs width:             {pmu_features.gp_width}\n" \
+					f"Fixed counters:            {pmu_features.f_counters}\n" \
+					f"Fixed counters width:      {pmu_features.f_width}")
+		if args.show_uarch:
+			try:
+				uarch = cpuid.get_microarchitecture()
+				print(f'microarchitecture: {uarch.description}')
+			except:
+				print("[W] microarchitecture not yet recorded!")
+				vendor = cpuid.get_vendor_name()
+				proc_info = cpuid.processor_info()
+				family, model = proc_info['family'], proc_info['model']
+				print(f'    vendor: {vendor}, family: {family},  model: {model}')
 
 @program.register_program
 class find_matrix(program.program):
