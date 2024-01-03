@@ -288,9 +288,10 @@ def plot_data(data,file_name_labels_list,division_size,event_name_arr):
 
 	#plt.savefig('1111111111111111111111111111111111111111111111111111111111111111111111oaigaosighaoighasdighsdcija.png')	
 	
-	plt.show()
+	#plt.show()
 	
 	
+	plt.savefig( "testing.png", dpi = 800 )
 		
 	temp_y_values = []
 	graph_dict = {}
