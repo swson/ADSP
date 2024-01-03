@@ -29,17 +29,15 @@ cache.json"
 """
 
 
-custom_path = "/home/kchai/Documents/current/current_research/professor_Son_research/code/project_demo"	# REPLACE THIS WITH FILE PATH TO PROJECT IN YOUR SYSTEM
 
-project_dir_name = "project_dir_template_demo"			
-
-project_home = os.path.join(custom_path,project_dir_name)		# will travel to all directories relative to project home directory
+# this program is going to be run from the python_files directory. directory navigation is based on this starting point. 
 
 
 
+os.chdir("..")
 
+project_home = os.getcwd()
 
-#Global above, local below if I am making everything below this a file that gets called generically with global inputs from above as parameters
 
 
 
@@ -158,7 +156,7 @@ def run_matmult_process_perf_stat(matrix_file_names_list, event_name_string):
 		
 		
 	
-		subprocess.run( ["sudo taskset -c 0 perf stat -x , -o " + matrix_file_names_list[i] + ".csv" + " -e " + event_name_string + " ./crs_matmult_omp --matrix "+ matrix_file_names_list[i]], shell = True) #crs_matmult_omp
+		subprocess.run( ["sudo perf stat -x , -o " + matrix_file_names_list[i] + ".csv" + " -e " + event_name_string + " ./crs_matmult_omp --matrix "+ matrix_file_names_list[i]], shell = True) #crs_matmult_omp
 		
 		#time.sleep(2)
 		
@@ -271,7 +269,7 @@ def plot_data(data,file_name_labels_list,division_size,event_name_arr):
 	
 	df =  pd.DataFrame( graph_dict, index =  temp_y_values )	#reverse_array_for_graphing ( temp_y_values ) )
 	
-	ax = df.plot.barh()
+	ax = df.plot.barh(width = .85)	#width = .7 
 	
 	plt.xscale('log')
 	
@@ -279,13 +277,20 @@ def plot_data(data,file_name_labels_list,division_size,event_name_arr):
 	plt.yticks(fontsize=10)
 	
 	
-	#for container in ax.containers:
+	for container in ax.containers:
 	
-		#ax.bar_label(container)
+		ax.bar_label(container,padding=5)
 	
 
 
+	#os.chdir(path_to_data)
+	
+
+	#plt.savefig('1111111111111111111111111111111111111111111111111111111111111111111111oaigaosighaoighasdighsdcija.png')	
+	
 	plt.show()
+	
+	
 		
 	temp_y_values = []
 	graph_dict = {}
@@ -305,6 +310,32 @@ def plot_data(data,file_name_labels_list,division_size,event_name_arr):
 		if ( i % division == 0 ):
 		
 """			
+	
+	
+	
+#def multi_run_plot_data(data,file_name_labels_list,division_size,event_name_arr, num_runs):
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 
