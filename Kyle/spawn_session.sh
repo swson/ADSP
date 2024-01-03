@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-git clone https://github.com/swson/ADSP.git
+#git clone https://github.com/swson/ADSP.git
 
 cd Kyle/python_files
 
