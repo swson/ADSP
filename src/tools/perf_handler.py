@@ -41,7 +41,7 @@ class perf_list(object):
 		import subprocess
 		perf = [f'{self.__perf_path}/{perf_list.__perf_cmd}',
 					perf_list.__perf_subcmd,
-					perf_list.__perf_args]
+					*perf_list.__perf_args.split()]
 		if self.__verbose: perf.append(' --long-desc')
 		self.__perf_process = subprocess.Popen(args=perf, stdout=subprocess.PIPE)
 		return self
@@ -60,14 +60,50 @@ class perf_list(object):
 
 	def __exit__(self, exc_type, value, traceback):
 		pass
-		
 
 class perf_stat(object):
-	def __init__(self):
-		pass
+	__perf_cmd = 'perf'
+	__perf_subcmd = 'stat'
+	__perf_args = '-x {separator}'
+	__perf_events = '-e {events}'
+
+	def __init__(self, cmd, events=None, separator='|', perf_path='/usr/bin'):
+		self.__cmd = cmd
+		self.__separator = separator
+		self.__perf_path = perf_path
+		self.__events = events
+		self.__perf_process = None
+		self.__perf_process_cmd = None
+
+	@property
+	def perf_command(self):
+		return self.__perf_process_cmd
+
+	@property
+	def return_value(self):
+		if self.__perf_process:
+			return self.__perf_process.wait()
+		return None
 
 	def __enter__(self):
-		pass
+		import subprocess
+		perf_args = perf_stat.__perf_args.format(separator=self.__separator)
+
+		perf = [f'{self.__perf_path}/{perf_stat.__perf_cmd}',
+					perf_stat.__perf_subcmd,
+					*perf_args.split()]
+		if self.__events:
+			perf.extend(perf_stat.__perf_events.format(events=','.join(self.__events)).split())
+		perf.extend(self.__cmd)
+		sellf.__perf_process_cmd = " ".join(perf)
+		self.__perf_process = subprocess.Popen(args=perf,
+				stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+		return self
+
+	def __iter__(self):
+		out = self.__perf_process.stderr.read().decode('utf-8').split('\n')
+		for l in out:
+			yield l
 
 	def __exit__(self, exc_type, value, traceback):
 		pass
