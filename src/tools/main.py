@@ -4,8 +4,8 @@ import program
 
 @program.register_program
 class matrix_downloader(program.program):
-	def __init__(self):
-		args = [
+	def __init__(self, args=None):
+		argslist = [
 			('--matrix', {
 					'dest':		'matrix',
 					'default':	'494_bus',
@@ -19,10 +19,10 @@ class matrix_downloader(program.program):
 					'type':		str
 				})
 			]
-		super().__init__(args, desc="download a matrix from the matrix market")
+		super().__init__(argslist, args, desc="download a matrix from the matrix market")
 
-	def run(self, args):
-		args = self.arguments(args)
+	def run(self):
+		args = self.arguments
 		import matrix_handler
 		mtx = matrix_handler.matrix_handler(args.matrix, data_dir=args.data_dir)
 		if not mtx.is_present():
@@ -30,8 +30,8 @@ class matrix_downloader(program.program):
 
 @program.register_program
 class examine_cpu(program.program):
-	def __init__(self):
-		args = [
+	def __init__(self, args=None):
+		argslist = [
 			('--pmu-events', {
 					'dest':		'pmu_events',
 					'default':	False,
@@ -43,10 +43,10 @@ class examine_cpu(program.program):
 					'action':	'store_true'
 				})
 			]
-		super().__init__(args, desc='show CPU name and data')
+		super().__init__(argslist, args, desc='show CPU name and data')
 
-	def run(self, args):
-		args = self.arguments(args)
+	def run(self):
+		args = self.arguments
 		import cpuid
 		print(cpuid.get_cpu_name())
 		if args.pmu_events:
@@ -71,8 +71,8 @@ class examine_cpu(program.program):
 
 @program.register_program
 class find_matrix(program.program):
-	def __init__(self):
-		args = [
+	def __init__(self, args=None):
+		argslist = [
 			('--data-dir', {
 					'dest':		'data_dir',
 					'default':	'../matrices',
@@ -90,10 +90,10 @@ class find_matrix(program.program):
 					'type':		str
 				})
 			]
-		super().__init__(args, desc='search for a matrix in the database')
+		super().__init__(argslist, args, desc='search for a matrix in the database')
 
-	def run(self, args):
-		args = self.arguments(args)
+	def run(self):
+		args = self.arguments
 		import matrix_handler
 		import csv
 		import re
@@ -115,8 +115,8 @@ class find_matrix(program.program):
 
 @program.register_program
 class perf_list(program.program):
-	def __init__(self):
-		args = [
+	def __init__(self, args=None):
+		argslist = [
 			('--group', {
 					'dest':		'group',
 					'default':	'',
@@ -146,10 +146,10 @@ class perf_list(program.program):
 					'type':		str
 				})
 			]
-		super().__init__(args, desc='list perf events')
+		super().__init__(argslist, args, desc='list perf events')
 
-	def run(self, args):
-		args = self.arguments(args)
+	def run(self):
+		args = self.arguments
 		import perf_handler
 		with perf_handler.perf_list(perf_path=args.perf_path, 
 					verbose=args.verbose) as perf:
