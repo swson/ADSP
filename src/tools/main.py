@@ -172,6 +172,14 @@ class perf_list(program.program):
 			if 'EventName' in event.keys():
 				if matcher.match(event['EventName']):
 					self.__dump_event(event, args)
+			elif args.info and 'BriefDescription' in event.keys():
+				if matcher.match(event['BriefDescription']) and \
+						'EventName' in event.keys():
+					self.__dump_event(event, args)
+			elif args.verbose and 'PublicDescription' in event.keys():
+				if matcher.match(event['PublicDescription']) and \
+						'EventName' in event.keys():
+					self.__dump_event(event, args)
 
 	def __dump_event(self, event, args):
 		name = event['EventName']
