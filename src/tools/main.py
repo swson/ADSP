@@ -64,8 +64,10 @@ class examine_cpu(program.program):
 				print("[W] microarchitecture not yet recorded!")
 				vendor = cpuid.get_vendor_name()
 				proc_info = cpuid.processor_info()
-				family, model = proc_info['family'], proc_info['model']
-				print(f'    vendor: {vendor}, family: {family},  model: {model}')
+				family, model, stepping = proc_info['family'], \
+							proc_info['model'], proc_info['stepping']
+				print(	f'    vendor: {vendor}, family: {family}, '
+						f'model: {model}, stepping: {stepping}')
 
 @program.register_program
 class find_matrix(program.program):
@@ -111,5 +113,79 @@ class find_matrix(program.program):
 					else:
 						print(l[1])
 
+@program.register_program
+class perf_list(program.program):
+	def __init__(self):
+		args = [
+			('--group', {
+					'dest':		'group',
+					'default':	'',
+					'action':	'store',
+					'type':		str
+				}),
+			('--info', {
+					'dest':		'info',
+					'default':	False,
+					'action':	'store_true'
+				}),
+			('--verbose', {
+					'dest':		'verbose',
+					'default':	False,
+					'action':	'store_true'
+				}),
+			('--perf-path', {
+					'dest':		'perf_path',
+					'default':	'/usr/bin',
+					'action':	'store',
+					'type':		str
+				}),
+			('--search', {
+					'dest':		'search',
+					'default':	None,
+					'action':	'store',
+					'type':		str
+				})
+			]
+		super().__init__(args, desc='list perf events')
+
+	def run(self, args):
+		args = self.arguments(args)
+		import perf_handler
+		with perf_handler.perf_list(perf_path=args.perf_path, 
+					verbose=args.verbose) as perf:
+			if args.search:
+				self.__search_events(perf, args)
+			else:
+				self.__dump_all_events(perf, args)
+
+	def __dump_all_events(self, perf, args):
+		for event in perf:
+			if 'EventName' in event.keys():
+				self.__dump_event(event, args)
+			else:
+				continue
+
+	def __search_events(self, perf, args):
+		import re
+		matcher = re.compile(args.search)
+		for event in perf:
+			if 'EventName' in event.keys():
+				if matcher.match(event['EventName']):
+					self.__dump_event(event, args)
+
+	def __dump_event(self, event, args):
+		name = event['EventName']
+		if args.info and 'BriefDescription' in event.keys():
+			print(f'{name}: {event["BriefDescription"]}')
+		elif args.info:
+			print(f'{name}: no description available')
+		else:
+			print(f'{name}')
+
+		if args.verbose and 'PublicDescription' in event.keys():
+			print(f'    {event["PublicDescription"]}')
+		elif args.verbose:
+			print('    no long description avaliable')
+
 if __name__ == "__main__":
-	print('[E] run adsd instead', file=stderr)
+	print('[E] run adsp instead', file=stderr)
