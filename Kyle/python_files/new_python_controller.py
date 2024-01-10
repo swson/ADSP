@@ -6,6 +6,7 @@ import time
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import math
 
 
 # want to pass these values in through a list coming from the main python program controlling all of the other python programs
@@ -230,115 +231,110 @@ def get_data_to_plot():		# this will create the data structure that I will use t
 
 def plot_data(data,file_name_labels_list,division_size,event_name_arr):
 
-	temp_x_values = []
-	temp_y_values = []
-	#temp_file_name_labels_list = []			# how many y values have we gone through as part of our division as well 
+	print("len(event_name_arr): ", len(event_name_arr))
+	print()
 	
-	graph_dict = {}
-
-	division = round_up( len(event_name_arr) / division_size )
+	
+	num_plots_needed = math.ceil( len(event_name_arr) / division_size ) 
+	
+	print("num_plots_needed: ", num_plots_needed)
+	print()
+	
 	
 	start = 0
-	end = division
+	
+	
+	for num_divisions_elapsed in range(1,( num_plots_needed + 1) ): 
+	
+		print("num_divisions_elapsed: ", num_divisions_elapsed)
+		print()
+		print("num_divisions_elapsed * division_size: ", num_divisions_elapsed * division_size)
+		print()
+	
+		if ( num_divisions_elapsed * division_size ) > len(event_name_arr):
+		
+			end = end + len(event_name_arr) - start #( num_divisions_elapsed * division_size ) - len(event_name_arr) 
+			
+		else:
+			end = ( num_divisions_elapsed * division_size )
 
-	# for now, try to plot first 10 values of each file
-	
-	for i in range ( len(data) ):		# looping through list of matrix data, not matricies themselves. Data should be the same as file_name_labels_list
-	
-		for j in range(start,end):			#event_name_arr = list of all y values for this graph ....len(event_name_arr)
-		
-			temp_x_values.append(data[i][j])
-			
-			if( i == 0):
-				temp_y_values.append(event_name_arr[j])	
-			
-			else:
-				continue
-			
-	
-		graph_dict[  file_name_labels_list[i]   ] = temp_x_values	#reverse_array_for_graphing( temp_x_values )
-		
+
 		temp_x_values = []
-	
-	
-	
-	
-	#plt.figure()
-	
-	
-	
-	df =  pd.DataFrame( graph_dict, index =  temp_y_values )	#reverse_array_for_graphing ( temp_y_values ) )
-	
-	ax = df.plot.barh(width = .85)	#width = .7 
-	
-	plt.xscale('log')
-	
-	plt.subplots_adjust(left=.3, right=.9, top=.9, bottom=0.05)
-	plt.yticks(fontsize=10)
-	
-	
-	for container in ax.containers:
-	
-		ax.bar_label(container,padding=5)
-	
+		temp_y_values = []
+		graph_dict = {}
 
-
-	#os.chdir(path_to_data)
-	
-
-	#plt.savefig('1111111111111111111111111111111111111111111111111111111111111111111111oaigaosighaoighasdighsdcija.png')	
-	
-	#plt.show()
-	
-	
-	plt.savefig( "testing.png", dpi = 800 )
 		
-	temp_y_values = []
-	graph_dict = {}
-	
-	#print(graph_dict)
-	
-	
-	
-	
-	
-	
-	
-"""	
-		temp_data.append( data[i] )
-		temp_index.append( temp[i] ) 	
-	
-		if ( i % division == 0 ):
+		for i in range ( len(data) ):		# looping through list of matrix data, not matricies themselves. Data should be the same as file_name_labels_list
 		
-"""			
+			for j in range(start,end):			#event_name_arr = list of all y values for this graph ....len(event_name_arr)
+			
+				print("start: ", start)
+				print()
+				print("end: ",end)
+				print()
+			
+				temp_x_values.append(data[i][j])
+				
+				if( i == 0):
+					temp_y_values.append(event_name_arr[j])	# getting the event name labels up until a certian point. within the division range for graphing
+				
+				else:
+					continue
+				
+		
+			graph_dict[  file_name_labels_list[i]   ] = temp_x_values	#reverse_array_for_graphing( temp_x_values )
+			
+			#print("temp_x_values: ",temp_x_values)
+			#print()
+			
+			temp_x_values = []
+		
+
+		df =  pd.DataFrame( graph_dict, index =  temp_y_values )	
+		
+		ax = df.plot.barh(width = .85)	#width = .7 
+		
+		plt.xscale('log')
+		
+		plt.subplots_adjust(left=.3, right=.9, top=.9, bottom=0.05)
+		plt.yticks(fontsize=9)
+		
+		#ax.legend(loc='upper left')
+		
+		ax.legend(loc='upper center', bbox_to_anchor=(0.35, 1.1),
+          fancybox=True, shadow=True, ncol= len(file_name_labels_list))
+		
+		for container in ax.containers:
+		
+			ax.bar_label(container,padding=5)
+		
+
+
+		#os.chdir(path_to_data)
+		
+
+		#plt.figure()
+		
+		
+		#plt.savefig( "testing.png", dpi = 800 )
+			
+		temp_y_values = []
+		graph_dict = {}
+		
+		#print(graph_dict)
+		
+		start = end
+		
+		
+	plt.show()
 	
 	
-	
-#def multi_run_plot_data(data,file_name_labels_list,division_size,event_name_arr, num_runs):
+
 
 	
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 
 ############# main
 
@@ -363,7 +359,7 @@ data,file_name_labels_list=get_data_to_plot()
 
 
 
-plot_data(data,file_name_labels_list,10,temp)
+plot_data(data,file_name_labels_list,12,temp)
 
 # now I want to plot this data
 
