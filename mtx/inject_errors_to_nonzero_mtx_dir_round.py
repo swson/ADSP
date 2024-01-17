@@ -29,19 +29,19 @@ def save_dense_to_mtx(bin_data, mtx_file_path):
 
 def format_element(x):
     if x != 0:
-        # 전체 숫자의 길이를 고려하여 반올림 자릿수 계산
+        # Calculate the number of rounding digits by considering the length of the entire number
         if x > 0:
-            # 전체 숫자의 길이를 고려하여 반올림 자릿수 계산
             total_digits = 7
-            integer_part = len(str(int(x)))  # 정수 부분의 길이
+            integer_part = len(str(int(x)))  # length of integer part
             decimal_places = total_digits - integer_part   
-            return round(x, decimal_places)
+            round_number = math.floor(x * (10**decimal_places)) / (10**decimal_places)  
+            return round_number
         else:
-            # 전체 숫자의 길이를 고려하여 반올림 자릿수 계산
             total_digits = 8
-            integer_part = len(str(int(abs(x))))  # 정수 부분의 길이
+            integer_part = len(str(int(abs(x))))  # length of integer part
             decimal_places = total_digits - integer_part - 1  # -1 for the decimal point
-            return round(x, decimal_places)
+            round_number = math.floor(x * (10**decimal_places)) / (10**decimal_places)  
+            return round_number
     else:
         return 0
 
