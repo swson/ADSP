@@ -99,7 +99,7 @@ def parse_csv_get_x_vals( csv_file ):
 
 
 
-def plot_data_store_plot( matrix_file_names_list, data_window_event_name_arr_subset, data_window_matrix_x_values, plot_info_string ):
+def plot_data( matrix_file_names_list, data_window_event_name_arr_subset, data_window_matrix_x_values, plot_info_string ):
 
 		temp_y_values = data_window_event_name_arr_subset
 		
@@ -146,6 +146,7 @@ def plot_data_store_plot( matrix_file_names_list, data_window_event_name_arr_sub
 		#plt.rcParams['figure.figsize'] = [200, 200]
 		plt.tight_layout()
 		plt.savefig( image_name, dpi = 100 )	#dpi = 200
+		
 		#plt.show()
 		
 
@@ -188,7 +189,8 @@ def testing(matrix_file_names_list, event_name_arr, max_counter):
 		
 		
 		
-	os.chdir(path_to_exe)
+		
+	os.chdir(path_to_exe)		# Changing from the python files directory this program was ran from into the directory where the execuatble is
 		
 		
 		
@@ -268,21 +270,30 @@ def testing(matrix_file_names_list, event_name_arr, max_counter):
 			
 			data_window_event_name_arr_subset = event_name_string.split(',')
 			
+
 			
 			subprocess.run( ["sudo mv -f "+ matrix + "_" + "g"+ str(total_groups_created) + ".csv "  + dir_name ] , shell = True)
 			
-			subprocess.run( ["sudo mv -f $(ls | grep .png) " + dir_name], shell = True)
 			
+			
+
 		
-		subprocess.run( ["sudo mv -f "+ dir_name + " " + path_to_data ] , shell = True)	
-		
+
+
 		plot_info_string = str(total_groups_created)
 			
-		plot_data_store_plot( matrix_file_names_list, data_window_event_name_arr_subset, data_window_matrix_x_values , plot_info_string)
+		plot_data( matrix_file_names_list, data_window_event_name_arr_subset, data_window_matrix_x_values , plot_info_string)
 		
+		subprocess.run( ["sudo mv -f " +  "$(ls | grep .png) " + dir_name], shell = True)  #FIXME I concatonated $... to this line, I think I actually want the double quotes around this. ex "$..." This didn't solve the issue as much. I put the line in the right place, but the line itself isn't completely correct. 
+
+
+		subprocess.run( ["sudo mv -f "+ dir_name + " " + path_to_data ] , shell = True) 
+
 		event_name_string =""
-		
+
 		start = end
+
+		
 			
 			
 			
@@ -315,7 +326,7 @@ def testing(matrix_file_names_list, event_name_arr, max_counter):
 
 event_name_arr = get_event_names()
 
-event_name_arr = event_name_arr[:8]	# just doing this for testing purposes. Remove later
+#event_name_arr = event_name_arr[:8]	# just doing this for testing purposes. Remove later
 
 matrix_file_names_list = get_matrix_file_names()
 
