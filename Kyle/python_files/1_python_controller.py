@@ -25,7 +25,7 @@ event_file = event_file_list[0]
 
 os.chdir("..")
 
-project_home = os.getcwd()
+project_home = os.getcwd()  #Changing path from python_files folder to project home directory
 
 
 ############################################ additional file paths that are subject to project directory structure
@@ -88,6 +88,7 @@ def parse_csv_get_x_vals( csv_file ):
 		
 
 			elif row[0].startswith('<'):
+			
 	 			matrix_x_vals.append(0)
 	 			
 			else:
@@ -127,72 +128,145 @@ def plot_data( matrix_file_names_list, data_window_event_name_arr_subset, data_w
 		
 		plt.yticks(fontsize=9)
 
-		
-
-		ax.legend(loc='upper center', bbox_to_anchor=(0.35, 1.1),
+		ax.legend(loc='lower center', bbox_to_anchor=(0.35, 1.1),
 		fancybox=True, shadow=True, ncol= len(matrix_file_names_list))
 
-		for container in ax.containers:
+		#for container in ax.containers:
 
-			ax.bar_label(container,padding=5)
+			#ax.bar_label(container,padding=5)
 
 		plt.title("Event Monitored: " + event_file + " Group: " + plot_info_string)
 		
-		image_name = event_file + "_group_" + plot_info_string + ".png"
-		
+		image_name = event_file + plot_info_string
+
 		#plt.figure(figsize=(20,20))
 		
 		#plt.figure()
 		#plt.rcParams['figure.figsize'] = [200, 200]
-		plt.tight_layout()
-		plt.savefig( image_name, dpi = 100 )	#dpi = 200
+		#plt.tight_layout()
+		
+		plt.savefig( image_name, bbox_inches = 'tight')	#dpi = 200	#, pad_inches = 2	
 		
 		#plt.show()
 		
+		
+		
+		
+		
+		
+def local_aggr_csv( aggr_csv_file_name, column_labels, data_window_event_name_arr_subset, data_window_matrix_x_values):
+
+#data_window_event_name_arr_subset, data_window_matrix_x_values, aggr_csv_file_name, column_labels):
+
+	with open(aggr_csv_file_name,"a+") as f:
+	
+		
+		f.write( column_labels + "\n" ) 
+
+		for i in range( len(data_window_event_name_arr_subset) ):
+	
+			line_of_info = []
+
+			line_of_info.append( data_window_event_name_arr_subset[i] )
 
 
-def testing(matrix_file_names_list, event_name_arr, max_counter):
+			for j in range( len( data_window_matrix_x_values ) ):
 
-	"""
-	print(event_name_arr)
+				line_of_info.append( str(data_window_matrix_x_values[j][i]) )
+
+
+			f.write( ",".join( line_of_info ) )
+
+			f.write("\n")
+				
+
+
+				
+				
+def create_global_aggr_csv(aggr_csv_file_name,column_labels):
+
+	f =  open(aggr_csv_file_name,"w+")
+	
+	f.write( column_labels + "\n" ) 
+	
+	f.close()
+					
+
+
+				
+				
+
+def add_to_global_aggr_csv( aggr_csv_file_name, data_window_event_name_arr_subset, data_window_matrix_x_values):
+
+	with open(aggr_csv_file_name,"a+") as f:
+	
+		
+		for i in range( len(data_window_event_name_arr_subset) ):
+
+			line_of_info = []
+
+			line_of_info.append( data_window_event_name_arr_subset[i] )
+
+
+			for j in range( len( data_window_matrix_x_values ) ):
+
+				line_of_info.append( str(data_window_matrix_x_values[j][i]) )
+
+
+			f.write( ",".join( line_of_info ) )
+
+			f.write("\n")
+				
+				
+				
+
+
+
+	
+	
+		
+		
+
+
+def single_run(matrix_file_names_list, event_name_arr, max_counter):
+
+	print("matrix_file_names_list: ", matrix_file_names_list)
 	print()
+	print()
+	
 
-	print("len(event_name_arr): ", len(event_name_arr))
-	print()
-	
-	
-	
-	print("num_loops_needed: ", num_loops_needed)
-	print()
-	"""
-	
-	
 	
 	for i  in range( len(matrix_file_names_list) ):		               # go through all of the matrix files being used one by one
 
 
-		if ( i == 0):
-
-			print()
-			print()
-			print("opening baseline file now")                                  # baseline matrix should alyays be first entry in list. 
-			print()
-			print()
+		if ( i == 0 ):
 
 			os.chdir(path_to_baseline_file)
+			
+			print("current path: " + path_to_baseline_file)
+			print()
 
-		else: 							# dealing with any other matrix in that list, i.e. corrupted matrix
+			subprocess.run( ["cp " + matrix_file_names_list[i] + " " + path_to_exe], shell = True )	    # copy matrix being tested into exe directory
+
+			
+        
+		else:
 			os.chdir(path_to_corrupted_files)
-	
+			print("current path: " + path_to_corrupted_files)
+			print()
+			
+			subprocess.run( ["cp " + matrix_file_names_list[i] + " " + path_to_exe], shell = True )	    # copy matrix being tested into exe directory
 		
-		subprocess.run( ["cp " + matrix_file_names_list[i] + " " + path_to_exe], shell = True )	    # copy matrix being tested into exe directory
-		
-		
-		
-		
+
+
 	os.chdir(path_to_exe)		# Changing from the python files directory this program was ran from into the directory where the execuatble is
+	
+	
+	column_labels = "Event Name " + ",".join(matrix_file_names_list)	
 		
-		
+	global_aggr_csv_file_name = "global_aggr_csv_file.csv"
+
+	create_global_aggr_csv( global_aggr_csv_file_name, column_labels )
 		
 
 # how many loops it will take to get through all possible data given that data will be split up into divisions of max_counter
@@ -213,7 +287,6 @@ def testing(matrix_file_names_list, event_name_arr, max_counter):
 		
 		subprocess.run( ["sudo mkdir " + dir_name ], shell = True)
 
-		#new_path_to_data = os.path.join( path_to_data, dir_name ) 
 
 		if ( total_groups_created * max_counter ) > len(event_name_arr):
 
@@ -232,16 +305,15 @@ def testing(matrix_file_names_list, event_name_arr, max_counter):
 
 				event_name_string = event_name_string + event_name_arr[j]
 				
-				#temp_y_values.append( event_name_arr[j] )
 
 			else:
-
 				event_name_string = event_name_string +","+ event_name_arr[j]
 
-				#temp_y_values.append( event_name_arr[j] )
-			
-	
-	
+
+
+		data_window_event_name_arr_subset = event_name_string.split(',')
+
+
 	
 		for matrix in ( matrix_file_names_list ):		               # go through all of the matrix files being used one by one
 	
@@ -254,51 +326,51 @@ def testing(matrix_file_names_list, event_name_arr, max_counter):
 			subprocess.run( ["make clean"], shell = True)
 			
 			subprocess.run( ["make openmp"],shell = True)
-			
-			subprocess.run( ["sudo perf stat -x , -o " + matrix + "_" + "g"+ str(total_groups_created) + ".csv" + " -e " + event_name_string + " ./crs_matmult_omp --matrix "+ matrix], shell = True) #crs_matmult_omp
-			
-	
-			# just created csv file for this run, now want to parse it and store data in a list
-			
-	
+
 			csv_file_name = matrix + "_" + "g"+ str(total_groups_created) + ".csv"
-			
+
+			subprocess.run( ["sudo perf stat -x , -o " + csv_file_name + " -e " + event_name_string + " ./crs_matmult_omp --matrix "+ matrix], shell = True) #crs_matmult_omp
+
+			# just created csv file for this run containing results of running perf on this matrix with the given event name string, now want to parse this data and store it a in a list
+
 			single_matrix_x_vals = parse_csv_get_x_vals( csv_file_name )
-	
+
 			data_window_matrix_x_values.append( single_matrix_x_vals )
-	
-			
-			data_window_event_name_arr_subset = event_name_string.split(',')
-			
 
-			
-			subprocess.run( ["sudo mv -f "+ matrix + "_" + "g"+ str(total_groups_created) + ".csv "  + dir_name ] , shell = True)
-			
+			subprocess.run( ["sudo mv -f " + csv_file_name + " " + dir_name ] , shell = True)
 			
 			
-
+			
 		
 
-
-		plot_info_string = str(total_groups_created)
+		plot_info_string = "_group_" + str(total_groups_created) + ".png"
 			
 		plot_data( matrix_file_names_list, data_window_event_name_arr_subset, data_window_matrix_x_values , plot_info_string)
 		
-		subprocess.run( ["sudo mv -f " +  "$(ls | grep .png) " + dir_name], shell = True)  #FIXME I concatonated $... to this line, I think I actually want the double quotes around this. ex "$..." This didn't solve the issue as much. I put the line in the right place, but the line itself isn't completely correct. 
-
+		
+		local_aggr_csv_file_name = "group_" + str(total_groups_created) + "_aggr_csv_file.csv"
+		
+		local_aggr_csv( local_aggr_csv_file_name, column_labels, data_window_event_name_arr_subset, data_window_matrix_x_values )	
+		
+	
+		add_to_global_aggr_csv( global_aggr_csv_file_name, data_window_event_name_arr_subset, data_window_matrix_x_values )
+		
+		
+		subprocess.run( ["sudo mv -f " + local_aggr_csv_file_name + " " + dir_name], shell = True ) 
+	
+		subprocess.run( ["sudo mv -f " +  "$(ls | grep .png) " + dir_name], shell = True)  
 
 		subprocess.run( ["sudo mv -f "+ dir_name + " " + path_to_data ] , shell = True) 
+		
 
 		event_name_string =""
 
 		start = end
 
 		
-			
-			
-			
-			
-			
+		
+	subprocess.run( ["sudo mv -f " + global_aggr_csv_file_name + " " + path_to_data], shell = True ) 
+		
 			
 	for remove_matrix_from_exe_dir in matrix_file_names_list:
 	
@@ -316,23 +388,18 @@ def testing(matrix_file_names_list, event_name_arr, max_counter):
 	
 	
 	
-	
-	
-	
-	
-	
 ######################################################## Main
 
 
 event_name_arr = get_event_names()
 
-#event_name_arr = event_name_arr[:8]	# just doing this for testing purposes. Remove later
+event_name_arr = event_name_arr[:8]	# just doing this for testing purposes. Remove later
 
 matrix_file_names_list = get_matrix_file_names()
 
 max_counter = 8
 
-testing(matrix_file_names_list, event_name_arr, max_counter)
+single_run(matrix_file_names_list, event_name_arr, max_counter)
 
 
 
