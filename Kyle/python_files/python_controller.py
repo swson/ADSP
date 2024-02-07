@@ -11,8 +11,9 @@ import math
 matrix_name = "494_bus"
 file_type = "crs"
 file_composition = "non_zero"
-trial_name = "trial_1"
-run_name = "single_run"
+#run_type = "single_run"
+
+#trial_name = "trial_1"
 
 microarch_directory_name = "skylake"  # will become list of microarch 
 
@@ -35,9 +36,9 @@ path_to_json_file = os.path.join(project_home,"x86",microarch_directory_name, ev
 path_to_baseline_file = os.path.join(project_home, "matrix_directory",matrix_name,file_type,"baseline_matrix_uncorrupted")
 path_to_corrupted_files = os.path.join(project_home,"matrix_directory",matrix_name,file_type,file_composition )
 
-path_to_exe = os.path.join(project_home,"hw4_release","crs_matmult")
+path_to_exe = os.path.join(project_home,"hw4_release","matmult-progs","crs_matmult")
 
-path_to_data = os.path.join(project_home,"data",matrix_name,trial_name,run_name,"csv_files")
+#os.path.join(project_home,"data",matrix_name,trial_name,run_type,"csv_files")
 
 ############################################ Function declarations
 
@@ -54,6 +55,9 @@ def get_event_names():
 
         event_name_arr.append( c["EventName"] ) # will be used for graphing later on
 
+    #print(event_name_arr,"\n")
+    print("length of event_name_arr: ", len(event_name_arr) )
+    print("\n")
     return event_name_arr
 
 
@@ -64,7 +68,7 @@ def get_matrix_file_names():
 
     matrix_file_names_list = os.listdir(path_to_baseline_file) + os.listdir(path_to_corrupted_files)    # Joining the two lists together. BASELINE SHOULD ALWAYS BE FIRST ELEMENT
 
-    return matrix_file_names_list   # will be file_name.extension, where extension != csv. ex) if using crs files, all files end in .crs in this list
+    return sorted(matrix_file_names_list)   # will be file_name.extension, where extension != csv. ex) if using crs files, all files end in .crs in this list
 
 
 
@@ -106,12 +110,12 @@ def plot_data( matrix_file_names_list, data_window_event_name_arr_subset, data_w
 		
 		graph_dict = {}
 	
-	
+		"""	
 		print( "len(matrix_file_names_list) ", len(matrix_file_names_list) )
 		print()
 		print( "len(data_window_matrix_x_values) ", len(data_window_matrix_x_values) )
 		print()
-	
+		"""	
 		for i in range( len(matrix_file_names_list) -1 ):
 		
 			graph_dict[ matrix_file_names_list[i] ] = data_window_matrix_x_values[i]
@@ -228,14 +232,17 @@ def add_to_global_aggr_csv( aggr_csv_file_name, data_window_event_name_arr_subse
 		
 
 
-def single_run(matrix_file_names_list, event_name_arr, max_counter):
+def single_run(matrix_file_names_list, event_name_arr, max_counter,path_to_data):
 
 	print("matrix_file_names_list: ", matrix_file_names_list)
 	print()
 	print()
 	
 
-	
+	print("path to data: ", path_to_data)
+	print()
+
+	 
 	for i  in range( len(matrix_file_names_list) ):		               # go through all of the matrix files being used one by one
 
 
@@ -243,8 +250,8 @@ def single_run(matrix_file_names_list, event_name_arr, max_counter):
 
 			os.chdir(path_to_baseline_file)
 			
-			print("current path: " + path_to_baseline_file)
-			print()
+			#print("current path: " + path_to_baseline_file)
+			#print()
 
 			subprocess.run( ["cp " + matrix_file_names_list[i] + " " + path_to_exe], shell = True )	    # copy matrix being tested into exe directory
 
@@ -252,17 +259,16 @@ def single_run(matrix_file_names_list, event_name_arr, max_counter):
         
 		else:
 			os.chdir(path_to_corrupted_files)
-			print("current path: " + path_to_corrupted_files)
-			print()
+			#print("current path: " + path_to_corrupted_files)
+			#print()
 			
 			subprocess.run( ["cp " + matrix_file_names_list[i] + " " + path_to_exe], shell = True )	    # copy matrix being tested into exe directory
-		
-
+	
 
 	os.chdir(path_to_exe)		# Changing from the python files directory this program was ran from into the directory where the execuatble is
 	
 	
-	column_labels = "Event Name " + ",".join(matrix_file_names_list)	
+	column_labels = "Event Name," + ",".join(matrix_file_names_list)	
 		
 	global_aggr_csv_file_name = "global_aggr_csv_file.csv"
 
@@ -286,6 +292,8 @@ def single_run(matrix_file_names_list, event_name_arr, max_counter):
 		dir_name = "group_" + str(total_groups_created)
 		
 		subprocess.run( ["sudo mkdir " + dir_name ], shell = True)
+		
+		#path_to_data = os.path.join(path_to_data,dir_name)
 
 
 		if ( total_groups_created * max_counter ) > len(event_name_arr):
@@ -323,13 +331,13 @@ def single_run(matrix_file_names_list, event_name_arr, max_counter):
 
 			#Run commands that are needed for executable
 			
-			subprocess.run( ["make clean"], shell = True)
+			#subprocess.run( ["make clean"], shell = True)
 			
-			subprocess.run( ["make openmp"],shell = True)
+			#subprocess.run( ["make openmp"],shell = True)
 
 			csv_file_name = matrix + "_" + "g"+ str(total_groups_created) + ".csv"
 
-			subprocess.run( ["sudo perf stat -x , -o " + csv_file_name + " -e " + event_name_string + " ./crs_matmult_omp --matrix "+ matrix], shell = True) #crs_matmult_omp
+			subprocess.run( ["sudo perf stat -x , -o " + csv_file_name + " -e " + event_name_string + " ./crs_matmult --matrix "+ matrix], shell = True) #crs_matmult_omp
 
 			# just created csv file for this run containing results of running perf on this matrix with the given event name string, now want to parse this data and store it a in a list
 
@@ -362,6 +370,8 @@ def single_run(matrix_file_names_list, event_name_arr, max_counter):
 
 		subprocess.run( ["sudo mv -f "+ dir_name + " " + path_to_data ] , shell = True) 
 		
+		print("path to data: ", path_to_data)
+		print()
 
 		event_name_string =""
 
@@ -384,25 +394,117 @@ def single_run(matrix_file_names_list, event_name_arr, max_counter):
 			print(error)
 			print("file path can not be removed")
 
+
+
+
+
+def multi_run(matrix_file_names_list, event_name_arr, max_counter, num_runs, path_to_data):
+
 	
 	
+	print("path to data: ", path_to_data)
+	print()
+	
+	os.chdir(path_to_data)
+	original_working_directory = os.getcwd()
+	
+	for run_number in range(num_runs):
+	
+		trial_name = "run_" + str(run_number)
+		
+		subprocess.run( ["sudo mkdir " + trial_name] , shell = True)
+		
+		path_to_data = os.path.join(path_to_data, trial_name)	
+		
+		print("path to data: ", path_to_data)
+		print()
+		
+		single_run(matrix_file_names_list, event_name_arr, max_counter,path_to_data)
+		
+		#path_to_data = os.chdir("..")
+		
+		os.chdir(original_working_directory)
+		path_to_data = os.getcwd()
+		
+		print("path to data: ", path_to_data)
+		print()
+		
+		
+		
+	
+	
+	
+	
+	
+	
+def create_data_directories(path_to_data, trial_name):
+
+	original_working_directory = os.getcwd()
+	
+	os.chdir(path_to_data)
+	
+	subprocess.run( ["sudo mkdir " + trial_name], shell = True )
+	
+	#subprocess.run( ["cd -P"+ trial_name], shell = True )
+	
+	os.chdir(trial_name)
+	
+	subprocess.run( ["sudo mkdir " + "single_run " + "multi_run "], shell = True )
+	
+	os.chdir("single_run")
+	
+	subprocess.run( ["sudo mkdir csv_files"], shell = True)
+	
+	os.chdir("..")
+	
+	os.chdir("multi_run")
+	
+	subprocess.run( ["sudo mkdir csv_files"], shell = True)
+	
+	os.chdir("..")
+	
+	os.chdir(original_working_directory)
+	
+	
+	
+
 	
 	
 ######################################################## Main
 
+#run_type = "single_run"
+
+run_type = "multi_run"
 
 event_name_arr = get_event_names()
 
-event_name_arr = event_name_arr[:8]	# just doing this for testing purposes. Remove later
+#event_name_arr = event_name_arr[:8]	# just doing this for testing purposes. Remove later
 
 matrix_file_names_list = get_matrix_file_names()
 
-max_counter = 8
 
-single_run(matrix_file_names_list, event_name_arr, max_counter)
+max_counter = 4
+
+trial_name = event_file
+
+path_to_data = os.path.join(project_home,"data",matrix_name)			#trial_name,run_type,"csv_files")
+
+create_data_directories(path_to_data, trial_name)
 
 
 
+
+path_to_data = os.path.join(project_home,"data",matrix_name, trial_name, run_type, "csv_files")
+
+
+
+#single_run(matrix_file_names_list, event_name_arr, max_counter,path_to_data)
+print("path to data: ", path_to_data)
+print()
+
+num_runs = 3
+
+multi_run(matrix_file_names_list, event_name_arr, max_counter, num_runs, path_to_data)
 
 
 
