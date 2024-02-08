@@ -449,19 +449,19 @@ def create_data_directories(path_to_data, trial_name):
 	
 	os.chdir(trial_name)
 	
-	subprocess.run( ["sudo mkdir " + "single_run " + "multi_run "], shell = True )
-	
-	os.chdir("single_run")
-	
-	subprocess.run( ["sudo mkdir csv_files"], shell = True)
-	
-	os.chdir("..")
+	subprocess.run( ["sudo mkdir " + "multi_run "], shell = True )
 	
 	os.chdir("multi_run")
 	
 	subprocess.run( ["sudo mkdir csv_files"], shell = True)
 	
-	os.chdir("..")
+	#os.chdir("..")
+	
+	#os.chdir("multi_run")
+	
+	#subprocess.run( ["sudo mkdir csv_files"], shell = True)
+	
+	#os.chdir("..")
 	
 	os.chdir(original_working_directory)
 	
@@ -499,10 +499,8 @@ path_to_data = os.path.join(project_home,"data",matrix_name, trial_name, run_typ
 
 
 #single_run(matrix_file_names_list, event_name_arr, max_counter,path_to_data)
-print("path to data: ", path_to_data)
-print()
 
-num_runs = 3
+num_runs = 2
 
 multi_run(matrix_file_names_list, event_name_arr, max_counter, num_runs, path_to_data)
 
