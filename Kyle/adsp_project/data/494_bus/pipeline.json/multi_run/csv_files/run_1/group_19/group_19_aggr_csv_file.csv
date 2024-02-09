@@ -1,0 +1,5 @@
+Event Name,494_bus.mtx.crs,494_bus_gauss_0p01_0p01_nonzero.mtx.crs,494_bus_gauss_0p01_0p05_nonzero.mtx.crs,494_bus_gauss_0p01_0p10_nonzero.mtx.crs,494_bus_gauss_0p05_0p01_nonzero.mtx.crs,494_bus_gauss_0p05_0p05_nonzero.mtx.crs,494_bus_gauss_0p05_0p10_nonzero.mtx.crs,494_bus_gauss_0p10_0p01_nonzero.mtx.crs,494_bus_gauss_0p10_0p05_nonzero.mtx.crs,494_bus_gauss_0p10_0p10_nonzero.mtx.crs
+UOPS_ISSUED.VECTOR_WIDTH_MISMATCH,0,0,0,0,0,0,0,0,0,0
+UOPS_RETIRED.MACRO_FUSED,6248334,6251695,6257665,6265040,6250392,6260979,6265963,6254625,6257598,6266151
+ROB_MISC_EVENTS.LBR_INSERTS,0,0,0,0,0,0,0,0,0,0
+RS_EVENTS.EMPTY_CYCLES,1037249,913268,947850,1007530,928059,1308737,951235,977640,931819,945273

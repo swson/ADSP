@@ -1,0 +1,3 @@
+Event Name,494_bus.mtx.crs,494_bus_gauss_0p01_0p01_nonzero.mtx.crs,494_bus_gauss_0p01_0p05_nonzero.mtx.crs,494_bus_gauss_0p01_0p10_nonzero.mtx.crs,494_bus_gauss_0p05_0p01_nonzero.mtx.crs,494_bus_gauss_0p05_0p05_nonzero.mtx.crs,494_bus_gauss_0p05_0p10_nonzero.mtx.crs,494_bus_gauss_0p10_0p01_nonzero.mtx.crs,494_bus_gauss_0p10_0p05_nonzero.mtx.crs,494_bus_gauss_0p10_0p10_nonzero.mtx.crs
+UOPS_EXECUTED.CYCLES_GE_1_UOP_EXEC,21408034,20760696,20722790,21099828,20902238,20782752,21165256,20831490,20834809,20877758
+CYCLE_ACTIVITY.CYCLES_L2_MISS,562719,368048,319392,583739,386821,456877,533884,497387,423130,407917

@@ -1,0 +1,5 @@
+Event Name,494_bus.mtx.crs,494_bus_gauss_0p01_0p01_nonzero.mtx.crs,494_bus_gauss_0p01_0p05_nonzero.mtx.crs,494_bus_gauss_0p01_0p10_nonzero.mtx.crs,494_bus_gauss_0p05_0p01_nonzero.mtx.crs,494_bus_gauss_0p05_0p05_nonzero.mtx.crs,494_bus_gauss_0p05_0p10_nonzero.mtx.crs,494_bus_gauss_0p10_0p01_nonzero.mtx.crs,494_bus_gauss_0p10_0p05_nonzero.mtx.crs,494_bus_gauss_0p10_0p10_nonzero.mtx.crs
+UOPS_RETIRED.STALL_CYCLES,5563001,5777575,5570434,5394679,5607533,5780073,5323235,5842372,5493652,5642591
+LSD.UOPS,0,0,0,0,0,0,0,0,0,0
+CPU_CLK_THREAD_UNHALTED.ONE_THREAD_ACTIVE,342712,200970,189681,178616,181842,184998,186328,186727,187260,179365
+ILD_STALL.LCP,18463,18691,18692,18893,18684,18941,18754,19024,18813,18908

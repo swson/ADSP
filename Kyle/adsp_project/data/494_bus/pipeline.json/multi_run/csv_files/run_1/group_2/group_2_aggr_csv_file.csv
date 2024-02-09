@@ -1,0 +1,5 @@
+Event Name,494_bus.mtx.crs,494_bus_gauss_0p01_0p01_nonzero.mtx.crs,494_bus_gauss_0p01_0p05_nonzero.mtx.crs,494_bus_gauss_0p01_0p10_nonzero.mtx.crs,494_bus_gauss_0p05_0p01_nonzero.mtx.crs,494_bus_gauss_0p05_0p05_nonzero.mtx.crs,494_bus_gauss_0p05_0p10_nonzero.mtx.crs,494_bus_gauss_0p10_0p01_nonzero.mtx.crs,494_bus_gauss_0p10_0p05_nonzero.mtx.crs,494_bus_gauss_0p10_0p10_nonzero.mtx.crs
+LD_BLOCKS_PARTIAL.ADDRESS_ALIAS,124900,121721,128206,125737,140111,123920,127263,149114,125561,154755
+BR_INST_RETIRED.FAR_BRANCH,300,296,304,298,296,306,298,302,300,298
+UOPS_EXECUTED.X87,3335507,3335572,3337126,3335434,3336213,3335672,3335589,3335534,3337170,3338360
+LOAD_HIT_PRE.SW_PF,1,2,3,2,2,1,0,0,3,2

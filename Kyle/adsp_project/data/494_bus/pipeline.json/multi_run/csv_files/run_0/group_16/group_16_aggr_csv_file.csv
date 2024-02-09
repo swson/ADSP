@@ -1,0 +1,5 @@
+Event Name,494_bus.mtx.crs,494_bus_gauss_0p01_0p01_nonzero.mtx.crs,494_bus_gauss_0p01_0p05_nonzero.mtx.crs,494_bus_gauss_0p01_0p10_nonzero.mtx.crs,494_bus_gauss_0p05_0p01_nonzero.mtx.crs,494_bus_gauss_0p05_0p05_nonzero.mtx.crs,494_bus_gauss_0p05_0p10_nonzero.mtx.crs,494_bus_gauss_0p10_0p01_nonzero.mtx.crs,494_bus_gauss_0p10_0p05_nonzero.mtx.crs,494_bus_gauss_0p10_0p10_nonzero.mtx.crs
+ROB_MISC_EVENTS.PAUSE_INST,5,2,3,2,4,3,2,16,12,2
+RESOURCE_STALLS.ANY,810727,627879,553359,587973,799594,794396,2486302,2779245,680020,962392
+MACHINE_CLEARS.SMC,0,0,0,0,0,5,0,0,22,0
+CYCLE_ACTIVITY.STALLS_L2_MISS,284575,272090,230571,277799,351161,388198,356306,449328,350431,422802

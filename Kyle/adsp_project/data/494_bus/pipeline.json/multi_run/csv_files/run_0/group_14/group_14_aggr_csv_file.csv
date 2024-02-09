@@ -1,0 +1,5 @@
+Event Name,494_bus.mtx.crs,494_bus_gauss_0p01_0p01_nonzero.mtx.crs,494_bus_gauss_0p01_0p05_nonzero.mtx.crs,494_bus_gauss_0p01_0p10_nonzero.mtx.crs,494_bus_gauss_0p05_0p01_nonzero.mtx.crs,494_bus_gauss_0p05_0p05_nonzero.mtx.crs,494_bus_gauss_0p05_0p10_nonzero.mtx.crs,494_bus_gauss_0p10_0p01_nonzero.mtx.crs,494_bus_gauss_0p10_0p05_nonzero.mtx.crs,494_bus_gauss_0p10_0p10_nonzero.mtx.crs
+RS_EVENTS.EMPTY_END,58360,56887,63572,63108,54651,60717,54511,56240,57614,57399
+CYCLE_ACTIVITY.CYCLES_MEM_ANY,22033290,22129332,22389064,21933272,22090209,22088205,22099875,22011948,21988815,21904904
+BR_INST_RETIRED.NEAR_TAKEN,3425093,3424596,3429625,3432691,3426333,3429637,3434971,3431482,3430186,3433354
+LD_BLOCKS.NO_SR,0,0,0,0,0,0,0,0,0,0
