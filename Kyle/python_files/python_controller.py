@@ -8,25 +8,17 @@ import numpy as np
 import pandas as pd
 import math
 
+os.chdir("..")
+project_home = os.getcwd()  #Changing path from python_files folder to project home directory
+
 matrix_name = "494_bus"
 file_type = "crs"
 file_composition = "non_zero"
-#run_type = "single_run"
-
-#trial_name = "trial_1"
-
 microarch_directory_name = "skylake"  # will become list of microarch 
 
 event_file_list = ["pipeline.json", "cache.json" , "floating-point.json","memory.json"] 
-
 event_file = event_file_list[0]
 
-
-
-
-os.chdir("..")
-
-project_home = os.getcwd()  #Changing path from python_files folder to project home directory
 
 
 ############################################ additional file paths that are subject to project directory structure
@@ -43,7 +35,7 @@ path_to_exe = os.path.join(project_home,"hw4_release","matmult-progs","crs_matmu
 ############################################ Function declarations
 
 
-def get_event_names():
+def get_event_names(path_to_json_file):
 
     event_name_arr = []
 
@@ -64,7 +56,7 @@ def get_event_names():
 
 
 
-def get_matrix_file_names():
+def get_matrix_file_names(path_to_baseline_file,path_to_corrupted_files):
 
     matrix_file_names_list = os.listdir(path_to_baseline_file) + os.listdir(path_to_corrupted_files)    # Joining the two lists together. BASELINE SHOULD ALWAYS BE FIRST ELEMENT
 
@@ -382,9 +374,7 @@ def single_run(matrix_file_names_list, event_name_arr, max_counter,path_to_data)
 	subprocess.run( ["sudo mv -f " + global_aggr_csv_file_name + " " + path_to_data], shell = True ) 
 		
 			
-	for remove_matrix_from_exe_dir in matrix_file_names_list:
-	
-	
+	for remove_matrix_from_exe_dir in matrix_file_names_list:	
 		try:
 			os.remove( remove_matrix_from_exe_dir )
 			print( remove_matrix_from_exe_dir , " removed successfully")
@@ -470,20 +460,30 @@ def create_data_directories(path_to_data, trial_name):
 
 	
 	
-######################################################## Main
+########################################################################################################################################################### Main
 
-#run_type = "single_run"
 
-run_type = "multi_run"
 
-event_name_arr = get_event_names()
 
-#event_name_arr = event_name_arr[:8]	# just doing this for testing purposes. Remove later
 
-matrix_file_names_list = get_matrix_file_names()
+
 
 
 max_counter = 4
+
+num_runs = 2
+
+run_type = "multi_run"
+
+
+event_name_arr = get_event_names(path_to_json_file)
+
+#event_name_arr = event_name_arr[:8]	# just doing this for testing purposes. Remove later
+
+
+
+matrix_file_names_list = get_matrix_file_names(path_to_baseline_file,path_to_corrupted_files)
+
 
 trial_name = event_file
 
@@ -492,15 +492,10 @@ path_to_data = os.path.join(project_home,"data",matrix_name)			#trial_name,run_t
 create_data_directories(path_to_data, trial_name)
 
 
-
-
 path_to_data = os.path.join(project_home,"data",matrix_name, trial_name, run_type, "csv_files")
 
 
 
-#single_run(matrix_file_names_list, event_name_arr, max_counter,path_to_data)
-
-num_runs = 2
 
 multi_run(matrix_file_names_list, event_name_arr, max_counter, num_runs, path_to_data)
 
