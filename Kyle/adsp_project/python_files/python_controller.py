@@ -16,6 +16,18 @@ file_type = "crs"
 file_composition = "non_zero"
 microarch_directory_name = "skylake"  # will become list of microarch 
 
+
+
+#event_file = "perf_list_json_out.json"  # will become list of microarch 
+#
+
+#os.chdir(path_to_json_file)
+#subprocess.run( ["sudo perf list -j > " + event_file  ], shell = True)
+#os.chdir(project_home)
+
+
+#microarch_directory_name = perf_list_json_out.txt  # will become list of microarch 
+
 event_file_list = ["pipeline.json", "cache.json" , "floating-point.json","memory.json"] 
 event_file = event_file_list[0]
 
@@ -25,6 +37,8 @@ event_file = event_file_list[0]
 
 path_to_json_file = os.path.join(project_home,"x86",microarch_directory_name, event_file)
 
+#path_to_json_file = os.path.join(project_home,"python_files")#,microarch_directory_name)
+
 path_to_baseline_file = os.path.join(project_home, "matrix_directory",matrix_name,file_type,"baseline_matrix_uncorrupted")
 path_to_corrupted_files = os.path.join(project_home,"matrix_directory",matrix_name,file_type,file_composition )
 
@@ -32,13 +46,17 @@ path_to_exe = os.path.join(project_home,"hw4_release","matmult-progs","crs_matmu
 
 #os.path.join(project_home,"data",matrix_name,trial_name,run_type,"csv_files")
 
+
+
+
 ############################################ Function declarations
 
 
-def get_event_names(path_to_json_file):
+def get_event_names(path_to_json_file,event_file):
 
     event_name_arr = []
 
+    #path_to_json_file = os.path.join(project_home,event_file)
 
     with open(path_to_json_file) as f:              # absolute path to json file
             contents = json.load(f)
@@ -476,7 +494,7 @@ num_runs = 2
 run_type = "multi_run"
 
 
-event_name_arr = get_event_names(path_to_json_file)
+event_name_arr = get_event_names(path_to_json_file,event_file)
 
 #event_name_arr = event_name_arr[:8]	# just doing this for testing purposes. Remove later
 

@@ -113,10 +113,10 @@ def create_graph(row_data_across_all_files,path_to_data):
 	vert=False,  # vertical box alignment
 	patch_artist=True,  # fill with color
 	labels=labels[:5])  # will be used to label x-ticks
-	plt.title("pipeline, " +title_temp_var )
+	plt.title(title_temp_var )
 	plt.subplots_adjust(left=.3, right=.9, top=.9, bottom=0.05)
 	plt.yticks(fontsize=9)
-	image_name = "pipeline_" + title_temp_var+ "_first_half" + ".png"
+	image_name = title_temp_var+ "_first_half" + ".png"
 	plt.savefig( image_name, bbox_inches = 'tight')
 
 	fig2 = plt.figure(figsize =(10, 7))
@@ -125,10 +125,10 @@ def create_graph(row_data_across_all_files,path_to_data):
 	vert=False,  # vertical box alignment
 	patch_artist=True,  # fill with color
 	labels=labels[5:])  # will be used to label x-ticks
-	plt.title("pipeline, " +title_temp_var )
+	plt.title(title_temp_var )
 	plt.subplots_adjust(left=.3, right=.9, top=.9, bottom=0.05)
 	plt.yticks(fontsize=9)
-	image_name = "pipeline_" + title_temp_var+ "_second_half" + ".png"
+	image_name = title_temp_var+ "_second_half" + ".png"
 	plt.savefig( image_name, bbox_inches = 'tight')
 	
 	#plt.show()
@@ -139,7 +139,7 @@ def create_graph(row_data_across_all_files,path_to_data):
 	print()
 	
 
-		
+
 
 
 
