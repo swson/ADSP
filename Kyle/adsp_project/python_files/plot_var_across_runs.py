@@ -46,7 +46,7 @@ def create_graph(row_data_across_all_files,path_to_data):
 	print(os.getcwd())
 	print()
 	
-	subprocess.run( ["sudo mkdir " + "event_deviation_across_runs" ], shell = True)
+	subprocess.run( ["sudo mkdir -m a=rwx " + "event_deviation_across_runs" ], shell = True)
 	os.chdir("event_deviation_across_runs")
 	
 	print(os.getcwd())
@@ -63,10 +63,11 @@ def create_graph(row_data_across_all_files,path_to_data):
 	labels.pop(0)
 	title_temp_var = all_data[0][0] 
 	
-	subprocess.run( ["sudo mkdir " + title_temp_var ], shell = True)
+	subprocess.run( ["sudo mkdir -m a=rwx " + title_temp_var ], shell = True)
 	
 	os.chdir(title_temp_var)
-	
+	print(os.getcwd())
+	print()
 	
 	all_data.pop(0)
 	
@@ -115,8 +116,8 @@ def create_graph(row_data_across_all_files,path_to_data):
 	plt.title("pipeline, " +title_temp_var )
 	plt.subplots_adjust(left=.3, right=.9, top=.9, bottom=0.05)
 	plt.yticks(fontsize=9)
-	image_name = "test" #"pipeline, " + title_temp_var+ " first half" + ".png"
-	#plt.savefig( image_name, bbox_inches = 'tight')
+	image_name = "pipeline_" + title_temp_var+ "_first_half" + ".png"
+	plt.savefig( image_name, bbox_inches = 'tight')
 
 	fig2 = plt.figure(figsize =(10, 7))
 	# notch shape box plot
@@ -127,8 +128,8 @@ def create_graph(row_data_across_all_files,path_to_data):
 	plt.title("pipeline, " +title_temp_var )
 	plt.subplots_adjust(left=.3, right=.9, top=.9, bottom=0.05)
 	plt.yticks(fontsize=9)
-	image_name = "test" #"pipeline, " + title_temp_var+ " second half" + ".png"
-	#plt.savefig( image_name, bbox_inches = 'tight')
+	image_name = "pipeline_" + title_temp_var+ "_second_half" + ".png"
+	plt.savefig( image_name, bbox_inches = 'tight')
 	
 	#plt.show()
 	
@@ -198,7 +199,7 @@ dict_key_template = all_global_aggr_file_data[0][0]		# all of these dictionary k
 
 
 
-for i in range( 1):#len(all_global_aggr_file_data[0])):
+for i in range( len(all_global_aggr_file_data[0])):
 
 	#print(all_global_aggr_file_data[0][i])		# this prints all the rows in the first file
 	#print()
