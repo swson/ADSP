@@ -8,19 +8,136 @@ import numpy as np
 import pandas as pd
 
 
+ 
 
 
-def create_data_structure(num_lists):
 
-	temp = []
+def create_data_structure(dict_key_template):
+
+	new_dict = {}
 	
-	empty_list_of_lists = []
+	for k in list (dict_key_template.keys()):
 	
-	for i in range(num_lists):
-	
-		empty_list_of_lists.append(temp)
+		new_dict[k] = []
 		
-	return empty_list_of_lists
+	return new_dict
+
+
+
+def create_graph(row_data_across_all_files,path_to_data):
+
+	#dict_val_list =  list( row_data_across_all_files.values() ) 
+
+	#title = row_data_across_all_files[dict_key_list[0]]
+	
+	#print()
+	#print(dict_val_list)
+
+
+	#event_name_list = row_data_across_all_files.pop(event
+	
+	original_directory = path_to_data	#path_to_data = os.path.join(project_home,"data",matrix_name,event_name,"multi_run","csv_files")
+	
+	print(os.getcwd())
+	print()
+	
+	os.chdir("..")
+	
+	print(os.getcwd())
+	print()
+	
+	subprocess.run( ["sudo mkdir " + "event_deviation_across_runs" ], shell = True)
+	os.chdir("event_deviation_across_runs")
+	
+	print(os.getcwd())
+	print()
+	
+	all_data = []
+	labels = []
+	
+	for k,v in row_data_across_all_files.items():
+	
+		labels.append(k)
+		all_data.append(v)
+		
+	labels.pop(0)
+	title_temp_var = all_data[0][0] 
+	
+	subprocess.run( ["sudo mkdir " + title_temp_var ], shell = True)
+	
+	os.chdir(title_temp_var)
+	
+	
+	all_data.pop(0)
+	
+	for arr in all_data: 			#converting all data in list of lists from strings to ints
+		for i in range(len(arr)):
+			arr[i] = int(arr[i])
+	
+	
+	print()
+	print()
+	
+	print(labels)
+	print()
+	
+	print(all_data)
+	
+	
+	
+	"""
+	fig = plt.figure(figsize =(10, 7))
+
+	plt.title("pipeline, " +title_temp_var )
+	# Creating plot
+	#bplot1 = plt.boxplot(data)
+	
+	bplot1 = plt.boxplot(all_data,
+	vert=True,  # vertical box alignment
+	patch_artist=True,  # fill with color
+	labels=labels)
+
+	# show plot
+	plt.show()
+	"""
+	
+	#fig, (ax1, ax2) = plt.subplots(nrows=1, ncols=2, figsize=(9, 4))
+	
+	fig1 = plt.figure(figsize =(10, 7))
+	
+	#fig1 = plt.tight_layout()
+
+	# rectangular box plot
+	bplot1 = plt.boxplot(all_data[:5],		# this slicing relies on the fact that I am only dealing with 10 files. WILL NEED TO CHANGE THIS IF PROCESSING ANYTHING OTHER THAN 10 FILES
+	vert=False,  # vertical box alignment
+	patch_artist=True,  # fill with color
+	labels=labels[:5])  # will be used to label x-ticks
+	plt.title("pipeline, " +title_temp_var )
+	plt.subplots_adjust(left=.3, right=.9, top=.9, bottom=0.05)
+	plt.yticks(fontsize=9)
+	image_name = "test" #"pipeline, " + title_temp_var+ " first half" + ".png"
+	#plt.savefig( image_name, bbox_inches = 'tight')
+
+	fig2 = plt.figure(figsize =(10, 7))
+	# notch shape box plot
+	bplot2 = plt.boxplot(all_data[5:],
+	vert=False,  # vertical box alignment
+	patch_artist=True,  # fill with color
+	labels=labels[5:])  # will be used to label x-ticks
+	plt.title("pipeline, " +title_temp_var )
+	plt.subplots_adjust(left=.3, right=.9, top=.9, bottom=0.05)
+	plt.yticks(fontsize=9)
+	image_name = "test" #"pipeline, " + title_temp_var+ " second half" + ".png"
+	#plt.savefig( image_name, bbox_inches = 'tight')
+	
+	#plt.show()
+	
+	os.chdir(original_directory)
+	
+	print(os.getcwd())
+	print()
+	
+
 		
 
 
@@ -37,6 +154,7 @@ path_to_data = os.path.join(project_home,"data",matrix_name,event_name,"multi_ru
 
 os.chdir(path_to_data)
 
+
 all_runs = sorted( os.listdir( path_to_data ) ) 
 
 #creating data structure to hold all global aggr csv file information for each run
@@ -51,7 +169,7 @@ for run in all_runs:
 	
 		run_data = []
 	
-		line_reader = csv.reader(f)
+		line_reader = csv.DictReader(f)
 		
 		for row in line_reader:
 		
@@ -61,51 +179,69 @@ for run in all_runs:
 	
 	all_global_aggr_file_data.append(run_data)
 	
-		
+	#print(all_global_aggr_file_data)
+	#print()
+
+	
 #data structure created, now it is time to parse it	
 
 
 
+dict_key_template = all_global_aggr_file_data[0][0]		# all of these dictionary keys from the first row of the first file, are going to be the same across every file
+						# using this to create a new dictionary template for run info
+						
+
+
+#print(	row_data_across_all_files )
+#print()	
 
 
 
 
+for i in range( 1):#len(all_global_aggr_file_data[0])):
 
-
-def empty_list_of_lists():
-
-	list_of_lists = []
-	empty_list = []
-
-	for i in range( len( all_global_aggr_file_data[0][0] ) ):
-
-		list_of_lists.append(empty_list)
-
-	return list_of_lists
+	#print(all_global_aggr_file_data[0][i])		# this prints all the rows in the first file
+	#print()
 	
+	row_data_across_all_files = create_data_structure(dict_key_template)
 
-for run in  all_global_aggr_file_data:
-	list_of_lists = empty_list_of_lists()
+	for file in all_global_aggr_file_data:		# gets the ith row in each file
 	
-	for row in run: 
-		
-	
-		for j in range( len(row) ): 
-		
-			list_of_lists[j].append(row[j])
-		
-			
-			
-		print(list_of_lists)
+		print(file[i])
 		print()
-	
+		
+		for k,v in file[i].items():
+		#print(k,v)
+			row_data_across_all_files[k].append(v)
+	print()
+	print("row_data_across_all_files ", row_data_across_all_files)	# would generate graph with this data now
+	create_graph(row_data_across_all_files,path_to_data)
+		
 	print()
 	print()
-		
-			
-		
-			
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 	
 		
