@@ -18,7 +18,7 @@ microarch_directory_name = "skylake"  # will become list of microarch
 
 
 
-#event_file = "perf_list_json_out.json"  # will become list of microarch 
+#event_file = "perf_list_output.json"  # will become list of microarch 
 #
 
 #os.chdir(path_to_json_file)
@@ -28,14 +28,14 @@ microarch_directory_name = "skylake"  # will become list of microarch
 
 #microarch_directory_name = perf_list_json_out.txt  # will become list of microarch 
 
-event_file_list = ["pipeline.json", "cache.json" , "floating-point.json","memory.json"] 
-event_file = event_file_list[0]
+#event_file_list = ["pipeline.json", "cache.json" , "floating-point.json","memory.json"] 
+#event_file = event_file_list[0]
 
 
 
 ############################################ additional file paths that are subject to project directory structure
 
-path_to_json_file = os.path.join(project_home,"x86",microarch_directory_name, event_file)
+#path_to_json_file = os.path.join(project_home,"x86",microarch_directory_name, event_file)
 
 #path_to_json_file = os.path.join(project_home,"python_files")#,microarch_directory_name)
 
@@ -106,8 +106,8 @@ def parse_csv_get_x_vals( csv_file ):
 	 			matrix_x_vals.append(0)
 	 			
 			else:
-				matrix_x_vals.append( int( row[0] ) )	# matrix data stored in a list
-	
+				#matrix_x_vals.append( int( row[0] ) )	# matrix data stored in a list
+                                matrix_x_vals.append( int( round(float(row[0] ) ) ) )
 
 	return matrix_x_vals
 
@@ -173,26 +173,29 @@ def local_aggr_csv( aggr_csv_file_name, column_labels, data_window_event_name_ar
 #data_window_event_name_arr_subset, data_window_matrix_x_values, aggr_csv_file_name, column_labels):
 
 	with open(aggr_csv_file_name,"a+") as f:
-	
 		
-		f.write( column_labels + "\n" ) 
+                f.write( column_labels + "\n" ) 
 
-		for i in range( len(data_window_event_name_arr_subset) ):
-	
-			line_of_info = []
+                if len(data_window_event_name_arr_subset) != len(data_window_matrix_x_values):
+                    return
+                else:
 
-			line_of_info.append( data_window_event_name_arr_subset[i] )
+                        for i in range( len(data_window_event_name_arr_subset) ):
+
+                                line_of_info = []
+
+                                line_of_info.append( data_window_event_name_arr_subset[i] )
 
 
-			for j in range( len( data_window_matrix_x_values ) ):
+                        for j in range( len( data_window_matrix_x_values ) ):
 
-				line_of_info.append( str(data_window_matrix_x_values[j][i]) )
+                            line_of_info.append( str(data_window_matrix_x_values[j][i]) )
 
 
-			f.write( ",".join( line_of_info ) )
+                        f.write( ",".join( line_of_info ) )
 
-			f.write("\n")
-				
+                        f.write("\n")
+                    
 
 
 				
@@ -213,23 +216,29 @@ def create_global_aggr_csv(aggr_csv_file_name,column_labels):
 def add_to_global_aggr_csv( aggr_csv_file_name, data_window_event_name_arr_subset, data_window_matrix_x_values):
 
 	with open(aggr_csv_file_name,"a+") as f:
+	        
 	
-		
-		for i in range( len(data_window_event_name_arr_subset) ):
+                if len(data_window_event_name_arr_subset) != len(data_window_matrix_x_values):
 
-			line_of_info = []
+                    return
+                    
+                else:
+                        
+                        for i in range( len(data_window_event_name_arr_subset) ):
 
-			line_of_info.append( data_window_event_name_arr_subset[i] )
+	                        line_of_info = []
+
+	                        line_of_info.append( data_window_event_name_arr_subset[i] )
 
 
-			for j in range( len( data_window_matrix_x_values ) ):
+	                        for j in range( len( data_window_matrix_x_values ) ):
 
-				line_of_info.append( str(data_window_matrix_x_values[j][i]) )
+		                        line_of_info.append( str(data_window_matrix_x_values[j][i]) )
 
 
-			f.write( ",".join( line_of_info ) )
+	                        f.write( ",".join( line_of_info ) )
 
-			f.write("\n")
+	                        f.write("\n")
 				
 				
 				
@@ -363,7 +372,7 @@ def single_run(matrix_file_names_list, event_name_arr, max_counter,path_to_data)
 
 		plot_info_string = "_group_" + str(total_groups_created) + ".png"
 			
-		plot_data( matrix_file_names_list, data_window_event_name_arr_subset, data_window_matrix_x_values , plot_info_string)
+		#plot_data( matrix_file_names_list, data_window_event_name_arr_subset, data_window_matrix_x_values , plot_info_string)
 		
 		
 		local_aggr_csv_file_name = "group_" + str(total_groups_created) + "_aggr_csv_file.csv"
@@ -494,28 +503,47 @@ num_runs = 2
 run_type = "multi_run"
 
 
-event_name_arr = get_event_names(path_to_json_file,event_file)
+event_list = ["hw","sw","cache","pmu"]
 
-#event_name_arr = event_name_arr[:8]	# just doing this for testing purposes. Remove later
+temp_path = os.path.join(project_home,"x86",microarch_directory_name)
 
+#path_to_json_file = os.path.join(project_home,"x86",microarch_directory_name, event_file)
 
+for event_name in event_list:
+    
+    os.chdir(temp_path)
 
-matrix_file_names_list = get_matrix_file_names(path_to_baseline_file,path_to_corrupted_files)
+    subprocess.run( ["sudo perf list -j "+ event_name + " > perf_list_output_"+event_name+".json"] , shell = True)
 
+    event_file = "perf_list_output_"+event_name+".json"
+    
+    path_to_json_file = os.path.join(temp_path, event_file)
 
-trial_name = event_file
-
-path_to_data = os.path.join(project_home,"data",matrix_name)			#trial_name,run_type,"csv_files")
-
-create_data_directories(path_to_data, trial_name)
-
-
-path_to_data = os.path.join(project_home,"data",matrix_name, trial_name, run_type, "csv_files")
-
-
+    os.chdir(project_home)
 
 
-multi_run(matrix_file_names_list, event_name_arr, max_counter, num_runs, path_to_data)
+    event_name_arr = get_event_names(path_to_json_file,event_file)
+
+    #event_name_arr = event_name_arr[:8]	# just doing this for testing purposes. Remove later
+
+
+
+    matrix_file_names_list = get_matrix_file_names(path_to_baseline_file,path_to_corrupted_files)
+
+
+    trial_name = event_file
+
+    path_to_data = os.path.join(project_home,"data",matrix_name)			#trial_name,run_type,"csv_files")
+
+    create_data_directories(path_to_data, trial_name)
+
+
+    path_to_data = os.path.join(project_home,"data",matrix_name, trial_name, run_type, "csv_files")
+
+
+
+
+    multi_run(matrix_file_names_list, event_name_arr, max_counter, num_runs, path_to_data)
 
 
 
