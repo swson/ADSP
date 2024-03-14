@@ -356,7 +356,8 @@ def single_run(matrix_file_names_list, event_name_arr, max_counter,path_to_data)
 
 			csv_file_name = matrix + "_" + "g"+ str(total_groups_created) + ".csv"
 
-			subprocess.run( ["sudo perf stat -x , -o " + csv_file_name + " -e " + event_name_string + " ./crs_matmult --matrix "+ matrix], shell = True) #crs_matmult_omp
+            # need to finish typing the line I have below
+			subprocess.run( ["sudo perf stat -x , -o " + csv_file_name + " -e " + event_name_string + " ./crs_matmult --matrix "+ matrix + "--output matrix_output_run_"+  ], shell = True) #crs_matmult_omp
 
 			# just created csv file for this run containing results of running perf on this matrix with the given event name string, now want to parse this data and store it a in a list
 

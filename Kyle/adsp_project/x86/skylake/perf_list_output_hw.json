@@ -1,0 +1,36 @@
+[
+{
+	"EventName": "branch-instructions",
+	"EventAlias": "branches",
+	"EventType": "Hardware event"
+},
+{
+	"EventName": "branch-misses",
+	"EventType": "Hardware event"
+},
+{
+	"EventName": "bus-cycles",
+	"EventType": "Hardware event"
+},
+{
+	"EventName": "cache-misses",
+	"EventType": "Hardware event"
+},
+{
+	"EventName": "cache-references",
+	"EventType": "Hardware event"
+},
+{
+	"EventName": "cpu-cycles",
+	"EventAlias": "cycles",
+	"EventType": "Hardware event"
+},
+{
+	"EventName": "instructions",
+	"EventType": "Hardware event"
+},
+{
+	"EventName": "ref-cycles",
+	"EventType": "Hardware event"
+}
+]

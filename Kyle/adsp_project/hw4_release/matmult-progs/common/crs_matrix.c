@@ -120,6 +120,7 @@ err_no_mtx:
 }
 
 void dump_crs_matrix(FILE* stream, struct crs_matrix* m) {
+
 	fprintf(stream, "CRS Matrix: (%c)\n", m->type);
 	fprintf(stream, "a: ");
 	for(size_t i = 0; i < m->data_len; i++) {
@@ -137,6 +138,7 @@ void dump_crs_matrix(FILE* stream, struct crs_matrix* m) {
 	}
 
 	fprintf(stream, "\n");
+
 }
 
 struct crs_matrix* destroy_crs_matrix(struct crs_matrix* m) {

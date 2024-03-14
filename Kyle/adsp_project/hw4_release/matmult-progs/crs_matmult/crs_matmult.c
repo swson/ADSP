@@ -42,6 +42,7 @@ void usage(const char* s) {
 int main(int argc, char** argv) {
 	static const struct option long_opts[] = {
 		{ "matrix",	required_argument, NULL, 'm' },
+		{ "output",	required_argument, NULL, 'o' },
 		{ "help", no_argument, NULL, 'h' },
 		{ NULL,	0, NULL, 0 }
 	};
@@ -49,6 +50,7 @@ int main(int argc, char** argv) {
 	char cpu_name[49] = {0};
 
 	FILE* data_in = NULL;
+	FILE* data_out = NULL;
 	struct crs_matrix* m;
 	struct vector* v, * r, * t;
 	struct vector* (*mult_fn)(const struct crs_matrix*,
@@ -58,109 +60,130 @@ int main(int argc, char** argv) {
 	uint64_t time_start, time_end;
 	int opt;
 
-	while((opt = getopt_long(argc, argv, "m:h", long_opts, NULL)) >= 0) {
-		//printf("%c\n", opt);
-		switch(opt) {
-			case 'm':
-				if(data_in) {
-					fprintf(stderr, "closing previous file\n");
-					fclose(data_in);
-				}
-				data_in = fopen(optarg, "r");
-				if(data_in) {
-					fprintf(stderr, "openend file %s\n", optarg);
-				} else {
-					perror("fopen()");
-				}
-				break;
-			case 'h':
-				/* fallthrough */
-			default:
-				usage(argv[0]);
-				return opt != 'h' ? EXIT_FAILURE : EXIT_SUCCESS;
+	//Kyle edits 
+	
+	// FILE *matrix_out, *vector_out;
+
+	// encapsilating everything in a big while loop here, for num runs
+	
+
+		
+		while((opt = getopt_long(argc, argv, "m:h", long_opts, NULL)) >= 0) {
+			//printf("%c\n", opt);
+			switch(opt) {
+				case 'm':
+					if(data_in) {
+						fprintf(stderr, "closing previous file\n");
+						fclose(data_in);
+					}
+					data_in = fopen(optarg, "r");
+					if(data_in) {
+						fprintf(stderr, "openend file %s\n", optarg);
+					} else {
+						perror("fopen()");
+					}
+					break;
+				case 'o':
+					if(data_out) {
+						fclose(data_out);
+					}
+					data_out = fopen(optarg, "w");
+					break;
+				case 'h':
+					/* fallthrough */
+				default:
+					usage(argv[0]);
+					return opt != 'h' ? EXIT_FAILURE : EXIT_SUCCESS;
+			}
 		}
-	}
 
 
-	/* CPU identification */
-	fprintf(stdout, "Running on CPU: %s\n", get_cpu_name(cpu_name));
+		/* CPU identification */
+		fprintf(stdout, "Running on CPU: %s\n", get_cpu_name(cpu_name));
 
-	/* compile time options */
-	//fprintf(stdout, "compiled with: %s %s\n", CC, CFLAGS_ALL);
+		/* compile time options */
+		//fprintf(stdout, "compiled with: %s %s\n", CC, CFLAGS_ALL);
 
-	/* link time options */
-	//fprintf(stdout, "linked with: %s %s\n", LD, LDFLAGS_ALL);
-	//fprintf(stdout, "compiler specs: %s\n", COMPILERSPEC);
+		/* link time options */
+		//fprintf(stdout, "linked with: %s %s\n", LD, LDFLAGS_ALL);
+		//fprintf(stdout, "compiler specs: %s\n", COMPILERSPEC);
 
-	/* check for non-serializing read */
-	if(cpu_has_rtdsc()) {
-		time_function = rdtsc;
-		//fprintf(stdout, "CPU supports the RTDSC instruction.\n");
-	} else if(!time_function) {
-		fprintf(stdout, "CPU does not support the RTDSC instruction. "
-						"Using software-based timing.\n");
-  		time_function = soft_timer;
-	}
+		/* check for non-serializing read */
+		if(cpu_has_rtdsc()) {
+			time_function = rdtsc;
+			//fprintf(stdout, "CPU supports the RTDSC instruction.\n");
+		} else if(!time_function) {
+			fprintf(stdout, "CPU does not support the RTDSC instruction. "
+							"Using software-based timing.\n");
+			time_function = soft_timer;
+		}
 
-	if(!data_in) {
-		fprintf(stderr, "fin is NULL\n");
-		data_in = stdin;
-	} else {
-		//fprintf(stderr, "fin is NOT NULL\n");
-	}
+		if(!data_in) {
+			fprintf(stderr, "fin is NULL\n");
+			data_in = stdin;
+		} else {
+			//fprintf(stderr, "fin is NOT NULL\n");
+		}
 
-	/* load the crs_matrix */
-	if(!(m = load_crs_matrix(data_in))) {
-		fprintf(stdout, "no matrix loaded\n");
-		return EXIT_FAILURE;
-	}
+		if(!data_out) {
+			data_out = stdout;
+		}
 
-	if(data_in != stdin) {
-		//fprintf(stdout, "fin is not stdin\n");
-		fclose(data_in);
-	}
+		/* load the crs_matrix */
+		if(!(m = load_crs_matrix(data_in))) {
+			fprintf(stdout, "no matrix loaded\n");
+			return EXIT_FAILURE;
+		}
 
-	if(crs_is_symmetric(m)) {
-		mult_fn = crs_symm_vect_mult;
-	} else {
-		mult_fn = crs_vect_mult;
-	}
+		if(data_in != stdin) {
+			//fprintf(stdout, "fin is not stdin\n");
+			fclose(data_in);
+		}
 
-	//fprintf(stdout, "Loaded crs_matrix\n");
+		if(crs_is_symmetric(m)) {
+			mult_fn = crs_symm_vect_mult;
+		} else {
+			mult_fn = crs_vect_mult;
+		}
 
-//	dump_crs_matrix(stdout, m);
+		//fprintf(stdout, "Loaded crs_matrix\n");
 
-	/* prepare the original vector */
-	if(!(v = make_col_ones(get_crs_matrix_size(m)))) {
-		perror("make_col_ones()");
-		return EXIT_FAILURE;
-	}
+	//	dump_crs_matrix(stdout, m);
 
-	/* prepare the results vector */
-	if(!(r = make_col_ones(get_crs_matrix_size(m)))) {
-		perror("make_col_ones()");
-		return EXIT_FAILURE;
-	}
+		/* prepare the original vector */
+		if(!(v = make_col_ones(get_crs_matrix_size(m)))) {
+			perror("make_col_ones()");
+			return EXIT_FAILURE;
+		}
 
-	/* perform y = A^n x */
-	time_start = time_function();
-	for(int i = 0; i < 1000; i++) {
-		t = mult_fn(m, v, r);
-		r = v;
-		v = t;
-	}
-	time_end = time_function();
+		/* prepare the results vector */
+		if(!(r = make_col_ones(get_crs_matrix_size(m)))) {
+			perror("make_col_ones()");
+			return EXIT_FAILURE;
+		}
 
-	//fprintf(stdout, "results:\n");
-	//dump_vector(stdout, v);
+		/* perform y = A^n x */
+		time_start = time_function();
+		for(int i = 0; i < 1000; i++) {
+			t = mult_fn(m, v, r);
+			r = v;
+			v = t;
+		}
+		time_end = time_function();
 
-	fprintf(stdout, "computational time: %lu\n", time_end - time_start);
 
-	fprintf(stdout,"\n");
+		dump_crs_matrix(data_out, m);
+		//fprintf(stdout, "results:\n");
+		
+		//dump_vector(data_out, v);
 
-	destroy_crs_matrix(m);
-	destroy_vector(v);
-	destroy_vector(r);
+		fprintf(stdout, "computational time: %lu\n", time_end - time_start);
+
+		fprintf(stdout,"\n");
+
+		destroy_crs_matrix(m);
+		destroy_vector(v);
+		destroy_vector(r);
 
 	return EXIT_SUCCESS;
 }
