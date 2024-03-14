@@ -23,7 +23,7 @@ path_to_corrupted_files = os.path.join(project_home,"matrix_directory",matrix_na
 path_to_exe = os.path.join(project_home,"hw4_release","matmult-progs","crs_matmult")
 
 
-num_runs=100
+num_runss = 100
 
 
 ############################################ Function declarations
@@ -65,7 +65,7 @@ def get_matrix_file_names(path_to_baseline_file,path_to_corrupted_files):
 
 
 
-def single_run(matrix_file_names_list, event_name_arr, max_counter,path_to_data):
+def single_run(matrix_file_names_list, event_name_arr, max_counter,path_to_data,event_name):
 
         print("matrix_file_names_list: ", matrix_file_names_list)
         print()
@@ -158,9 +158,8 @@ def single_run(matrix_file_names_list, event_name_arr, max_counter,path_to_data)
 
 	                
 
-                        for i in range(num_runs + 1):
-                                
-                                subprocess.run( [f"sudo perf stat -x , -o {matrix}_csv_file_{i} -e {event_name_string} ./crs_matmult --matrix {matrix}  --output {matrix}_output_run_{i}.txt"], shell = True) #crs_matmult_omp
+                        for i in range(num_runss + 1):
+                                subprocess.run( [f"sudo perf stat -x , -o {matrix}_{event_name}_csv_file_{i} -e {event_name_string} ./crs_matmult --matrix {matrix}  --output {matrix}_{event_name}_output_run_{i}.txt"], shell = True) #crs_matmult_omp
 
 	                
 
@@ -247,7 +246,7 @@ num_runs = 2
 run_type = "single_run"
 
 
-event_list = ["hw"]     #"sw","cache","pmu"]
+event_list = ["hw","sw","cache","pmu"]
 
 temp_path = os.path.join(project_home,"x86",microarch_directory_name)
 
@@ -287,7 +286,7 @@ for event_name in event_list:
 
 
 
-    single_run(matrix_file_names_list, event_name_arr, max_counter,path_to_data)
+    single_run(matrix_file_names_list, event_name_arr, max_counter,path_to_data,event_name)
 
 
 

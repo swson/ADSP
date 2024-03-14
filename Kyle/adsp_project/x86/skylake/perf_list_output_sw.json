@@ -1,0 +1,68 @@
+[
+{
+	"EventName": "alignment-faults",
+	"EventType": "Software event"
+},
+{
+	"EventName": "bpf-output",
+	"EventType": "Software event"
+},
+{
+	"EventName": "cgroup-switches",
+	"EventType": "Software event"
+},
+{
+	"EventName": "context-switches",
+	"EventAlias": "cs",
+	"EventType": "Software event"
+},
+{
+	"EventName": "cpu-clock",
+	"EventType": "Software event"
+},
+{
+	"EventName": "cpu-migrations",
+	"EventAlias": "migrations",
+	"EventType": "Software event"
+},
+{
+	"EventName": "dummy",
+	"EventType": "Software event"
+},
+{
+	"EventName": "emulation-faults",
+	"EventType": "Software event"
+},
+{
+	"EventName": "major-faults",
+	"EventType": "Software event"
+},
+{
+	"EventName": "minor-faults",
+	"EventType": "Software event"
+},
+{
+	"EventName": "page-faults",
+	"EventAlias": "faults",
+	"EventType": "Software event"
+},
+{
+	"EventName": "task-clock",
+	"EventType": "Software event"
+},
+{
+	"Unit": "tool",
+	"EventName": "duration_time",
+	"EventType": "Tool event"
+},
+{
+	"Unit": "tool",
+	"EventName": "user_time",
+	"EventType": "Tool event"
+},
+{
+	"Unit": "tool",
+	"EventName": "system_time",
+	"EventType": "Tool event"
+}
+]

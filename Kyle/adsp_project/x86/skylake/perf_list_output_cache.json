@@ -1,0 +1,142 @@
+[
+{
+	"Unit": "cache",
+	"Topic": "cpu",
+	"EventName": "L1-dcache-loads",
+	"EventAlias": "cpu/L1-dcache-loads/",
+	"EventType": "Hardware cache event"
+},
+{
+	"Unit": "cache",
+	"Topic": "cpu",
+	"EventName": "L1-dcache-load-misses",
+	"EventAlias": "cpu/L1-dcache-load-misses/",
+	"EventType": "Hardware cache event"
+},
+{
+	"Unit": "cache",
+	"Topic": "cpu",
+	"EventName": "L1-dcache-stores",
+	"EventAlias": "cpu/L1-dcache-stores/",
+	"EventType": "Hardware cache event"
+},
+{
+	"Unit": "cache",
+	"Topic": "cpu",
+	"EventName": "L1-icache-load-misses",
+	"EventAlias": "cpu/L1-icache-load-misses/",
+	"EventType": "Hardware cache event"
+},
+{
+	"Unit": "cache",
+	"Topic": "cpu",
+	"EventName": "LLC-loads",
+	"EventAlias": "cpu/LLC-loads/",
+	"EventType": "Hardware cache event"
+},
+{
+	"Unit": "cache",
+	"Topic": "cpu",
+	"EventName": "LLC-load-misses",
+	"EventAlias": "cpu/LLC-load-misses/",
+	"EventType": "Hardware cache event"
+},
+{
+	"Unit": "cache",
+	"Topic": "cpu",
+	"EventName": "LLC-stores",
+	"EventAlias": "cpu/LLC-stores/",
+	"EventType": "Hardware cache event"
+},
+{
+	"Unit": "cache",
+	"Topic": "cpu",
+	"EventName": "LLC-store-misses",
+	"EventAlias": "cpu/LLC-store-misses/",
+	"EventType": "Hardware cache event"
+},
+{
+	"Unit": "cache",
+	"Topic": "cpu",
+	"EventName": "dTLB-loads",
+	"EventAlias": "cpu/dTLB-loads/",
+	"EventType": "Hardware cache event"
+},
+{
+	"Unit": "cache",
+	"Topic": "cpu",
+	"EventName": "dTLB-load-misses",
+	"EventAlias": "cpu/dTLB-load-misses/",
+	"EventType": "Hardware cache event"
+},
+{
+	"Unit": "cache",
+	"Topic": "cpu",
+	"EventName": "dTLB-stores",
+	"EventAlias": "cpu/dTLB-stores/",
+	"EventType": "Hardware cache event"
+},
+{
+	"Unit": "cache",
+	"Topic": "cpu",
+	"EventName": "dTLB-store-misses",
+	"EventAlias": "cpu/dTLB-store-misses/",
+	"EventType": "Hardware cache event"
+},
+{
+	"Unit": "cache",
+	"Topic": "cpu",
+	"EventName": "iTLB-loads",
+	"EventAlias": "cpu/iTLB-loads/",
+	"EventType": "Hardware cache event"
+},
+{
+	"Unit": "cache",
+	"Topic": "cpu",
+	"EventName": "iTLB-load-misses",
+	"EventAlias": "cpu/iTLB-load-misses/",
+	"EventType": "Hardware cache event"
+},
+{
+	"Unit": "cache",
+	"Topic": "cpu",
+	"EventName": "branch-loads",
+	"EventAlias": "cpu/branch-loads/",
+	"EventType": "Hardware cache event"
+},
+{
+	"Unit": "cache",
+	"Topic": "cpu",
+	"EventName": "branch-load-misses",
+	"EventAlias": "cpu/branch-load-misses/",
+	"EventType": "Hardware cache event"
+},
+{
+	"Unit": "cache",
+	"Topic": "cpu",
+	"EventName": "node-loads",
+	"EventAlias": "cpu/node-loads/",
+	"EventType": "Hardware cache event"
+},
+{
+	"Unit": "cache",
+	"Topic": "cpu",
+	"EventName": "node-load-misses",
+	"EventAlias": "cpu/node-load-misses/",
+	"EventType": "Hardware cache event"
+},
+{
+	"Unit": "cache",
+	"Topic": "cpu",
+	"EventName": "node-stores",
+	"EventAlias": "cpu/node-stores/",
+	"EventType": "Hardware cache event"
+},
+{
+	"Unit": "cache",
+	"Topic": "cpu",
+	"EventName": "node-store-misses",
+	"EventAlias": "cpu/node-store-misses/",
+	"EventType": "Hardware cache event"
+}
+]
