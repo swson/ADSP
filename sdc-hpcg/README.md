@@ -13,6 +13,7 @@ The system is designed to:
 
 ## Directory Structure ##
 
+<pre lang="md">
 sdc-inference/
 ├── hpcg-3.1/                # Modified HPCG benchmark source
 │   └── ...                  # HPCG source files (Makefile, *.cpp, *.hpp, etc.)
@@ -25,11 +26,12 @@ sdc-inference/
 │   └── inference_analysis.py# Performs anomaly detection and evaluation
 ├── Makefile                 # Makefile to build hpcg-3.1
 └── script_all.sh            # Runs error injection and collects PMC data
+</pre>
 
 ## Run SDC-HPCG ##
 
 1. Build
-Run 'make' in the root directory. This builds the hpcg-3.1 project under the Linux-Serial configuration.
+Run `make` in the root directory. This builds the hpcg-3.1 project under the Linux-Serial configuration.
 
 ex) make
 
@@ -42,13 +44,13 @@ This will:
 ex) ./script_all.sh
 
 3. Convert Raw to CSV
-Run 'script_new.py' in the inference/ folder.
+Run `script_new.py` in the inference/ folder.
 This converts *.txt files in raw/ folder into .csv files in the data/ folder.
 
 ex) python3 script_new.py
 
 4. Run Inference
-Run 'inference_analysis.py' in the inference/ folder.
+Run `inference_analysis.py` in the inference/ folder.
 This loads the CSV data, trains anomaly detection classifiers, and outputs evaluation metrics and results with the top 10 PMUs.
 
 ex) python3 inference_analysis.py
