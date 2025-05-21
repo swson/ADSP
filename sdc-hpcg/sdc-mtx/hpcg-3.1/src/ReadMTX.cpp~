@@ -1,0 +1,99 @@
+#include "ReadMTX.hpp"
+#include <fstream>
+#include <sstream>
+#include <iostream>
+#include <set>
+
+bool ReadMTX(const char* filename, SparseMatrix & A) {
+  std::ifstream infile(filename);
+  if (!infile) {
+    std::cerr << "[ERROR] Cannot open MTX file: " << filename << std::endl;
+    return false;
+  }
+
+  std::string line;
+
+  // Skip comments
+  while (std::getline(infile, line)) {
+    if (!line.empty() && line[0] != '%') break;
+  }
+
+  if (line.empty()) {
+    std::cerr << "[ERROR] Unexpected empty line in MTX file.\n";
+    return false;
+  }
+
+  std::istringstream iss(line);
+  local_int_t rows, cols, nnz;
+  if (!(iss >> rows >> cols >> nnz)) {
+    std::cerr << "[ERROR] Failed to parse MTX header line.\n";
+    return false;
+  }
+
+  // Initialize SparseMatrix structure
+  A.localNumberOfRows = rows;
+  A.localNumberOfColumns = cols;
+  A.localNumberOfNonzeros = 0;
+  A.totalNumberOfRows = rows;
+  A.totalNumberOfNonzeros = 0;
+
+  A.nonzerosInRow.resize(rows, 0);
+  A.matrixValues.resize(rows);
+  A.matrixDiagonal.resize(rows, nullptr);
+  A.mtxIndG.resize(rows);
+  A.mtxIndL.resize(rows);
+  A.localToGlobalMap.resize(rows);
+  A.globalToLocalMap.clear();
+
+  // Read non-zero entries
+  for (int i = 0; i < nnz; ++i) {
+    local_int_t r, c;
+    double val;
+    if (!(infile >> r >> c >> val)) {
+      std::cerr << "[ERROR] Unexpected end of MTX file at line " << i + 1 << ".\n";
+      return false;
+    }
+
+    r--; c--;  // Convert from 1-based to 0-based indexing
+
+    if (r < 0 || r >= rows || c < 0 || c >= cols) {
+      std::cerr << "[ERROR] Invalid index at line " << i + 1 << ": (" << r + 1 << ", " << c + 1 << ")\n";
+      return false;
+    }
+
+    A.matrixValues[r].push_back(val);
+    A.mtxIndG[r].push_back(c);
+    A.mtxIndL[r].push_back(c); // Assume identity mapping (single-node)
+    A.nonzerosInRow[r]++;
+    A.localNumberOfNonzeros++;
+    A.totalNumberOfNonzeros++;
+  }
+
+  // Set diagonal pointers and local-global maps
+  for (int i = 0; i < rows; ++i) {
+    A.localToGlobalMap[i] = i;
+    A.globalToLocalMap[i] = i;
+
+    bool foundDiag = false;
+    for (size_t j = 0; j < A.mtxIndG[i].size(); ++j) {
+      if (A.mtxIndG[i][j] == i) {
+        A.matrixDiagonal[i] = &A.matrixValues[i][j];
+        foundDiag = true;
+        break;
+      }
+    }
+
+    if (!foundDiag) {
+      // Add diagonal entry if missing
+      A.mtxIndG[i].push_back(i);
+      A.mtxIndL[i].push_back(i);
+      A.matrixValues[i].push_back(1.0);
+      A.matrixDiagonal[i] = &A.matrixValues[i].back();
+      A.nonzerosInRow[i]++;
+      A.localNumberOfNonzeros++;
+      A.totalNumberOfNonzeros++;
+    }
+  }
+
+  return true;
+}
