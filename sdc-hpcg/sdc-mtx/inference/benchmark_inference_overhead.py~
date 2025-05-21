@@ -1,0 +1,62 @@
+#!/usr/bin/env python3
+"""
+Benchmark inference overhead for multiple classifiers on HPCG cg_16.csv dataset.
+Measures average prediction time (in microseconds) for 1,000 independent predictions.
+"""
+
+import os
+import time
+import numpy as np
+import pandas as pd
+from sklearn import preprocessing, tree, svm
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
+from sklearn.neural_network import MLPClassifier
+
+# Load cg_16.csv data
+DATA_PATH = "data/cg_494.csv"
+df = pd.read_csv(DATA_PATH, index_col=0)
+
+# Extract features and labels
+X_raw = df.iloc[:, 2:].to_numpy().astype(np.float64)
+y_raw = df.iloc[:, 0].to_numpy().astype(np.float64)  # err_rate column
+
+# Normalize features
+scaler = preprocessing.MinMaxScaler()
+X = scaler.fit_transform(X_raw)
+y = (y_raw != 0).astype(int)  # binary labels: 1 if error, 0 if clean
+
+# Use first 1000 samples (or all if less than 1000)
+n_samples = min(1000, len(X))
+samples = X[:n_samples]
+
+# Define classifiers
+classifiers = {
+    "LR": LogisticRegression(solver='lbfgs', max_iter=1000),
+    "KNN": KNeighborsClassifier(n_neighbors=4, algorithm="ball_tree"),
+    "DT": tree.DecisionTreeClassifier(),
+    "GB": GradientBoostingClassifier(),
+    "RF": RandomForestClassifier(),
+    "SVM": svm.SVC(),
+    "MLP": MLPClassifier(hidden_layer_sizes=(32, 16), max_iter=1000, random_state=42)
+}
+
+results = []
+
+print("Benchmarking average inference time (1000 independent predictions)...\n")
+
+for name, clf in classifiers.items():
+    clf.fit(X, y)
+    start = time.time()
+    for i in range(n_samples):
+        clf.predict(samples[i].reshape(1, -1))
+    end = time.time()
+    avg_us = (end - start) / n_samples * 1e6
+    results.append((name, avg_us))
+
+# Display results as a table
+print("{:<10} {:>30}".format("Classifier", "Avg Inference Time (μs)"))
+print("=" * 40)
+for name, us in results:
+    print("{:<10} {:>30.2f}".format(name, us))
