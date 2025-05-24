@@ -58,8 +58,8 @@ ex) python3 inference_analysis.py
 
 |   variable/value        |                            description                                    |
 |-------------------------|---------------------------------------------------------------------------|
-| grid_size=494           | Set this value to match the grid size used in your experiment. If your    |
-                           script_new.sh script processes data from the folder grid-494, then this   
-                           should be grid_size=494.                                                  
+| grid_size=494           | Set this value to match the grid size used in your experiment. If your script_new.sh script processes data from the folder grid-494, then this should be grid_size=494.    |
+                              
+                                                                           
 
 
