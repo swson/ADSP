@@ -13,20 +13,22 @@ Collect hardware performance counter data using libpmu tool,
 Convert raw output into structured CSV format,
 Compare classifier performance for anomaly detection using PMC values.
 
-## Directory Structure ##
+## Directory Structure
+
 sdc-inference/
-├── hpcg-3.1/                # Modified HPCG benchmark source
-│   └── ...                  # HPCG source files (Makefile, *.cpp, *.hpp, etc.)
-├── limpmu/                  # PMU monitoring tool
-│   └── ...                  # limpmu source code and scripts
-├── inference/              
-│   ├── raw/                 # Raw PMC output files (txt) after error injection
-│   ├── data/                # Converted CSV files from raw PMC data data/                # Converted CSV files from raw PMC data
-│   ├── script_new_494.py    # Converts raw txt files into CSV format
-|   ├── .mtx files           # a fixed .mtx sparse matrix file as input  (e.g., 494_bus.mtx) 
-│   └── inference_analysis.py# Performs anomaly detection and evaluation
-├── Makefile                 # Makefile to build hpcg-3.1
-└── script_494.sh            # Runs error injection and collects PMC data
+├── hpcg-3.1/                 # Modified HPCG benchmark source
+│   └── ...                   # HPCG source files (Makefile, *.cpp, *.hpp, etc.)
+├── limpmu/                   # PMU monitoring tool
+│   └── ...                   # limpmu source code and scripts
+├── inference/               
+│   ├── raw/                  # Raw PMC output files (txt) after error injection
+│   ├── data/                 # Converted CSV files from raw PMC data
+│   ├── script_new_494.py     # Converts raw txt files into CSV format
+│   ├── 494_bus.mtx           # A fixed .mtx sparse matrix file as input
+│   └── inference_analysis.py # Performs anomaly detection and evaluation
+├── Makefile                  # Makefile to build hpcg-3.1
+└── script_494.sh             # Runs error injection and collects PMC data
+
 
 ## Run SDC-HPCG ##
 Build Run make in the root directory. This builds the hpcg-3.1 project under the Linux-Serial configuration.
