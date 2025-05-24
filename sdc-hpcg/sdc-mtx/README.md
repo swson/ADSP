@@ -14,9 +14,8 @@ Convert raw output into structured CSV format,
 Compare classifier performance for anomaly detection using PMC values.
 
 ## Directory Structure ##
-
+<pre lang="md">
 sdc-inference/
-
 ├── hpcg-3.1/                 # Modified HPCG benchmark source
 │   └── ...                   # HPCG source files (Makefile, *.cpp, *.hpp, etc.)
 ├── limpmu/                   # PMU monitoring tool
@@ -29,7 +28,7 @@ sdc-inference/
 │   └── inference_analysis.py # Performs anomaly detection and evaluation
 ├── Makefile                  # Makefile to build hpcg-3.1
 └── script_494.sh             # Runs error injection and collects PMC data
-
+</pre>
 
 ## Run SDC-HPCG ##
 Build Run make in the root directory. This builds the hpcg-3.1 project under the Linux-Serial configuration.
