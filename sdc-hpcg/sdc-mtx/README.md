@@ -16,6 +16,7 @@ Compare classifier performance for anomaly detection using PMC values.
 ## Directory Structure ##
 
 sdc-inference/
+
 ├── hpcg-3.1/                 # Modified HPCG benchmark source
 │   └── ...                   # HPCG source files (Makefile, *.cpp, *.hpp, etc.)
 ├── limpmu/                   # PMU monitoring tool
