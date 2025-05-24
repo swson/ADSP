@@ -42,9 +42,7 @@ Save raw counter outputs into the inference/raw/ directory
 |    variable/value       |                               description                                      |
 |-------------------------|--------------------------------------------------------------------------------|
 | out=~/grid-494          | Output directory to store generated files. Replace with your desired location. |
-|-------------------------|--------------------------------------------------------------------------------|
 | HPCG_MATRIX_PATH=/.mtx  | Path to your .mtx file. Update with the full path to your matrix file.         |
-|-------------------------|--------------------------------------------------------------------------------|
 | 494 494 1               | the size of your .mtx file                                                     |
 
 
@@ -61,7 +59,7 @@ ex) python3 inference_analysis.py
 |   variable/value        |                            description                                    |
 |-------------------------|---------------------------------------------------------------------------|
 | grid_size=494           | Set this value to match the grid size used in your experiment. If your    |
-|                         | script_new.sh script processes data from the folder grid-494, then this   |
-|                         | should be grid_size=494.                                                  |
+                           script_new.sh script processes data from the folder grid-494, then this   
+                           should be grid_size=494.                                                  
 
 
