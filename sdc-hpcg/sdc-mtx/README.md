@@ -13,7 +13,7 @@ Collect hardware performance counter data using libpmu tool,
 Convert raw output into structured CSV format,
 Compare classifier performance for anomaly detection using PMC values.
 
-## Directory Structure
+## Directory Structure ##
 
 sdc-inference/
 ├── hpcg-3.1/                 # Modified HPCG benchmark source
