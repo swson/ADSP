@@ -8,8 +8,8 @@ This repository contains tools for injecting errors into sparse matrix files.
 
 You can run the `anomaly_mtx.py` script to inject Gaussian error into an `.mtx` file:
 
-```bash
-python anomaly_mtx.py -f data/494_bus.mtx -o result/ -e 0.1 -i 0.05 -m point_gauss
+  ```bash
+  python anomaly_mtx.py -f data/494_bus.mtx -o result/ -e 0.1 -i 0.05 -m point_gauss
 
 *Arguments:
 -f or --file: Path to the input .mtx file.
@@ -21,8 +21,8 @@ python anomaly_mtx.py -f data/494_bus.mtx -o result/ -e 0.1 -i 0.05 -m point_gau
 ### 2. Running Batch Experiments
 To run multiple combinations of error rates and injection rates automatically:
 
-```bash
-python anomaly_exp.py
+  ```bash
+  python anomaly_exp.py
 
 *This will:
 - Run experiments with error_rate from 0.1 to 1.0 in steps of 0.1
@@ -30,5 +30,5 @@ python anomaly_exp.py
 - Apply point_gauss noise to each configuration
 - Save each noisy matrix to the result/ directory with filenames like:
 
-```bash
-494_bus_point_gauss_gauss_0.10_0.01.mtx
+  ```bash
+  494_bus_point_gauss_gauss_0.10_0.01.mtx
