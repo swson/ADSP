@@ -14,7 +14,8 @@ pmu:
 # Build HPCG
 hpcg:
 	mkdir -p $(HPCG_BUILD)
-	cd $(HPCG_BUILD) && ../configure Linux_Serial && make
+	cd $(HPCG_BUILD) && ../configure Linux_Serial
+	cd $(HPCG_BUILD) && make
 
 # Clean only compiled objects safely
 clean:
