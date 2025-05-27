@@ -11,7 +11,7 @@ You can run the `anomaly_mtx.py` script to inject Gaussian error into an `.mtx` 
   ```bash
   python anomaly_mtx.py -f data/494_bus.mtx -o result/ -e 0.1 -i 0.05 -m point_gauss
 
-*Arguments:
+Arguments:
 -f or --file: Path to the input .mtx file.
 -o or --output: Path to the folder where the modified file will be saved.
 -e or --error_rate: Error rate (e.g., 0.1 means 10% of the value is used as stddev for noise).
@@ -24,7 +24,7 @@ To run multiple combinations of error rates and injection rates automatically:
   ```bash
   python anomaly_exp.py
 
-*This will:
+This will:
 - Run experiments with error_rate from 0.1 to 1.0 in steps of 0.1
 - Run experiments with injection_rate from 0.01 to 0.1 in steps of 0.01
 - Apply point_gauss noise to each configuration
