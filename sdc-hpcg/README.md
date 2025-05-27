@@ -64,13 +64,13 @@ Before building the HPCG benchmark, ensure the following steps are taken to avoi
    ```bash
    chmod +x hpcg-3.1/configure
 
-2. **Use full absolute path for HPCG_MATRIX_PATH**
+2. **Clean and recompile if needed**
+   If the build fails or xhpcg is missing, you can manually clean and rebuild:
+   ```bash
+   make clean
+   make
+
+3. **Use full absolute path for HPCG_MATRIX_PATH**
    Some scripts and binaries require the full path to the .mtx file. Set the environment variable explicitly:
    ```bash
    HPCG_MATRIX_PATH=$(pwd)/inference/494_bus.mtx
-3. **Clean and recompile if needed**
-  If the build fails or xhpcg is missing, you can manually clean and rebuild:
-  ```bash
-  make clean
-  make
-   
