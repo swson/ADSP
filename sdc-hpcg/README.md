@@ -32,7 +32,7 @@ sdc-inference/
 
 1. Build
 Run `make` in the root directory. This builds the hpcg-3.1 project under the Linux-Serial configuration.
-
+(See **Build Tips** section below if the build fails or `xhpcg` is missing.)
 ex) make
 
 2. Run Error injection + Data Collection
@@ -55,7 +55,22 @@ This loads the CSV data, trains anomaly detection classifiers, and outputs evalu
 
 ex) python3 inference_analysis.py
 
+## Build Tips (for HPCG) ##
 
+Before building the HPCG benchmark, ensure the following steps are taken to avoid common build and runtime issues:
 
+1. **Make the configure script executable**  
+   Ensure that `configure` in the `hpcg-3.1/` folder has execution permission.
+   ```bash
+   chmod +x hpcg-3.1/configure
 
+2. **Clean and recompile if needed**
+   If the build fails or xhpcg is missing, you can manually clean and rebuild:
+   ```bash
+   make clean
+   make
 
+3. **Use full absolute path for HPCG_MATRIX_PATH**
+   Some scripts and binaries require the full path to the .mtx file. Set the environment variable explicitly:
+   ```bash
+   HPCG_MATRIX_PATH=$(pwd)/inference/494_bus.mtx

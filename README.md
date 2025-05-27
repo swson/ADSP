@@ -40,6 +40,10 @@ Output file names follow the following naming convention:
 
 A separate log file containing the metadata for the injection called 'log.txt' will also be created in the current directory. This log file will always output to the current directory. 
 
+### Usage
+You can use this tool by running the main Python script (i.e., anomaly_test.py ) with command-line arguments.
+`python anomaly_test.py -f data/sample.csv -o result/ -e 0.1 -i 0.05 -m point_gauss -p`
+
 # Customization
 ## Mandatory arguments
 ### Error rate
