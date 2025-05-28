@@ -1,6 +1,6 @@
-##################################################################
+##########################################################################################################
 # SDC-HPCG: Silent Data Corruption Detection with HPCG Benchmark #
-##################################################################
+##########################################################################################################
 
 This repository contains a modified version of the [HPCG benchmark](https://www.hpcg-benchmark.org/) 
 adapted for Silent Data Corruption (SDC) detection research using performance counters.
