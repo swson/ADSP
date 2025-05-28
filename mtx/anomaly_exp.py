@@ -1,7 +1,7 @@
 import subprocess
 import numpy as np
 
-# 설정값
+# Setting 
 input_file = 'data/494_bus.mtx'
 output_dir = 'result/'
 mode = 'point_gauss'
