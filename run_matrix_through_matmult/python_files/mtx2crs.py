@@ -1,3 +1,9 @@
+"""
+takes a matrix in mtx format from the matrix marketplace. (can give it one locally also) and converts it into crs format
+"""
+
+
+
 #! /usr/bin/python3
 
 from sys import stdin

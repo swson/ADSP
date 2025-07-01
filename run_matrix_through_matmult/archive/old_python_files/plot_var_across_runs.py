@@ -1,4 +1,6 @@
 # This program assumes that all of the directory structure from python_controller.py has been established and that python_controller.py has been run already
+# this program plots the variance across runs normal and corrupted for a given event when for a given matrix being run
+
 
 import os
 import csv 

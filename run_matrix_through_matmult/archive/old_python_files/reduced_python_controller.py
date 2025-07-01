@@ -1,3 +1,7 @@
+"""
+This program is most likely outdated and needs to be refactored. use as boilerplate code.
+"""
+
 import os
 import json
 import csv 

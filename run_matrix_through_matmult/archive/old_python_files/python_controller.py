@@ -1,3 +1,14 @@
+"""
+
+This program is most likely outdated and needs to be refactored. Provides boilerplate code.
+
+This program will require you to update the path variables to reflect your own directory structure.
+This program when plotting takes into account that different micro arch have different number of counters. In this case we have max of 4.
+This means we can only monitor 4 events and must only pass 4 events to perf stat to prevent extra overhead per perf docs
+
+"""
+
+
 import os
 import json
 import csv 
@@ -15,6 +26,10 @@ matrix_name = "494_bus"
 file_type = "crs"
 file_composition = "non_zero"
 microarch_directory_name = "skylake"  # will become list of microarch 
+
+
+
+
 
 
 
@@ -46,7 +61,7 @@ path_to_exe = os.path.join(project_home,"hw4_release","matmult-progs","crs_matmu
 
 #os.path.join(project_home,"data",matrix_name,trial_name,run_type,"csv_files")
 
-
+#1 gets paths to relevant files
 
 
 ############################################ Function declarations
@@ -71,6 +86,8 @@ def get_event_names(path_to_json_file,event_file):
     return event_name_arr
 
 
+#1 gets all of the perf event names from json file and stores them in list
+
 
 
 
@@ -81,7 +98,7 @@ def get_matrix_file_names(path_to_baseline_file,path_to_corrupted_files):
     return sorted(matrix_file_names_list)   # will be file_name.extension, where extension != csv. ex) if using crs files, all files end in .crs in this list
 
 
-
+#1 gets all of the matrix file names. Both baseline and uncorrupted
 
 def parse_csv_get_x_vals( csv_file ):
 
@@ -111,7 +128,7 @@ def parse_csv_get_x_vals( csv_file ):
 
 	return matrix_x_vals
 
-
+#1 parses csv file to get x values for plotting
 
 
 def plot_data( matrix_file_names_list, data_window_event_name_arr_subset, data_window_matrix_x_values, plot_info_string ):
@@ -165,7 +182,7 @@ def plot_data( matrix_file_names_list, data_window_event_name_arr_subset, data_w
 		
 		
 		
-		
+		#1 plots data in bar chart
 		
 		
 def local_aggr_csv( aggr_csv_file_name, column_labels, data_window_event_name_arr_subset, data_window_matrix_x_values):
@@ -197,7 +214,7 @@ def local_aggr_csv( aggr_csv_file_name, column_labels, data_window_event_name_ar
                         f.write("\n")
                     
 
-
+#1 collects aggregate results for events
 				
 				
 def create_global_aggr_csv(aggr_csv_file_name,column_labels):
@@ -250,6 +267,7 @@ def add_to_global_aggr_csv( aggr_csv_file_name, data_window_event_name_arr_subse
 		
 		
 
+#1 allows for single or multiple runs
 
 def single_run(matrix_file_names_list, event_name_arr, max_counter,path_to_data):
 

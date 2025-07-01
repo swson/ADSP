@@ -1,3 +1,8 @@
+"""
+takes multiple matricies in mtx format from the matrix marketplace. (can give it one locally also) and converts them into crs format.
+Actions intended to be performed on local files. Need to change path variables to reflect your own directory structure.
+"""
+
 import os
 import subprocess
 
