@@ -57,6 +57,6 @@ This loads the CSV data, trains anomaly detection classifiers, and outputs evalu
 ex) python3 inference_analysis.py
 
 5. Convert ABFT Result Files to CSV
-If ABFT-based error detection is enabled, run abft_txt_csv.py to convert ABFT output logs into a single summary CSV.
+If ABFT-based error detection is enabled, run `abft_txt_csv.py` to convert ABFT output logs into a single summary CSV.
 
 ex) python3 abft_txt_csv.py
