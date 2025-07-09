@@ -1,0 +1,5 @@
+error=1
+detected=0
+sum_Ap=10218.4
+expected_sum=10218.4
+abft_error=0

@@ -1,0 +1,1 @@
+cmd_/users/mchoi/ADSP/sdc-hpcg/sdc-hpcg/libpmu/cr4/modules.order := {   echo /users/mchoi/ADSP/sdc-hpcg/sdc-hpcg/libpmu/cr4/pceset.ko; :; } | awk '!x[$$0]++' - > /users/mchoi/ADSP/sdc-hpcg/sdc-hpcg/libpmu/cr4/modules.order

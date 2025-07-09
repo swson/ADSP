@@ -1,0 +1,1 @@
+cmd_/users/mchoi/ADSP/sdc-hpcg/sdc-hpcg/libpmu/cr4/pceset.ko := ld -r -m elf_x86_64 -z noexecstack --build-id=sha1  -T scripts/module.lds -o /users/mchoi/ADSP/sdc-hpcg/sdc-hpcg/libpmu/cr4/pceset.ko /users/mchoi/ADSP/sdc-hpcg/sdc-hpcg/libpmu/cr4/pceset.o /users/mchoi/ADSP/sdc-hpcg/sdc-hpcg/libpmu/cr4/pceset.mod.o;  true
