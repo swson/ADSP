@@ -23,7 +23,8 @@ sdc-inference/
 │   ├── raw/                 # Raw PMC output files (txt) after error injection
 │   ├── data/                # Converted CSV files from raw PMC data
 │   ├── script_new.py        # Converts raw txt files into CSV format
-│   └── inference_analysis.py# Performs anomaly detection and evaluation
+│   ├── inference_analysis.py# Performs anomaly detection and evaluation
+│   └── abft_txt_csv.py      # Converts ABFT result .txt files into a summary .csv
 ├── Makefile                 # Makefile to build hpcg-3.1
 └── script_all.sh            # Runs error injection and collects PMC data
 </pre>
@@ -54,3 +55,8 @@ Run `inference_analysis.py` in the inference/ folder.
 This loads the CSV data, trains anomaly detection classifiers, and outputs evaluation metrics and results with the top 10 PMUs.
 
 ex) python3 inference_analysis.py
+
+5. Convert ABFT Result Files to CSV
+If ABFT-based error detection is enabled, run abft_txt_csv.py to convert ABFT output logs into a single summary CSV.
+
+ex) python3 abft_txt_csv.py
