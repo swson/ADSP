@@ -1,6 +1,8 @@
 HPCG=hpcg-3.1
-HPCG_BUILD=$(HPCG)/build
-HPCG_BIN=$(HPCG_BUILD)/bin/xhpcg
+HPCG_BUILD=build-hpcg
+HPCG_DIR=$(HPCG)/build/bin
+HPCG_BIN=$(HPCG_DIR)/xhpcg
+
 PMU=libpmu
 
 # Build all components
@@ -14,8 +16,10 @@ pmu:
 # Build HPCG
 hpcg:
 	mkdir -p $(HPCG_BUILD)
-	cd $(HPCG_BUILD) && ../configure Linux_Serial
+	cd $(HPCG_BUILD) && ../$(HPCG)/configure Linux_Serial
 	cd $(HPCG_BUILD) && make
+	mkdir -p $(HPCG_DIR)
+	cp $(HPCG_BUILD)/bin/xhpcg $(HPCG_BIN)
 
 # Clean only compiled objects safely
 clean:

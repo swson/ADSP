@@ -34,7 +34,12 @@ uninstall:
 kernel:
 	modprobe msr
 	make -C cr4
-	insmod cr4/pceset.ko
+	@if ! lsmod | grep -q pceset; then \
+		echo "[INFO] Loading kernel module pceset.ko..."; \
+		sudo insmod cr4/pceset.ko; \
+	else \
+		echo "[INFO] Kernel module pceset.ko is already loaded."; \
+	fi
 
 clean:
 	rm -rf $(OBJ) $(EXAMPLES) $(LIB)

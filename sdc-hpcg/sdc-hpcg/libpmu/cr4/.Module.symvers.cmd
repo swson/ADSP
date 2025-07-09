@@ -1,0 +1,1 @@
+cmd_/users/mchoi/ADSP/sdc-hpcg/sdc-hpcg/libpmu/cr4/Module.symvers := sed 's/\.ko$$/\.o/' /users/mchoi/ADSP/sdc-hpcg/sdc-hpcg/libpmu/cr4/modules.order | scripts/mod/modpost -m -a  -o /users/mchoi/ADSP/sdc-hpcg/sdc-hpcg/libpmu/cr4/Module.symvers -e -i Module.symvers   -T -
