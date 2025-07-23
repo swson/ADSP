@@ -46,6 +46,9 @@ num_entries_to_modify = int(len(matrix_values) * injection_rate)
 entries_to_modify = random.sample(matrix_values, num_entries_to_modify)
 
 for entry in entries_to_modify:
+    if len(entry) < 3:
+        entry.append("1.0")
+    
     entry[2] = str(add_gaussian_noise(float(entry[2]), error_rate))
 
 modified_lines = [header] + matrix_values
