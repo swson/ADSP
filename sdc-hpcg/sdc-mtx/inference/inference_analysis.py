@@ -12,6 +12,9 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
 from sklearn.metrics import make_scorer, accuracy_score, precision_score, recall_score, f1_score
 from sklearn.neural_network import MLPClassifier
+from sklearn.pipeline import Pipeline
+from sklearn.neural_network import BernoulliRBM
+
 
 class Inference:
     def __init__(self, data_dir="data", grid_size=494, cv=5):
@@ -21,7 +24,8 @@ class Inference:
         self.cv = cv
         self.all = {
             "LR": self.lr, "DT": self.dt, "GB": self.gb, "RF": self.rf,
-            "KNN": self.knn, "SVM": self.svm, "MLP": self.mlp
+            "KNN": self.knn, "SVM": self.svm, "MLP": self.mlp,
+            "RBM+LR": self.rbm_lr
         }
         self.scoring = {
             'accuracy': make_scorer(accuracy_score),
@@ -36,6 +40,10 @@ class Inference:
     def knn(self): return KNeighborsClassifier()
     def svm(self): return svm.SVC()
     def mlp(self): return MLPClassifier(hidden_layer_sizes=(32,16), max_iter=1000, random_state=42)
+    def rbm_lr(self):
+        rbm = BernoulliRBM(n_components=100, learning_rate=0.06, n_iter=10, random_state=42)
+        lr = LogisticRegression(max_iter=1000)
+        return Pipeline(steps=[('rbm', rbm), ('logistic', lr)])
 
     def read_data(self, f):
         path = os.path.join(self.data_dir, f"{f}_{self.grid_size}.csv")
