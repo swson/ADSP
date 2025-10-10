@@ -53,6 +53,6 @@ root/
 ## Citation
 If you use this framework in your research, please cite:
 
-M. Choi, K. Chaisson, O. Arias, and S. W. Son. Detecting silent data corruption from hardware counters.
+M. Choi, T. Azzaoui, K. Chaisson, O. Arias, and S. W. Son. Detecting silent data corruption from hardware counters.
 In 2025 IEEE International Conference on Cluster Computing (CLUSTER), 2025.
 
