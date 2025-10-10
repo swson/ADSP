@@ -9,7 +9,7 @@ covering data preparation, error modeling, benchmark execution, and inference ev
 ---
 
 ##  Repository Structure
-
+<pre lang="md">
 root/
 │
 ├── error_injection/ # Error injection modules
@@ -35,7 +35,7 @@ root/
 │ └── inference_jupyter/ # Jupyter notebooks for LR, DT, RF, MLP models and metrics
 │
 └── README.md # Project overview and usage guide
-
+</pre>
 ## Typical Workflow
 
 (1) Prepare datasets
