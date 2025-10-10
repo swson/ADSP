@@ -15,8 +15,8 @@ e.g) `ADSP/benchmarks/SpMV_uml/matmult-progs/crs_matmult/run_combined_exec.py`
 
 ### What happens:
 - Generates filtered_events.json via `perf list -j`.
-- Runs HPCG or SpMV on the clean (error-free) matrix for 100 iterations.
-- Runs HPCG or SpMV on all error-injected .crs files (100 cases).
+- Runs SpMV on the clean (error-free) matrix for 100 iterations.
+- Runs SpMV on all error-injected .crs files (100 cases).
 - Collects Performance Monitoring Counters (PMCs) for each run.
 
 
