@@ -1,17 +1,22 @@
-In python_files you will find files for converting matricies from mtx format to crs format. Matricies need to be in crs format to be run by matrix multiplication program in matmult_progs. 
+## CSR SpMV experiments using Linux perf
 
-matmult_progs contains a program that will perform matrix multiplication on a given input matrix. We use matrix multiplication to represent a workload being performed on the system that we later use perf to monior. 
-
-To run this program go to crs_matmult directory. Upload your matrix in crs format. 
-
-To get a list of all hardware events for your system, install perf and once it is installed, type the following 
-into the command line: perf list -o "list_of_all_hw_events.json" -j     to get a list of all the hardware event counters on your system in a json formatted file.
-
-run make to get the crs_matmult program ready.
-
-run 494_uncorrupted_runs.py to get 5 runs of the uncorrupted matrix each copied 100 times and stored in individual folders. 
+It (1) collects a filtered set of PMU events, (2) runs a clean baseline on a fixed CRS matrix, and (3) runs error-injected variants, measuring with a limited number of hardware counters (max_counter = 4) per run
+e.g) `ADSP/benchmarks/SpMV_uml/matmult-progs/crs_matmult/run_combined_exec.py`
 
 
-remove_json_files_for_testint.py is a utility file to get rid of automated json files that are created in the wrong directory. 
+## How to run
+# Path
+`cd ADSP/benchmarks/SpMV_uml/matmult-progs/crs_matmult`
+# CRS matrices prepared in input/494_bus_input/ using `error_injection/anomaly_exp.py` and `data/convert/multiple_mtx2crs.py'.
+- Baseline path defaults to: input/494_bus_input/494_bus.mtx.crs
+- Error-injected files are discovered by glob: 494_bus_point_gauss_*.crs
+# Run the experiment
+'python3 run_combined_exec.py'
 
- 
+# What happens:
+- Generates filtered_events.json via perf list -j.
+- Runs 100 clean batches by default (for batch_id2 in range(100): ...).
+- Iterates all matched error-injected .crs files (100 cases)
+
+
+
