@@ -39,16 +39,16 @@ root/
 ## Typical Workflow
 
 (1) Prepare datasets
-   └─ data/dataset/*.mtx
+   e.g) data/dataset/*.mtx
 
 (2) Inject errors
-   └─ error_injection/ → generate corrupted data
+   e.g) error_injection/ → generate corrupted data
 
 (3) Run benchmarks
-   └─ benchmarks/HPCG_uml/ → collect PMU performance counters
+   e.g) benchmarks/HPCG_uml/ → collect PMU performance counters
 
 (4) Perform inference
-   └─ inference/inference_python/ or inference/inference_jupyter/
+   e.g) inference/inference_python/ or inference/inference_jupyter/
 
 ## Citation
 If you use this framework in your research, please cite:
