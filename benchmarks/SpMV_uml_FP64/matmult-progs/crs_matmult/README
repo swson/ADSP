@@ -1,0 +1,9 @@
+
+first go to 494_clean/matmult-progs/crs_matmult and type in "make" in the command line
+
+then run 494_uncorrupted.py. look at the number of groups needed that it outputs.
+
+you will then see directories for each run where there will be 100 copies of data for that run
+
+
+
