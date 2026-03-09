@@ -60,14 +60,10 @@ ex) python3 inference_analysis.py
 Before building the HPCG benchmark, ensure the following steps are taken to avoid common build and runtime issues:
 
 1. **Make the configure script executable**  
-   Ensure that `configure` in the `hpcg-3.1/` folder has execution permission.
+   Run the following commands to ensure that both `configure` and `xhpcg` have execution permission.
    ```bash
    chmod +x hpcg-3.1/configure
-
-   ** **
-   Ensure that `xhpcg` in the `hpcg-3.1/build/bin/` folder has execution permission.
-   ```bash
-   chmod +x xhpcg
+   chmod +x hpcg-3.1/build/bin/xhpcg
 
 2. **Clean and recompile if needed**
    If the build fails or xhpcg is missing, you can manually clean and rebuild:
