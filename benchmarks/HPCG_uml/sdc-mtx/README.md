@@ -1,7 +1,7 @@
-###########################################################################################################################
+##########################################################################################################
 
 # SDC-HPCG: Silent Data Corruption Detection with MTX-based HPCG Benchmark #
-###########################################################################################################################
+##########################################################################################################
 
 This repository contains a modified version of the HPCG benchmark adapted for Silent Data Corruption (SDC) detection research using performance counters. 
 This project uses a fixed .mtx sparse matrix file  (e.g., 494_bus.mtx)  as input for the HPCG benchmark.
@@ -109,14 +109,16 @@ python3 inference_analysis_once.py
 Example:
 ```bash
 (base) mchoi@node0:~/ADSP/benchmarks/HPCG_uml/sdc-mtx/inference$ python3 inference_analysis_once.py
+```
 
 * Before running the script, update the following fields as needed:
 
-|   variable/value        |                            description                                    |
-|-------------------------|---------------------------------------------------------------------------|
+|   variable/value        |                                              description                                                |
+|-------------------------|---------------------------------------------------------------------------------------------------------|
 | grid_size=494           | Set this value to match the grid size used in your experiment. If your script_new.sh script processes data from the folder grid-494, then this should be grid_size=494.    |
 
-## Full Example Workflow
+
+## Full Example Workflow ##
 
 The following is an example workflow from build to inference:
 
