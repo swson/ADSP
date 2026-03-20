@@ -30,14 +30,43 @@ sdc-inference/
 └── script_494.sh             # Runs error injection and collects PMC data
 </pre>
 
-## Run SDC-HPCG ##
-Build Run make in the root directory. This builds the hpcg-3.1 project under the Linux-Serial configuration.
-ex) make
+## install the required Python packages ##
+```bash
+python3 -m pip install seaborn pandas matplotlib numpy scipy scikit-learn
+```
 
-Run Error injection + Data Collection This will:
-Inject errors during HPCG computations
-Collect PMC data using the limpmu tool
-Save raw counter outputs into the inference/raw/ directory
+If `pip` is not installed on your system, install it first:
+```bash
+sudo apt update
+sudo apt install -y python3-pip
+```
+
+## Build HPCG
+
+Run the following commands from the repository root directory:
+```bash
+chmod +x hpcg-3.1/configure
+chmod +x hpcg-3.1/build/bin/xhpcg
+make
+```
+
+If you want to rebuild from scratch:
+```bash
+cd hpcg-3.1
+make clean
+make
+cd ..
+```
+
+## Run SDC-HPCG
+
+### 1. Run Error Injection + Data Collection
+
+This step will:
+
+- Inject errors during HPCG computations
+- Collect PMC data using the `limpmu` tool
+- Save raw counter outputs into the `inference/raw/` directory
 
 * Before running the script, update the following fields as needed:
 
@@ -47,21 +76,72 @@ Save raw counter outputs into the inference/raw/ directory
 | HPCG_MATRIX_PATH=/.mtx  | Path to your .mtx file. Update with the full path to your matrix file.         |
 | 494 494 1               | the size of your .mtx file                                                     |
 
+Run:
+```bash
+./script_all.sh
+```
 
-ex) ./script_all.sh
+Example:
+```bash
+(base) mchoi@node0:~/ADSP/benchmarks/HPCG_uml/sdc-mtx$ ./script_all.sh
+```
+### 2. Convert Raw PMC Output to CSV
 
-Convert Raw to CSV Run script_new.py in the inference/ folder. This converts *.txt files in raw/ folder into .csv files in the data/ folder.
-ex) python3 script_new.py
+Run the conversion script in the `inference/` directory.  
+This converts `*.txt` files in the `raw/` folder into `.csv` files in the `data/` folder.
+```bash
+cd inference
+python3 script_new_494.py
+```
 
-Run Inference Run inference_analysis.py in the inference/ folder. This loads the CSV data, trains anomaly detection classifiers, and outputs evaluation metrics and results with the top 10 PMUs.
-ex) python3 inference_analysis.py
+Example:
+```bash
+(base) mchoi@node0:~/ADSP/benchmarks/HPCG_uml/sdc-mtx/inference$ python3 script_new_494.py
+```
+
+### 3. Run Inference
+Run the inference script in the `inference/` directory.  
+This loads the CSV data, trains anomaly detection classifiers, and outputs evaluation metrics and results with the top PMUs.
+```bash
+python3 inference_analysis_once.py
+```
+
+Example:
+```bash
+(base) mchoi@node0:~/ADSP/benchmarks/HPCG_uml/sdc-mtx/inference$ python3 inference_analysis_once.py
 
 * Before running the script, update the following fields as needed:
 
 |   variable/value        |                            description                                    |
 |-------------------------|---------------------------------------------------------------------------|
 | grid_size=494           | Set this value to match the grid size used in your experiment. If your script_new.sh script processes data from the folder grid-494, then this should be grid_size=494.    |
-                              
+
+## Full Example Workflow
+
+The following is an example workflow from build to inference:
+
+```bash
+(base) mchoi@node0:~/ADSP/benchmarks/HPCG_uml/sdc-mtx$ chmod +x hpcg-3.1/configure
+(base) mchoi@node0:~/ADSP/benchmarks/HPCG_uml/sdc-mtx$ chmod +x hpcg-3.1/build/bin/xhpcg
+(base) mchoi@node0:~/ADSP/benchmarks/HPCG_uml/sdc-mtx$ make
+
+(base) mchoi@node0:~/ADSP/benchmarks/HPCG_uml/sdc-mtx/hpcg-3.1$ make clean
+(base) mchoi@node0:~/ADSP/benchmarks/HPCG_uml/sdc-mtx/hpcg-3.1$ make
+
+(base) mchoi@node0:~/ADSP/benchmarks/HPCG_uml/sdc-mtx/hpcg-3.1$ sudo apt update
+(base) mchoi@node0:~/ADSP/benchmarks/HPCG_uml/sdc-mtx/hpcg-3.1$ sudo apt install -y python3-pip
+(base) mchoi@node0:~/ADSP/benchmarks/HPCG_uml/sdc-mtx/hpcg-3.1$ python3 -m pip install seaborn pandas matplotlib numpy scipy scikit-learn
+
+# Run Error Injection + Data Collection
+(base) mchoi@node0:~/ADSP/benchmarks/HPCG_uml/sdc-mtx$ ./script_all.sh
+
+# Convert Raw to CSV
+(base) mchoi@node0:~/ADSP/benchmarks/HPCG_uml/sdc-mtx/inference$ python3 script_new_494.py
+
+# Run Inference
+(base) mchoi@node0:~/ADSP/benchmarks/HPCG_uml/sdc-mtx/inference$ python3 inference_analysis_once.py
+```
+
                                                                            
 
 
