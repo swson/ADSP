@@ -4,6 +4,11 @@
 #if defined(__i386__) || defined(__x86_64__)
 
 #include <inttypes.h>
+#include <stdio.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #define PMU_TRACE_ALL(file_name, p, n, config, strings, func, ...)             \
   do {                                                                         \
@@ -93,7 +98,13 @@ int pmu_init(struct pmu_ctx *);
 int pmu_clear(struct pmu_ctx *);
 int pmu_trace(struct pmu_ctx *, union counter_config *const, int);
 void pmu_read(struct pmu_ctx *, uint64_t *, int);
+int perf_ts_start(FILE *fp, int interval_ms);
+void perf_ts_stop(void);
 int pmu_exit(struct pmu_ctx *);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 #endif /* PMU_H */

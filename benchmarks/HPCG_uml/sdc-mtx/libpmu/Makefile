@@ -1,6 +1,6 @@
 CC:=gcc
-CFLAGS:=-fPIC -O3 -Wall -Wextra -Iinclude
-LDFLAGS:=-shared
+CFLAGS:=-fPIC -O3 -Wall -Wextra -Iinclude -pthread
+LDFLAGS:=-shared -pthread
 LIB=libpmu.so
 PREFIX=/usr/local
 
