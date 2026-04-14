@@ -22,6 +22,7 @@
 #include <pthread.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <sched.h>
 #include <errno.h>
 
 /* ── syscall wrapper ────────────────────────────────────────────────────── */
@@ -40,14 +41,14 @@ static const struct {
     uint64_t    config;
     const char *label;
 } counter_defs[NUM_COUNTERS] = {
-    { PERF_TYPE_HARDWARE, PERF_COUNT_HW_BUS_CYCLES,       "cpu_cycles"       },
+    { PERF_TYPE_HARDWARE, PERF_COUNT_HW_CPU_CYCLES,       "cpu_cycles"       },
     { PERF_TYPE_HARDWARE, PERF_COUNT_HW_CACHE_REFERENCES, "cache_references" },
     { PERF_TYPE_HARDWARE, PERF_COUNT_HW_CACHE_MISSES,     "cache_misses"     },
     { PERF_TYPE_HARDWARE, PERF_COUNT_HW_BRANCH_MISSES,    "branch_misses"    },
 };
 
 /* ── internal state ─────────────────────────────────────────────────────── */
-static int          fd[NUM_COUNTERS];   /* one perf fd per counter          */
+static int          fd[NUM_COUNTERS] = {-1,-1,-1,-1};   /* one perf fd per counter          */
 static volatile int stop_flag      = 0;
 static pthread_t    sampler_thread;
 static int          thread_started = 0;
@@ -127,8 +128,14 @@ static void *sampler_func(void *arg)
  */
 int perf_ts_start(FILE *fp, int interval_ms)
 {
+    struct sampler_args *args = NULL;
+    int rc = 0;
+
     /* silent reentry guard — pmu_trace() calls this once per CG iteration */
     if (thread_started) return 0;
+
+    fprintf(stderr, "perf_ts_start called: interval_ms=%d\n", interval_ms);
+    fflush(stderr);
 
     if (!fp) {
         fprintf(stderr, "perf_ts_start: fp is NULL\n");
@@ -141,6 +148,7 @@ int perf_ts_start(FILE *fp, int interval_ms)
 
     /* write CSV header exactly once across all calls */
     if (!header_written) {
+//        header_written = 1;   // set BEFORE writing to prevent races
         fprintf(fp, "timestamp_ms");
         for (int i = 0; i < NUM_COUNTERS; i++)
             fprintf(fp, ",%s", counter_defs[i].label);
@@ -165,17 +173,28 @@ int perf_ts_start(FILE *fp, int interval_ms)
         pe.exclude_hv     = 0;
         pe.inherit        = 1;
 
-        fd[i] = perf_event_open(&pe, getpid(), -1, -1, 0);
-        if (fd[i] == -1) {
+	int cpu = sched_getcpu();
+	if (cpu < 0) {
+	    perror("sched_getcpu");
+	    goto cleanup;
+	}
+
+//	fd[i] = perf_event_open(&pe, 0, -1, -1, 0);
+//	fprintf(stderr, "[PMU DEBUG] counter[%d] fd=%d errno=%d\n", i, fd[i], errno);
+        fd[i] = perf_event_open(&pe, -1, 0, -1, 0);
+	fprintf(stderr, "[PMU DEBUG] counter[%d] fd=%d errno=%d\n", i, fd[i], errno);
+//        fd[i] = perf_event_open(&pe, -1, cpu, -1, 0);
+       // fd[i] = perf_event_open(&pe, getpid(), -1, -1, 0);
+      /*   if (fd[i] == -1) {
     		fprintf(stderr,
 		        "WARNING: counter [%s] not available on this CPU/VM, "
 		        "skipping (column will show 0)\n",
 		        counter_defs[i].label);
-		    fd[i] = -1;   /* mark as skipped, don't abort */
+		    fd[i] = -1;   // mark as skipped, don't abort 
 		    continue;
 	}
      }
-    /* reset and enable all counters atomically */
+    // reset and enable all counters atomically 
     for (int i = 0; i < NUM_COUNTERS; i++) {
         if (ioctl(fd[i], PERF_EVENT_IOC_RESET,  0) == -1) {
             perror("ioctl RESET"); goto cleanup;
@@ -184,11 +203,18 @@ int perf_ts_start(FILE *fp, int interval_ms)
             perror("ioctl ENABLE"); goto cleanup;
         }
     }
+*/
+	for (int i = 0; i < NUM_COUNTERS; i++) {
+	    if (fd[i] == -1) continue;
+	    if (ioctl(fd[i], PERF_EVENT_IOC_RESET, 0) == -1) { perror("ioctl RESET"); goto cleanup; }
+	    if (ioctl(fd[i], PERF_EVENT_IOC_ENABLE, 0) == -1) { perror("ioctl ENABLE"); goto cleanup; }
+	}
+}
 
     /* launch sampler thread */
     stop_flag = 0;
 
-    struct sampler_args *args = malloc(sizeof(*args));
+    args = (struct sampler_args *)malloc(sizeof(*args));  
     if (!args) {
         perror("malloc");
         goto cleanup;
@@ -196,7 +222,7 @@ int perf_ts_start(FILE *fp, int interval_ms)
     args->fp          = fp;
     args->interval_ms = interval_ms;
 
-    int rc = pthread_create(&sampler_thread, NULL, sampler_func, args);
+    rc = pthread_create(&sampler_thread, NULL, sampler_func, args);
     if (rc != 0) {
         errno = rc;
         perror("pthread_create");
