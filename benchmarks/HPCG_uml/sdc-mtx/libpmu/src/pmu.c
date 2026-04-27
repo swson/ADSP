@@ -111,7 +111,12 @@ int pmu_init(struct pmu_ctx *p) {
 }
 
 int pmu_clear(struct pmu_ctx *p) {
+    if (ts_mode) {
+        return 0;
+     }
+
     /* UNCHANGED */
+    fprintf(stderr, "[PMU DEBUG] pmu_clear called, ts_mode=%d\n", ts_mode);
     int ret;
     uint64_t mask = 0;
 

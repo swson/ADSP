@@ -40,12 +40,20 @@ static const struct {
     uint32_t    type;
     uint64_t    config;
     const char *label;
+
 } counter_defs[NUM_COUNTERS] = {
-    { PERF_TYPE_HARDWARE, PERF_COUNT_HW_CPU_CYCLES,       "cpu_cycles"       },
-    { PERF_TYPE_HARDWARE, PERF_COUNT_HW_CACHE_REFERENCES, "cache_references" },
-    { PERF_TYPE_HARDWARE, PERF_COUNT_HW_CACHE_MISSES,     "cache_misses"     },
-    { PERF_TYPE_HARDWARE, PERF_COUNT_HW_BRANCH_MISSES,    "branch_misses"    },
+    { PERF_TYPE_RAW, 0x003C, "CPU_CLK_UNHALTED.THREAD" },
+    { PERF_TYPE_RAW, 0x013C, "CPU_CLK_UNHALTED.THREAD_ANY" },
+    { PERF_TYPE_RAW, 0x010E, "UOPS_ISSUED.STALL_CYCLES" },
+    { PERF_TYPE_RAW, 0x01C4, "BR_INST_RETIRED.COND" },
 };
+
+//} counter_defs[NUM_COUNTERS] = {
+//    { PERF_TYPE_HARDWARE, PERF_COUNT_HW_CPU_CYCLES,       "cpu_cycles"       },
+//    { PERF_TYPE_HARDWARE, PERF_COUNT_HW_CACHE_REFERENCES, "cache_references" },
+//    { PERF_TYPE_HARDWARE, PERF_COUNT_HW_CACHE_MISSES,     "cache_misses"     },
+//    { PERF_TYPE_HARDWARE, PERF_COUNT_HW_BRANCH_MISSES,    "branch_misses"    },
+//};
 
 /* ── internal state ─────────────────────────────────────────────────────── */
 static int          fd[NUM_COUNTERS] = {-1,-1,-1,-1};   /* one perf fd per counter          */
@@ -162,6 +170,13 @@ int perf_ts_start(FILE *fp, int interval_ms)
      *  cpu = -1        →  follow across CPU migrations                     *
      *  inherit = 1     →  include OpenMP child threads                     *
      * ─────────────────────────────────────────────────────────────────── */
+   int cpu = sched_getcpu(); 
+   if(cpu < 0) {
+	perror("sched_getcpu");
+        goto cleanup;
+    }
+
+
     for (int i = 0; i < NUM_COUNTERS; i++) {
         struct perf_event_attr pe;
         memset(&pe, 0, sizeof(pe));
@@ -169,32 +184,31 @@ int perf_ts_start(FILE *fp, int interval_ms)
         pe.size           = sizeof(pe);
         pe.config         = counter_defs[i].config;
         pe.disabled       = 1;
-        pe.exclude_kernel = 0;
-        pe.exclude_hv     = 0;
-        pe.inherit        = 1;
+        pe.exclude_kernel = 1;
+        pe.exclude_hv     = 1;
+        pe.inherit        = 0;
 
-	int cpu = sched_getcpu();
-	if (cpu < 0) {
-	    perror("sched_getcpu");
-	    goto cleanup;
-	}
 
 //	fd[i] = perf_event_open(&pe, 0, -1, -1, 0);
 //	fprintf(stderr, "[PMU DEBUG] counter[%d] fd=%d errno=%d\n", i, fd[i], errno);
-        fd[i] = perf_event_open(&pe, -1, 0, -1, 0);
-	fprintf(stderr, "[PMU DEBUG] counter[%d] fd=%d errno=%d\n", i, fd[i], errno);
+//        fd[i] = perf_event_open(&pe, -1, 0, -1, 0);//worked for older counters
+//	fd[i] = perf_event_open(&pe, getpid(), -1, -1, 0);
+	fd[i] = perf_event_open(&pe, -1, cpu, -1, 0);
+	fprintf(stderr, "[PMU DEBUG]CPU-WIDE MODE cpu = %d counter[%d] %s fd = %d errno = %d\n", cpu, i, counter_defs[i].label, fd[i], errno); 
+
 //        fd[i] = perf_event_open(&pe, -1, cpu, -1, 0);
        // fd[i] = perf_event_open(&pe, getpid(), -1, -1, 0);
-      /*   if (fd[i] == -1) {
+         if (fd[i] == -1) {
     		fprintf(stderr,
-		        "WARNING: counter [%s] not available on this CPU/VM, "
-		        "skipping (column will show 0)\n",
+		        "WARNING: counter [%s] not available on this CPU/VM,failed to open "
+		        "skipping\n",
 		        counter_defs[i].label);
 		    fd[i] = -1;   // mark as skipped, don't abort 
-		    continue;
+		    goto cleanup;
 	}
+	
      }
-    // reset and enable all counters atomically 
+    // reset and enable all counters after all fds are opened
     for (int i = 0; i < NUM_COUNTERS; i++) {
         if (ioctl(fd[i], PERF_EVENT_IOC_RESET,  0) == -1) {
             perror("ioctl RESET"); goto cleanup;
@@ -203,13 +217,7 @@ int perf_ts_start(FILE *fp, int interval_ms)
             perror("ioctl ENABLE"); goto cleanup;
         }
     }
-*/
-	for (int i = 0; i < NUM_COUNTERS; i++) {
-	    if (fd[i] == -1) continue;
-	    if (ioctl(fd[i], PERF_EVENT_IOC_RESET, 0) == -1) { perror("ioctl RESET"); goto cleanup; }
-	    if (ioctl(fd[i], PERF_EVENT_IOC_ENABLE, 0) == -1) { perror("ioctl ENABLE"); goto cleanup; }
-	}
-}
+
 
     /* launch sampler thread */
     stop_flag = 0;
