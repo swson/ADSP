@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import os
 import re
 from dataclasses import dataclass
@@ -24,14 +25,16 @@ class RunMeta:
 class TimeSeriesDatasetBuilder:
     def __init__(
         self,
-        raw_dir: str = "inference/raw/grid-494",
-        out_dir: str = "inference/data",
-        grid_size: int = 494,
+        raw_dir: str,
+        out_dir: str,
+        matrix_name: str,
+        grid_size: int,
         fill_method: str = "ffill_bfill",
         keep_source_file: bool = False,
     ) -> None:
         self.raw_dir = raw_dir
         self.out_dir = out_dir
+        self.matrix_name = matrix_name
         self.grid_size = grid_size
         self.fill_method = fill_method
         self.keep_source_file = keep_source_file
@@ -81,6 +84,8 @@ class TimeSeriesDatasetBuilder:
                 raw_df[stat_col] = stat_value
 
             insert_cols = [
+                ("matrix_name", self.matrix_name),
+                ("grid_size", self.grid_size),
                 ("label", meta.label),
                 ("injection_rate", meta.injection_rate),
                 ("error_rate", meta.error_rate),
@@ -98,6 +103,7 @@ class TimeSeriesDatasetBuilder:
             metadata_rows.append(
                 {
                     "test_id": meta.test_id,
+                    "matrix_name": self.matrix_name,
                     "grid_size": self.grid_size,
                     "phase": meta.phase,
                     "error_rate": meta.error_rate,
@@ -129,6 +135,10 @@ class TimeSeriesDatasetBuilder:
         print(f"[OK] Run metadata saved to:                  {metadata_csv}")
 
         print("\nDataset summary:")
+        print(f"  Matrix name:             {self.matrix_name}")
+        print(f"  Grid size:               {self.grid_size}")
+        print(f"  Raw dir:                 {self.raw_dir}")
+        print(f"  Output dir:              {self.out_dir}")
         print(f"  Files/runs found:        {len(run_files)}")
         print(f"  Normal runs:             {sum(1 for _, _, e, i in run_files if abs(e) < 1e-9 and abs(i) < 1e-9)}")
         print(f"  Faulty runs:             {sum(1 for _, _, e, i in run_files if not (abs(e) < 1e-9 and abs(i) < 1e-9))}")
@@ -265,13 +275,64 @@ class TimeSeriesDatasetBuilder:
         return float(np.polyfit(t, x, 1)[0])
 
 
+def infer_grid_size(matrix_name: str) -> int:
+    try:
+        return int(matrix_name.split("_")[0])
+    except Exception:
+        return -1
+
+
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Build PMU time-series dataset")
+
+    parser.add_argument(
+        "--matrix",
+        type=str,
+        default="494_bus",
+        help="Matrix name, example: 494_bus, 662_bus, 1138_bus, bcsstk19",
+    )
+
+    parser.add_argument(
+        "--raw-dir",
+        type=str,
+        default=None,
+        help="Raw input directory. If not provided, uses inference/raw/<matrix>",
+    )
+
+    parser.add_argument(
+        "--out-dir",
+        type=str,
+        default=None,
+        help="Output directory. If not provided, uses inference/data/<matrix>",
+    )
+
+    parser.add_argument(
+        "--grid-size",
+        type=int,
+        default=None,
+        help="Grid/matrix size. If not provided, inferred from matrix name if possible.",
+    )
+
+    parser.add_argument(
+        "--keep-source-file",
+        action="store_true",
+        help="Keep source_file column in merged dataset",
+    )
+
+    args = parser.parse_args()
+
+    matrix_name = args.matrix
+    raw_dir = args.raw_dir or f"inference/raw/{matrix_name}"
+    out_dir = args.out_dir or f"inference/data/{matrix_name}"
+    grid_size = args.grid_size if args.grid_size is not None else infer_grid_size(matrix_name)
+
     builder = TimeSeriesDatasetBuilder(
-        raw_dir="inference/raw/grid-494",
-        out_dir="inference/data",
-        grid_size=494,
+        raw_dir=raw_dir,
+        out_dir=out_dir,
+        matrix_name=matrix_name,
+        grid_size=grid_size,
         fill_method="ffill_bfill",
-        keep_source_file=False,
+        keep_source_file=args.keep_source_file,
     )
 
     builder.build()
