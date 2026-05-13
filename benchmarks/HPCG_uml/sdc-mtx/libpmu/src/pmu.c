@@ -167,7 +167,27 @@ int pmu_trace(struct pmu_ctx *p, union counter_config *const events, int n) {
 }
 
 void pmu_read(struct pmu_ctx *p, uint64_t *vals, int n) {
-    /* UNCHANGED */
+
+    /* In timeseries mode, perf_ts.c already collects PMU data.
+       Skip old rdpmc snapshot reads to avoid crashes. */
+    if (ts_mode) {
+
+        if (vals && p) {
+
+            int total = p->nfcntrs;
+
+            if (n > p->npcntrs)
+                total += p->npcntrs;
+            else
+                total += n;
+
+            for (int i = 0; i < total; ++i)
+                vals[i] = 0;
+        }
+
+        return;
+    }
+
     n = n > p->npcntrs ? p->npcntrs : n;
 
     for (int i = 0; i < p->nfcntrs; ++i)
@@ -178,6 +198,8 @@ void pmu_read(struct pmu_ctx *p, uint64_t *vals, int n) {
     for (int i = 0; i < n; ++i)
         vals[i] = rdpmc(0, i);
 }
+
+
 
 int pmu_exit(struct pmu_ctx *p) {
     if (ts_mode) {

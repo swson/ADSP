@@ -84,8 +84,6 @@ class TimeSeriesDatasetBuilder:
                 raw_df[stat_col] = stat_value
 
             insert_cols = [
-                ("matrix_name", self.matrix_name),
-                ("grid_size", self.grid_size),
                 ("label", meta.label),
                 ("injection_rate", meta.injection_rate),
                 ("error_rate", meta.error_rate),

@@ -21,9 +21,10 @@ sudo modprobe msr
 SCRIPT_DIR=$(dirname "$(realpath "$0")")
 
 BIN="$SCRIPT_DIR/hpcg-3.1/build/bin/xhpcg"
-LIBPMU_DIR="$SCRIPT_DIR/libpmu"
 MATRIX_PATH="$SCRIPT_DIR/../../../data/datasets/SuiteSparse_matrices/${MATRIX_NAME}.mtx"
 OUT="$SCRIPT_DIR/inference/raw/${MATRIX_NAME}"
+LOG_OUT="$SCRIPT_DIR/inference/hpcg_logs/${MATRIX_NAME}"
+
 
 if [ ! -f "$BIN" ]; then
   echo "Error: xhpcg binary not found at: $BIN"
@@ -35,7 +36,7 @@ if [ ! -f "$MATRIX_PATH" ]; then
   exit 1
 fi
 
-if [ ! -f "$LIBPMU_DIR/libpmu.so" ]; then
+if [ ! -f "$SCRIPT_DIR/libpmu/libpmu.so" ]; then
   echo "Error: libpmu.so not found at: $LIBPMU_DIR/libpmu.so"
   exit 1
 fi
@@ -49,6 +50,9 @@ echo "Matrix path:   $MATRIX_PATH"
 echo "Output dir:    $OUT"
 echo "Binary:        $BIN"
 echo "=============================================="
+
+mkdir -p "$LOG_OUT"
+cd "$LOG_OUT" || exit 1
 
 # Phase 1: Normal runs, repeated 100 times
 FIXED_ERR_RATE=0.0
@@ -67,7 +71,7 @@ for i in $(seq 0 99); do
     HPCG_INJ_RATE="$FIXED_INJ_RATE" \
     HPCG_TEST_ID="$i" \
     HPCG_MATRIX_PATH="$MATRIX_PATH" \
-    LD_LIBRARY_PATH="$LIBPMU_DIR":/usr/local/lib \
+    LD_LIBRARY_PATH="$SCRIPT_DIR/libpmu":/usr/local/lib \
     "$BIN" "$GRID_SIZE" "$GRID_SIZE" 1
 done
 
@@ -88,7 +92,7 @@ for ERR_RATE in $(seq 0.1 0.1 1.0); do
       HPCG_INJ_RATE="$INJ_RATE" \
       HPCG_TEST_ID="$i" \
       HPCG_MATRIX_PATH="$MATRIX_PATH" \
-      LD_LIBRARY_PATH="$LIBPMU_DIR":/usr/local/lib \
+      LD_LIBRARY_PATH="$SCRIPT_DIR/libpmu":/usr/local/lib \
       "$BIN" "$GRID_SIZE" "$GRID_SIZE" 1
 
     ((i++))
