@@ -1,0 +1,13 @@
+MKL_VERBOSE oneMKL 2024.0 Update 2 Product build 20240605 for Intel(R) 64 architecture Intel(R) Advanced Vector Extensions 2 (Intel(R) AVX2) enabled processors, Lnx 2.40GHz lp64 gnu_thread
+MKL_VERBOSE SGEMM(N,N,512,512,512,0x7fffed0a5110,0x562cd7fc8c80,512,0x562cd7ec8c00,512,0x7fffed0a5130,0x562cd80c8d00,512) 3.86ms CNR:OFF Dyn:0 FastMM:1 TID:0  NThr:1
+MKL_VERBOSE SGEMM(N,N,512,512,512,0x7fffed0a5110,0x562cd7fc8c80,512,0x562cd7ec8c00,512,0x7fffed0a5130,0x562cd81c8d80,512) 3.43ms CNR:OFF Dyn:0 FastMM:1 TID:0  NThr:1
+MKL_VERBOSE SGEMM(N,N,512,512,512,0x7fffed0a5110,0x562cd7fc8c80,512,0x562cd7ec8c00,512,0x7fffed0a5130,0x562cd82c8e00,512) 3.42ms CNR:OFF Dyn:0 FastMM:1 TID:0  NThr:1
+MKL_VERBOSE SGEMM(N,N,512,512,512,0x7fffed0a5110,0x562cd7fc8c80,512,0x562cd7ec8c00,512,0x7fffed0a5130,0x562cd83c8e80,512) 3.42ms CNR:OFF Dyn:0 FastMM:1 TID:0  NThr:1
+MKL_VERBOSE SGEMM(N,N,512,512,512,0x7fffed0a5110,0x562cd7fc8c80,512,0x562cd7ec8c00,512,0x7fffed0a5130,0x562cd84c8f00,512) 3.42ms CNR:OFF Dyn:0 FastMM:1 TID:0  NThr:1
+MKL_VERBOSE SGEMM(N,N,512,512,512,0x7fffed0a5110,0x562cd7fc8c80,512,0x562cd7ec8c00,512,0x7fffed0a5130,0x562cd85c8f80,512) 3.42ms CNR:OFF Dyn:0 FastMM:1 TID:0  NThr:1
+PyTorch: 2.14.1+cpu
+Matrix size: torch.Size([512, 512])
+Output shape: torch.Size([512, 512])
+Sample result: -29.063709259033203
+Execution time: 3.442 ms
+Finite results: True

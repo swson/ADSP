@@ -1,0 +1,6 @@
+Total elements: 262144
+Changed elements: 1
+Maximum absolute difference: 100.0
+Baseline finite: True
+Faulty finite: True
+C[0,0]: -29.063709 -> 70.936295, diff=100.000000

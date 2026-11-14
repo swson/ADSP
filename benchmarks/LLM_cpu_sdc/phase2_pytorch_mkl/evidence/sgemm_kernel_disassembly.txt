@@ -1,0 +1,1942 @@
+
+/users/gouthami/llama-cpu-sdc/llama-cpu-env/lib/python3.10/site-packages/torch/lib/libtorch_cpu.so:     file format elf64-x86-64
+
+
+Disassembly of section .init:
+
+Disassembly of section .plt:
+
+Disassembly of section .text:
+
+000000000dbb7500 <mkl_blas_avx2_sgemm_kernel_0>:
+     dbb7500:	f3 0f 1e fa          	endbr64
+     dbb7504:	48 83 ec 40          	sub    rsp,0x40
+     dbb7508:	48 89 1c 24          	mov    QWORD PTR [rsp],rbx
+     dbb750c:	48 89 6c 24 08       	mov    QWORD PTR [rsp+0x8],rbp
+     dbb7511:	4c 89 64 24 10       	mov    QWORD PTR [rsp+0x10],r12
+     dbb7516:	4c 89 6c 24 18       	mov    QWORD PTR [rsp+0x18],r13
+     dbb751b:	4c 89 74 24 20       	mov    QWORD PTR [rsp+0x20],r14
+     dbb7520:	4c 89 7c 24 28       	mov    QWORD PTR [rsp+0x28],r15
+     dbb7525:	48 8b 3f             	mov    rdi,QWORD PTR [rdi]
+     dbb7528:	48 8b 36             	mov    rsi,QWORD PTR [rsi]
+     dbb752b:	48 8b 12             	mov    rdx,QWORD PTR [rdx]
+     dbb752e:	4c 8b 54 24 48       	mov    r10,QWORD PTR [rsp+0x48]
+     dbb7533:	4c 8b 5c 24 50       	mov    r11,QWORD PTR [rsp+0x50]
+     dbb7538:	49 83 e8 80          	sub    r8,0xffffffffffffff80
+     dbb753c:	49 83 e9 80          	sub    r9,0xffffffffffffff80
+     dbb7540:	49 c1 e3 02          	shl    r11,0x2
+     dbb7544:	49 89 fd             	mov    r13,rdi
+     dbb7547:	49 83 fd 18          	cmp    r13,0x18
+     dbb754b:	0f 8c 0f 0b 00 00    	jl     dbb8060 <mkl_blas_avx2_sgemm_kernel_0+0xb60>
+     dbb7551:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+     dbb7558:	00 00 00 00
+     dbb755c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+     dbb7560:	48 89 d1             	mov    rcx,rdx
+     dbb7563:	48 6b c9 60          	imul   rcx,rcx,0x60
+     dbb7567:	4c 01 c1             	add    rcx,r8
+     dbb756a:	4d 89 d6             	mov    r14,r10
+     dbb756d:	4f 8d 3c 5a          	lea    r15,[r10+r11*2]
+     dbb7571:	49 83 c2 60          	add    r10,0x60
+     dbb7575:	4c 89 cd             	mov    rbp,r9
+     dbb7578:	49 89 f4             	mov    r12,rsi
+     dbb757b:	49 c1 fc 02          	sar    r12,0x2
+     dbb757f:	0f 8e 3b 06 00 00    	jle    dbb7bc0 <mkl_blas_avx2_sgemm_kernel_0+0x6c0>
+     dbb7585:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+     dbb758c:	00 00 00 00
+     dbb7590:	0f 18 59 80          	prefetcht2 BYTE PTR [rcx-0x80]
+     dbb7594:	c5 dc 57 e4          	vxorps ymm4,ymm4,ymm4
+     dbb7598:	c4 e2 7d 18 5d 80    	vbroadcastss ymm3,DWORD PTR [rbp-0x80]
+     dbb759e:	c5 d4 57 ed          	vxorps ymm5,ymm5,ymm5
+     dbb75a2:	c4 c1 7c 10 40 80    	vmovups ymm0,YMMWORD PTR [r8-0x80]
+     dbb75a8:	c5 cc 57 f6          	vxorps ymm6,ymm6,ymm6
+     dbb75ac:	c4 c1 7c 10 48 a0    	vmovups ymm1,YMMWORD PTR [r8-0x60]
+     dbb75b2:	c5 c4 57 ff          	vxorps ymm7,ymm7,ymm7
+     dbb75b6:	c4 c1 7c 10 50 c0    	vmovups ymm2,YMMWORD PTR [r8-0x40]
+     dbb75bc:	c4 41 3c 57 c0       	vxorps ymm8,ymm8,ymm8
+     dbb75c1:	c4 41 34 57 c9       	vxorps ymm9,ymm9,ymm9
+     dbb75c6:	41 0f 18 4e 1c       	prefetcht0 BYTE PTR [r14+0x1c]
+     dbb75cb:	43 0f 18 4c 1e 1c    	prefetcht0 BYTE PTR [r14+r11*1+0x1c]
+     dbb75d1:	c4 41 2c 57 d2       	vxorps ymm10,ymm10,ymm10
+     dbb75d6:	c4 41 24 57 db       	vxorps ymm11,ymm11,ymm11
+     dbb75db:	41 0f 18 4f 1c       	prefetcht0 BYTE PTR [r15+0x1c]
+     dbb75e0:	43 0f 18 4c 1f 1c    	prefetcht0 BYTE PTR [r15+r11*1+0x1c]
+     dbb75e6:	c4 41 1c 57 e4       	vxorps ymm12,ymm12,ymm12
+     dbb75eb:	c4 41 14 57 ed       	vxorps ymm13,ymm13,ymm13
+     dbb75f0:	c4 41 0c 57 f6       	vxorps ymm14,ymm14,ymm14
+     dbb75f5:	c4 41 04 57 ff       	vxorps ymm15,ymm15,ymm15
+     dbb75fa:	4c 89 c3             	mov    rbx,r8
+     dbb75fd:	48 89 d0             	mov    rax,rdx
+     dbb7600:	48 c1 f8 02          	sar    rax,0x2
+     dbb7604:	0f 8e 36 04 00 00    	jle    dbb7a40 <mkl_blas_avx2_sgemm_kernel_0+0x540>
+     dbb760a:	48 83 e8 22          	sub    rax,0x22
+     dbb760e:	0f 8e fc 01 00 00    	jle    dbb7810 <mkl_blas_avx2_sgemm_kernel_0+0x310>
+     dbb7614:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+     dbb761b:	00 00 00 00
+     dbb761f:	90                   	nop
+     dbb7620:	c4 e2 65 b8 e0       	vfmadd231ps ymm4,ymm3,ymm0
+     dbb7625:	c4 62 65 b8 c1       	vfmadd231ps ymm8,ymm3,ymm1
+     dbb762a:	c4 62 65 b8 e2       	vfmadd231ps ymm12,ymm3,ymm2
+     dbb762f:	0f 18 8d 00 01 00 00 	prefetcht0 BYTE PTR [rbp+0x100]
+     dbb7636:	c4 e2 7d 18 5d 84    	vbroadcastss ymm3,DWORD PTR [rbp-0x7c]
+     dbb763c:	0f 18 8b 40 02 00 00 	prefetcht0 BYTE PTR [rbx+0x240]
+     dbb7643:	c4 e2 65 b8 e8       	vfmadd231ps ymm5,ymm3,ymm0
+     dbb7648:	c4 62 65 b8 c9       	vfmadd231ps ymm9,ymm3,ymm1
+     dbb764d:	c4 62 65 b8 ea       	vfmadd231ps ymm13,ymm3,ymm2
+     dbb7652:	c4 e2 7d 18 5d 88    	vbroadcastss ymm3,DWORD PTR [rbp-0x78]
+     dbb7658:	c4 e2 65 b8 f0       	vfmadd231ps ymm6,ymm3,ymm0
+     dbb765d:	c4 62 65 b8 d1       	vfmadd231ps ymm10,ymm3,ymm1
+     dbb7662:	c4 62 65 b8 f2       	vfmadd231ps ymm14,ymm3,ymm2
+     dbb7667:	c4 e2 7d 18 5d 8c    	vbroadcastss ymm3,DWORD PTR [rbp-0x74]
+     dbb766d:	0f 18 8b 80 02 00 00 	prefetcht0 BYTE PTR [rbx+0x280]
+     dbb7674:	c4 e2 65 b8 f8       	vfmadd231ps ymm7,ymm3,ymm0
+     dbb7679:	c5 fc 10 43 e0       	vmovups ymm0,YMMWORD PTR [rbx-0x20]
+     dbb767e:	c4 62 65 b8 d9       	vfmadd231ps ymm11,ymm3,ymm1
+     dbb7683:	c5 fc 10 0b          	vmovups ymm1,YMMWORD PTR [rbx]
+     dbb7687:	c4 62 65 b8 fa       	vfmadd231ps ymm15,ymm3,ymm2
+     dbb768c:	c5 fc 10 53 20       	vmovups ymm2,YMMWORD PTR [rbx+0x20]
+     dbb7691:	c4 e2 7d 18 5d 90    	vbroadcastss ymm3,DWORD PTR [rbp-0x70]
+     dbb7697:	c4 e2 65 b8 e0       	vfmadd231ps ymm4,ymm3,ymm0
+     dbb769c:	c4 62 65 b8 c1       	vfmadd231ps ymm8,ymm3,ymm1
+     dbb76a1:	c4 62 65 b8 e2       	vfmadd231ps ymm12,ymm3,ymm2
+     dbb76a6:	c4 e2 7d 18 5d 94    	vbroadcastss ymm3,DWORD PTR [rbp-0x6c]
+     dbb76ac:	c4 e2 65 b8 e8       	vfmadd231ps ymm5,ymm3,ymm0
+     dbb76b1:	c4 62 65 b8 c9       	vfmadd231ps ymm9,ymm3,ymm1
+     dbb76b6:	c4 62 65 b8 ea       	vfmadd231ps ymm13,ymm3,ymm2
+     dbb76bb:	c4 e2 7d 18 5d 98    	vbroadcastss ymm3,DWORD PTR [rbp-0x68]
+     dbb76c1:	0f 18 8b c0 02 00 00 	prefetcht0 BYTE PTR [rbx+0x2c0]
+     dbb76c8:	c4 e2 65 b8 f0       	vfmadd231ps ymm6,ymm3,ymm0
+     dbb76cd:	c4 62 65 b8 d1       	vfmadd231ps ymm10,ymm3,ymm1
+     dbb76d2:	c4 62 65 b8 f2       	vfmadd231ps ymm14,ymm3,ymm2
+     dbb76d7:	c4 e2 7d 18 5d 9c    	vbroadcastss ymm3,DWORD PTR [rbp-0x64]
+     dbb76dd:	c4 e2 65 b8 f8       	vfmadd231ps ymm7,ymm3,ymm0
+     dbb76e2:	c5 fc 10 43 40       	vmovups ymm0,YMMWORD PTR [rbx+0x40]
+     dbb76e7:	c4 62 65 b8 d9       	vfmadd231ps ymm11,ymm3,ymm1
+     dbb76ec:	c5 fc 10 4b 60       	vmovups ymm1,YMMWORD PTR [rbx+0x60]
+     dbb76f1:	c4 62 65 b8 fa       	vfmadd231ps ymm15,ymm3,ymm2
+     dbb76f6:	c5 fc 10 93 80 00 00 	vmovups ymm2,YMMWORD PTR [rbx+0x80]
+     dbb76fd:	00
+     dbb76fe:	c4 e2 7d 18 5d a0    	vbroadcastss ymm3,DWORD PTR [rbp-0x60]
+     dbb7704:	c4 e2 65 b8 e0       	vfmadd231ps ymm4,ymm3,ymm0
+     dbb7709:	c4 62 65 b8 c1       	vfmadd231ps ymm8,ymm3,ymm1
+     dbb770e:	0f 18 8b 00 03 00 00 	prefetcht0 BYTE PTR [rbx+0x300]
+     dbb7715:	c4 62 65 b8 e2       	vfmadd231ps ymm12,ymm3,ymm2
+     dbb771a:	c4 e2 7d 18 5d a4    	vbroadcastss ymm3,DWORD PTR [rbp-0x5c]
+     dbb7720:	c4 e2 65 b8 e8       	vfmadd231ps ymm5,ymm3,ymm0
+     dbb7725:	c4 62 65 b8 c9       	vfmadd231ps ymm9,ymm3,ymm1
+     dbb772a:	c4 62 65 b8 ea       	vfmadd231ps ymm13,ymm3,ymm2
+     dbb772f:	c4 e2 7d 18 5d a8    	vbroadcastss ymm3,DWORD PTR [rbp-0x58]
+     dbb7735:	c4 e2 65 b8 f0       	vfmadd231ps ymm6,ymm3,ymm0
+     dbb773a:	c4 62 65 b8 d1       	vfmadd231ps ymm10,ymm3,ymm1
+     dbb773f:	c4 62 65 b8 f2       	vfmadd231ps ymm14,ymm3,ymm2
+     dbb7744:	c4 e2 7d 18 5d ac    	vbroadcastss ymm3,DWORD PTR [rbp-0x54]
+     dbb774a:	0f 18 8b 40 03 00 00 	prefetcht0 BYTE PTR [rbx+0x340]
+     dbb7751:	c4 e2 65 b8 f8       	vfmadd231ps ymm7,ymm3,ymm0
+     dbb7756:	c5 fc 10 83 a0 00 00 	vmovups ymm0,YMMWORD PTR [rbx+0xa0]
+     dbb775d:	00
+     dbb775e:	c4 62 65 b8 d9       	vfmadd231ps ymm11,ymm3,ymm1
+     dbb7763:	c5 fc 10 8b c0 00 00 	vmovups ymm1,YMMWORD PTR [rbx+0xc0]
+     dbb776a:	00
+     dbb776b:	c4 62 65 b8 fa       	vfmadd231ps ymm15,ymm3,ymm2
+     dbb7770:	c5 fc 10 93 e0 00 00 	vmovups ymm2,YMMWORD PTR [rbx+0xe0]
+     dbb7777:	00
+     dbb7778:	c4 e2 7d 18 5d b0    	vbroadcastss ymm3,DWORD PTR [rbp-0x50]
+     dbb777e:	c4 e2 65 b8 e0       	vfmadd231ps ymm4,ymm3,ymm0
+     dbb7783:	c4 62 65 b8 c1       	vfmadd231ps ymm8,ymm3,ymm1
+     dbb7788:	c4 62 65 b8 e2       	vfmadd231ps ymm12,ymm3,ymm2
+     dbb778d:	c4 e2 7d 18 5d b4    	vbroadcastss ymm3,DWORD PTR [rbp-0x4c]
+     dbb7793:	0f 18 8b 80 03 00 00 	prefetcht0 BYTE PTR [rbx+0x380]
+     dbb779a:	c4 e2 65 b8 e8       	vfmadd231ps ymm5,ymm3,ymm0
+     dbb779f:	c4 62 65 b8 c9       	vfmadd231ps ymm9,ymm3,ymm1
+     dbb77a4:	c4 62 65 b8 ea       	vfmadd231ps ymm13,ymm3,ymm2
+     dbb77a9:	c4 e2 7d 18 5d b8    	vbroadcastss ymm3,DWORD PTR [rbp-0x48]
+     dbb77af:	c4 e2 65 b8 f0       	vfmadd231ps ymm6,ymm3,ymm0
+     dbb77b4:	c4 62 65 b8 d1       	vfmadd231ps ymm10,ymm3,ymm1
+     dbb77b9:	c4 62 65 b8 f2       	vfmadd231ps ymm14,ymm3,ymm2
+     dbb77be:	c4 e2 7d 18 5d bc    	vbroadcastss ymm3,DWORD PTR [rbp-0x44]
+     dbb77c4:	48 83 ed c0          	sub    rbp,0xffffffffffffffc0
+     dbb77c8:	c4 e2 65 b8 f8       	vfmadd231ps ymm7,ymm3,ymm0
+     dbb77cd:	c5 fc 10 83 00 01 00 	vmovups ymm0,YMMWORD PTR [rbx+0x100]
+     dbb77d4:	00
+     dbb77d5:	c4 62 65 b8 d9       	vfmadd231ps ymm11,ymm3,ymm1
+     dbb77da:	c5 fc 10 8b 20 01 00 	vmovups ymm1,YMMWORD PTR [rbx+0x120]
+     dbb77e1:	00
+     dbb77e2:	c4 62 65 b8 fa       	vfmadd231ps ymm15,ymm3,ymm2
+     dbb77e7:	c5 fc 10 93 40 01 00 	vmovups ymm2,YMMWORD PTR [rbx+0x140]
+     dbb77ee:	00
+     dbb77ef:	48 81 eb 80 fe ff ff 	sub    rbx,0xfffffffffffffe80
+     dbb77f6:	48 83 e8 01          	sub    rax,0x1
+     dbb77fa:	c4 e2 7d 18 5d 80    	vbroadcastss ymm3,DWORD PTR [rbp-0x80]
+     dbb7800:	0f 8f 1a fe ff ff    	jg     dbb7620 <mkl_blas_avx2_sgemm_kernel_0+0x120>
+     dbb7806:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
+     dbb780d:	00 00 00
+     dbb7810:	0f 18 59 c0          	prefetcht2 BYTE PTR [rcx-0x40]
+     dbb7814:	41 0f 18 4e 1c       	prefetcht0 BYTE PTR [r14+0x1c]
+     dbb7819:	43 0f 18 4c 1e 1c    	prefetcht0 BYTE PTR [r14+r11*1+0x1c]
+     dbb781f:	41 0f 18 4f 1c       	prefetcht0 BYTE PTR [r15+0x1c]
+     dbb7824:	43 0f 18 4c 1f 1c    	prefetcht0 BYTE PTR [r15+r11*1+0x1c]
+     dbb782a:	41 0f 18 4e 5c       	prefetcht0 BYTE PTR [r14+0x5c]
+     dbb782f:	43 0f 18 4c 1e 5c    	prefetcht0 BYTE PTR [r14+r11*1+0x5c]
+     dbb7835:	41 0f 18 4f 5c       	prefetcht0 BYTE PTR [r15+0x5c]
+     dbb783a:	43 0f 18 4c 1f 5c    	prefetcht0 BYTE PTR [r15+r11*1+0x5c]
+     dbb7840:	48 83 c0 22          	add    rax,0x22
+     dbb7844:	0f 18 19             	prefetcht2 BYTE PTR [rcx]
+     dbb7847:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+     dbb784e:	00 00
+     dbb7850:	c4 e2 65 b8 e0       	vfmadd231ps ymm4,ymm3,ymm0
+     dbb7855:	c4 62 65 b8 c1       	vfmadd231ps ymm8,ymm3,ymm1
+     dbb785a:	c4 62 65 b8 e2       	vfmadd231ps ymm12,ymm3,ymm2
+     dbb785f:	0f 18 8d 00 01 00 00 	prefetcht0 BYTE PTR [rbp+0x100]
+     dbb7866:	c4 e2 7d 18 5d 84    	vbroadcastss ymm3,DWORD PTR [rbp-0x7c]
+     dbb786c:	0f 18 8b 40 02 00 00 	prefetcht0 BYTE PTR [rbx+0x240]
+     dbb7873:	c4 e2 65 b8 e8       	vfmadd231ps ymm5,ymm3,ymm0
+     dbb7878:	c4 62 65 b8 c9       	vfmadd231ps ymm9,ymm3,ymm1
+     dbb787d:	c4 62 65 b8 ea       	vfmadd231ps ymm13,ymm3,ymm2
+     dbb7882:	c4 e2 7d 18 5d 88    	vbroadcastss ymm3,DWORD PTR [rbp-0x78]
+     dbb7888:	c4 e2 65 b8 f0       	vfmadd231ps ymm6,ymm3,ymm0
+     dbb788d:	c4 62 65 b8 d1       	vfmadd231ps ymm10,ymm3,ymm1
+     dbb7892:	c4 62 65 b8 f2       	vfmadd231ps ymm14,ymm3,ymm2
+     dbb7897:	c4 e2 7d 18 5d 8c    	vbroadcastss ymm3,DWORD PTR [rbp-0x74]
+     dbb789d:	0f 18 8b 80 02 00 00 	prefetcht0 BYTE PTR [rbx+0x280]
+     dbb78a4:	c4 e2 65 b8 f8       	vfmadd231ps ymm7,ymm3,ymm0
+     dbb78a9:	c5 fc 10 43 e0       	vmovups ymm0,YMMWORD PTR [rbx-0x20]
+     dbb78ae:	c4 62 65 b8 d9       	vfmadd231ps ymm11,ymm3,ymm1
+     dbb78b3:	c5 fc 10 0b          	vmovups ymm1,YMMWORD PTR [rbx]
+     dbb78b7:	c4 62 65 b8 fa       	vfmadd231ps ymm15,ymm3,ymm2
+     dbb78bc:	c5 fc 10 53 20       	vmovups ymm2,YMMWORD PTR [rbx+0x20]
+     dbb78c1:	c4 e2 7d 18 5d 90    	vbroadcastss ymm3,DWORD PTR [rbp-0x70]
+     dbb78c7:	c4 e2 65 b8 e0       	vfmadd231ps ymm4,ymm3,ymm0
+     dbb78cc:	c4 62 65 b8 c1       	vfmadd231ps ymm8,ymm3,ymm1
+     dbb78d1:	c4 62 65 b8 e2       	vfmadd231ps ymm12,ymm3,ymm2
+     dbb78d6:	c4 e2 7d 18 5d 94    	vbroadcastss ymm3,DWORD PTR [rbp-0x6c]
+     dbb78dc:	c4 e2 65 b8 e8       	vfmadd231ps ymm5,ymm3,ymm0
+     dbb78e1:	c4 62 65 b8 c9       	vfmadd231ps ymm9,ymm3,ymm1
+     dbb78e6:	c4 62 65 b8 ea       	vfmadd231ps ymm13,ymm3,ymm2
+     dbb78eb:	c4 e2 7d 18 5d 98    	vbroadcastss ymm3,DWORD PTR [rbp-0x68]
+     dbb78f1:	0f 18 8b c0 02 00 00 	prefetcht0 BYTE PTR [rbx+0x2c0]
+     dbb78f8:	c4 e2 65 b8 f0       	vfmadd231ps ymm6,ymm3,ymm0
+     dbb78fd:	c4 62 65 b8 d1       	vfmadd231ps ymm10,ymm3,ymm1
+     dbb7902:	c4 62 65 b8 f2       	vfmadd231ps ymm14,ymm3,ymm2
+     dbb7907:	c4 e2 7d 18 5d 9c    	vbroadcastss ymm3,DWORD PTR [rbp-0x64]
+     dbb790d:	c4 e2 65 b8 f8       	vfmadd231ps ymm7,ymm3,ymm0
+     dbb7912:	c5 fc 10 43 40       	vmovups ymm0,YMMWORD PTR [rbx+0x40]
+     dbb7917:	c4 62 65 b8 d9       	vfmadd231ps ymm11,ymm3,ymm1
+     dbb791c:	c5 fc 10 4b 60       	vmovups ymm1,YMMWORD PTR [rbx+0x60]
+     dbb7921:	c4 62 65 b8 fa       	vfmadd231ps ymm15,ymm3,ymm2
+     dbb7926:	c5 fc 10 93 80 00 00 	vmovups ymm2,YMMWORD PTR [rbx+0x80]
+     dbb792d:	00
+     dbb792e:	c4 e2 7d 18 5d a0    	vbroadcastss ymm3,DWORD PTR [rbp-0x60]
+     dbb7934:	c4 e2 65 b8 e0       	vfmadd231ps ymm4,ymm3,ymm0
+     dbb7939:	c4 62 65 b8 c1       	vfmadd231ps ymm8,ymm3,ymm1
+     dbb793e:	0f 18 8b 00 03 00 00 	prefetcht0 BYTE PTR [rbx+0x300]
+     dbb7945:	c4 62 65 b8 e2       	vfmadd231ps ymm12,ymm3,ymm2
+     dbb794a:	c4 e2 7d 18 5d a4    	vbroadcastss ymm3,DWORD PTR [rbp-0x5c]
+     dbb7950:	c4 e2 65 b8 e8       	vfmadd231ps ymm5,ymm3,ymm0
+     dbb7955:	c4 62 65 b8 c9       	vfmadd231ps ymm9,ymm3,ymm1
+     dbb795a:	c4 62 65 b8 ea       	vfmadd231ps ymm13,ymm3,ymm2
+     dbb795f:	c4 e2 7d 18 5d a8    	vbroadcastss ymm3,DWORD PTR [rbp-0x58]
+     dbb7965:	c4 e2 65 b8 f0       	vfmadd231ps ymm6,ymm3,ymm0
+     dbb796a:	c4 62 65 b8 d1       	vfmadd231ps ymm10,ymm3,ymm1
+     dbb796f:	c4 62 65 b8 f2       	vfmadd231ps ymm14,ymm3,ymm2
+     dbb7974:	c4 e2 7d 18 5d ac    	vbroadcastss ymm3,DWORD PTR [rbp-0x54]
+     dbb797a:	0f 18 8b 40 03 00 00 	prefetcht0 BYTE PTR [rbx+0x340]
+     dbb7981:	c4 e2 65 b8 f8       	vfmadd231ps ymm7,ymm3,ymm0
+     dbb7986:	c5 fc 10 83 a0 00 00 	vmovups ymm0,YMMWORD PTR [rbx+0xa0]
+     dbb798d:	00
+     dbb798e:	c4 62 65 b8 d9       	vfmadd231ps ymm11,ymm3,ymm1
+     dbb7993:	c5 fc 10 8b c0 00 00 	vmovups ymm1,YMMWORD PTR [rbx+0xc0]
+     dbb799a:	00
+     dbb799b:	c4 62 65 b8 fa       	vfmadd231ps ymm15,ymm3,ymm2
+     dbb79a0:	c5 fc 10 93 e0 00 00 	vmovups ymm2,YMMWORD PTR [rbx+0xe0]
+     dbb79a7:	00
+     dbb79a8:	c4 e2 7d 18 5d b0    	vbroadcastss ymm3,DWORD PTR [rbp-0x50]
+     dbb79ae:	c4 e2 65 b8 e0       	vfmadd231ps ymm4,ymm3,ymm0
+     dbb79b3:	c4 62 65 b8 c1       	vfmadd231ps ymm8,ymm3,ymm1
+     dbb79b8:	c4 62 65 b8 e2       	vfmadd231ps ymm12,ymm3,ymm2
+     dbb79bd:	c4 e2 7d 18 5d b4    	vbroadcastss ymm3,DWORD PTR [rbp-0x4c]
+     dbb79c3:	0f 18 8b 80 03 00 00 	prefetcht0 BYTE PTR [rbx+0x380]
+     dbb79ca:	c4 e2 65 b8 e8       	vfmadd231ps ymm5,ymm3,ymm0
+     dbb79cf:	c4 62 65 b8 c9       	vfmadd231ps ymm9,ymm3,ymm1
+     dbb79d4:	c4 62 65 b8 ea       	vfmadd231ps ymm13,ymm3,ymm2
+     dbb79d9:	c4 e2 7d 18 5d b8    	vbroadcastss ymm3,DWORD PTR [rbp-0x48]
+     dbb79df:	c4 e2 65 b8 f0       	vfmadd231ps ymm6,ymm3,ymm0
+     dbb79e4:	c4 62 65 b8 d1       	vfmadd231ps ymm10,ymm3,ymm1
+     dbb79e9:	c4 62 65 b8 f2       	vfmadd231ps ymm14,ymm3,ymm2
+     dbb79ee:	c4 e2 7d 18 5d bc    	vbroadcastss ymm3,DWORD PTR [rbp-0x44]
+     dbb79f4:	48 83 ed c0          	sub    rbp,0xffffffffffffffc0
+     dbb79f8:	c4 e2 65 b8 f8       	vfmadd231ps ymm7,ymm3,ymm0
+     dbb79fd:	c5 fc 10 83 00 01 00 	vmovups ymm0,YMMWORD PTR [rbx+0x100]
+     dbb7a04:	00
+     dbb7a05:	c4 62 65 b8 d9       	vfmadd231ps ymm11,ymm3,ymm1
+     dbb7a0a:	c5 fc 10 8b 20 01 00 	vmovups ymm1,YMMWORD PTR [rbx+0x120]
+     dbb7a11:	00
+     dbb7a12:	c4 62 65 b8 fa       	vfmadd231ps ymm15,ymm3,ymm2
+     dbb7a17:	c5 fc 10 93 40 01 00 	vmovups ymm2,YMMWORD PTR [rbx+0x140]
+     dbb7a1e:	00
+     dbb7a1f:	48 81 eb 80 fe ff ff 	sub    rbx,0xfffffffffffffe80
+     dbb7a26:	c4 e2 7d 18 5d 80    	vbroadcastss ymm3,DWORD PTR [rbp-0x80]
+     dbb7a2c:	48 83 e8 01          	sub    rax,0x1
+     dbb7a30:	3e 0f 8f 19 fe ff ff 	ds jg  dbb7850 <mkl_blas_avx2_sgemm_kernel_0+0x350>
+     dbb7a37:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+     dbb7a3e:	00 00
+     dbb7a40:	48 89 d0             	mov    rax,rdx
+     dbb7a43:	48 83 e0 03          	and    rax,0x3
+     dbb7a47:	74 77                	je     dbb7ac0 <mkl_blas_avx2_sgemm_kernel_0+0x5c0>
+     dbb7a49:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+     dbb7a50:	c4 e2 65 b8 e0       	vfmadd231ps ymm4,ymm3,ymm0
+     dbb7a55:	c4 62 65 b8 c1       	vfmadd231ps ymm8,ymm3,ymm1
+     dbb7a5a:	c4 62 65 b8 e2       	vfmadd231ps ymm12,ymm3,ymm2
+     dbb7a5f:	c4 e2 7d 18 5d 84    	vbroadcastss ymm3,DWORD PTR [rbp-0x7c]
+     dbb7a65:	c4 e2 65 b8 e8       	vfmadd231ps ymm5,ymm3,ymm0
+     dbb7a6a:	c4 62 65 b8 c9       	vfmadd231ps ymm9,ymm3,ymm1
+     dbb7a6f:	c4 62 65 b8 ea       	vfmadd231ps ymm13,ymm3,ymm2
+     dbb7a74:	c4 e2 7d 18 5d 88    	vbroadcastss ymm3,DWORD PTR [rbp-0x78]
+     dbb7a7a:	c4 e2 65 b8 f0       	vfmadd231ps ymm6,ymm3,ymm0
+     dbb7a7f:	c4 62 65 b8 d1       	vfmadd231ps ymm10,ymm3,ymm1
+     dbb7a84:	c4 62 65 b8 f2       	vfmadd231ps ymm14,ymm3,ymm2
+     dbb7a89:	c4 e2 7d 18 5d 8c    	vbroadcastss ymm3,DWORD PTR [rbp-0x74]
+     dbb7a8f:	c4 e2 65 b8 f8       	vfmadd231ps ymm7,ymm3,ymm0
+     dbb7a94:	c5 fc 10 43 e0       	vmovups ymm0,YMMWORD PTR [rbx-0x20]
+     dbb7a99:	c4 62 65 b8 d9       	vfmadd231ps ymm11,ymm3,ymm1
+     dbb7a9e:	c5 fc 10 0b          	vmovups ymm1,YMMWORD PTR [rbx]
+     dbb7aa2:	c4 62 65 b8 fa       	vfmadd231ps ymm15,ymm3,ymm2
+     dbb7aa7:	c5 fc 10 53 20       	vmovups ymm2,YMMWORD PTR [rbx+0x20]
+     dbb7aac:	c4 e2 7d 18 5d 90    	vbroadcastss ymm3,DWORD PTR [rbp-0x70]
+     dbb7ab2:	48 83 eb a0          	sub    rbx,0xffffffffffffffa0
+     dbb7ab6:	48 83 ed f0          	sub    rbp,0xfffffffffffffff0
+     dbb7aba:	48 ff c8             	dec    rax
+     dbb7abd:	3e 7f 90             	ds jg  dbb7a50 <mkl_blas_avx2_sgemm_kernel_0+0x550>
+     dbb7ac0:	c4 c1 7c 10 06       	vmovups ymm0,YMMWORD PTR [r14]
+     dbb7ac5:	c5 fc 58 e4          	vaddps ymm4,ymm0,ymm4
+     dbb7ac9:	c4 c1 7c 10 4e 20    	vmovups ymm1,YMMWORD PTR [r14+0x20]
+     dbb7acf:	c4 41 74 58 c0       	vaddps ymm8,ymm1,ymm8
+     dbb7ad4:	c4 c1 7c 10 56 40    	vmovups ymm2,YMMWORD PTR [r14+0x40]
+     dbb7ada:	c4 41 6c 58 e4       	vaddps ymm12,ymm2,ymm12
+     dbb7adf:	c4 c1 7c 11 26       	vmovups YMMWORD PTR [r14],ymm4
+     dbb7ae4:	c4 41 7c 11 46 20    	vmovups YMMWORD PTR [r14+0x20],ymm8
+     dbb7aea:	c4 41 7c 11 66 40    	vmovups YMMWORD PTR [r14+0x40],ymm12
+     dbb7af0:	c4 81 7c 10 04 1e    	vmovups ymm0,YMMWORD PTR [r14+r11*1]
+     dbb7af6:	c5 fc 58 ed          	vaddps ymm5,ymm0,ymm5
+     dbb7afa:	c4 81 7c 10 4c 1e 20 	vmovups ymm1,YMMWORD PTR [r14+r11*1+0x20]
+     dbb7b01:	c4 41 74 58 c9       	vaddps ymm9,ymm1,ymm9
+     dbb7b06:	c4 81 7c 10 54 1e 40 	vmovups ymm2,YMMWORD PTR [r14+r11*1+0x40]
+     dbb7b0d:	c4 41 6c 58 ed       	vaddps ymm13,ymm2,ymm13
+     dbb7b12:	0f 18 59 40          	prefetcht2 BYTE PTR [rcx+0x40]
+     dbb7b16:	c4 81 7c 11 2c 1e    	vmovups YMMWORD PTR [r14+r11*1],ymm5
+     dbb7b1c:	c4 01 7c 11 4c 1e 20 	vmovups YMMWORD PTR [r14+r11*1+0x20],ymm9
+     dbb7b23:	c4 01 7c 11 6c 1e 40 	vmovups YMMWORD PTR [r14+r11*1+0x40],ymm13
+     dbb7b2a:	4f 8d 34 9e          	lea    r14,[r14+r11*4]
+     dbb7b2e:	c4 c1 7c 10 07       	vmovups ymm0,YMMWORD PTR [r15]
+     dbb7b33:	c5 fc 58 f6          	vaddps ymm6,ymm0,ymm6
+     dbb7b37:	c4 c1 7c 10 4f 20    	vmovups ymm1,YMMWORD PTR [r15+0x20]
+     dbb7b3d:	c4 41 74 58 d2       	vaddps ymm10,ymm1,ymm10
+     dbb7b42:	c4 c1 7c 10 57 40    	vmovups ymm2,YMMWORD PTR [r15+0x40]
+     dbb7b48:	c4 41 6c 58 f6       	vaddps ymm14,ymm2,ymm14
+     dbb7b4d:	0f 18 99 80 00 00 00 	prefetcht2 BYTE PTR [rcx+0x80]
+     dbb7b54:	c4 c1 7c 11 37       	vmovups YMMWORD PTR [r15],ymm6
+     dbb7b59:	c4 41 7c 11 57 20    	vmovups YMMWORD PTR [r15+0x20],ymm10
+     dbb7b5f:	c4 41 7c 11 77 40    	vmovups YMMWORD PTR [r15+0x40],ymm14
+     dbb7b65:	c4 81 7c 10 04 1f    	vmovups ymm0,YMMWORD PTR [r15+r11*1]
+     dbb7b6b:	c5 fc 58 ff          	vaddps ymm7,ymm0,ymm7
+     dbb7b6f:	c4 81 7c 10 4c 1f 20 	vmovups ymm1,YMMWORD PTR [r15+r11*1+0x20]
+     dbb7b76:	c4 41 74 58 db       	vaddps ymm11,ymm1,ymm11
+     dbb7b7b:	c4 81 7c 10 54 1f 40 	vmovups ymm2,YMMWORD PTR [r15+r11*1+0x40]
+     dbb7b82:	c4 41 6c 58 ff       	vaddps ymm15,ymm2,ymm15
+     dbb7b87:	0f 18 99 c0 00 00 00 	prefetcht2 BYTE PTR [rcx+0xc0]
+     dbb7b8e:	c4 81 7c 11 3c 1f    	vmovups YMMWORD PTR [r15+r11*1],ymm7
+     dbb7b94:	c4 01 7c 11 5c 1f 20 	vmovups YMMWORD PTR [r15+r11*1+0x20],ymm11
+     dbb7b9b:	c4 01 7c 11 7c 1f 40 	vmovups YMMWORD PTR [r15+r11*1+0x40],ymm15
+     dbb7ba2:	4f 8d 3c 9f          	lea    r15,[r15+r11*4]
+     dbb7ba6:	48 81 e9 40 ff ff ff 	sub    rcx,0xffffffffffffff40
+     dbb7bad:	49 ff cc             	dec    r12
+     dbb7bb0:	0f 8f da f9 ff ff    	jg     dbb7590 <mkl_blas_avx2_sgemm_kernel_0+0x90>
+     dbb7bb6:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
+     dbb7bbd:	00 00 00
+     dbb7bc0:	48 f7 c6 02 00 00 00 	test   rsi,0x2
+     dbb7bc7:	0f 8e 93 02 00 00    	jle    dbb7e60 <mkl_blas_avx2_sgemm_kernel_0+0x960>
+     dbb7bcd:	0f 18 59 80          	prefetcht2 BYTE PTR [rcx-0x80]
+     dbb7bd1:	4c 89 c3             	mov    rbx,r8
+     dbb7bd4:	c5 dc 57 e4          	vxorps ymm4,ymm4,ymm4
+     dbb7bd8:	c4 e2 7d 18 5d 80    	vbroadcastss ymm3,DWORD PTR [rbp-0x80]
+     dbb7bde:	c5 d4 57 ed          	vxorps ymm5,ymm5,ymm5
+     dbb7be2:	c5 fc 10 43 80       	vmovups ymm0,YMMWORD PTR [rbx-0x80]
+     dbb7be7:	c5 cc 57 f6          	vxorps ymm6,ymm6,ymm6
+     dbb7beb:	c5 fc 10 4b a0       	vmovups ymm1,YMMWORD PTR [rbx-0x60]
+     dbb7bf0:	c5 c4 57 ff          	vxorps ymm7,ymm7,ymm7
+     dbb7bf4:	c5 fc 10 53 c0       	vmovups ymm2,YMMWORD PTR [rbx-0x40]
+     dbb7bf9:	c4 41 3c 57 c0       	vxorps ymm8,ymm8,ymm8
+     dbb7bfe:	c4 41 34 57 c9       	vxorps ymm9,ymm9,ymm9
+     dbb7c03:	41 0f 18 4e 1c       	prefetcht0 BYTE PTR [r14+0x1c]
+     dbb7c08:	c4 41 2c 57 d2       	vxorps ymm10,ymm10,ymm10
+     dbb7c0d:	c4 41 24 57 db       	vxorps ymm11,ymm11,ymm11
+     dbb7c12:	43 0f 18 4c 1e 1c    	prefetcht0 BYTE PTR [r14+r11*1+0x1c]
+     dbb7c18:	c4 41 1c 57 e4       	vxorps ymm12,ymm12,ymm12
+     dbb7c1d:	c4 41 14 57 ed       	vxorps ymm13,ymm13,ymm13
+     dbb7c22:	c4 41 0c 57 f6       	vxorps ymm14,ymm14,ymm14
+     dbb7c27:	c4 41 04 57 ff       	vxorps ymm15,ymm15,ymm15
+     dbb7c2c:	48 89 d0             	mov    rax,rdx
+     dbb7c2f:	48 c1 f8 02          	sar    rax,0x2
+     dbb7c33:	0f 8e 47 01 00 00    	jle    dbb7d80 <mkl_blas_avx2_sgemm_kernel_0+0x880>
+     dbb7c39:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+     dbb7c40:	0f 18 8d 00 01 00 00 	prefetcht0 BYTE PTR [rbp+0x100]
+     dbb7c47:	c4 e2 65 b8 e0       	vfmadd231ps ymm4,ymm3,ymm0
+     dbb7c4c:	c4 62 65 b8 c1       	vfmadd231ps ymm8,ymm3,ymm1
+     dbb7c51:	c4 62 65 b8 e2       	vfmadd231ps ymm12,ymm3,ymm2
+     dbb7c56:	c4 e2 7d 18 5d 84    	vbroadcastss ymm3,DWORD PTR [rbp-0x7c]
+     dbb7c5c:	0f 18 8b 40 02 00 00 	prefetcht0 BYTE PTR [rbx+0x240]
+     dbb7c63:	c4 e2 65 b8 e8       	vfmadd231ps ymm5,ymm3,ymm0
+     dbb7c68:	c5 fc 10 43 e0       	vmovups ymm0,YMMWORD PTR [rbx-0x20]
+     dbb7c6d:	c4 62 65 b8 c9       	vfmadd231ps ymm9,ymm3,ymm1
+     dbb7c72:	c5 fc 10 0b          	vmovups ymm1,YMMWORD PTR [rbx]
+     dbb7c76:	c4 62 65 b8 ea       	vfmadd231ps ymm13,ymm3,ymm2
+     dbb7c7b:	c5 fc 10 53 20       	vmovups ymm2,YMMWORD PTR [rbx+0x20]
+     dbb7c80:	c4 e2 7d 18 5d 88    	vbroadcastss ymm3,DWORD PTR [rbp-0x78]
+     dbb7c86:	0f 18 8b c0 02 00 00 	prefetcht0 BYTE PTR [rbx+0x2c0]
+     dbb7c8d:	c4 e2 65 b8 e0       	vfmadd231ps ymm4,ymm3,ymm0
+     dbb7c92:	c4 62 65 b8 c1       	vfmadd231ps ymm8,ymm3,ymm1
+     dbb7c97:	c4 62 65 b8 e2       	vfmadd231ps ymm12,ymm3,ymm2
+     dbb7c9c:	c4 e2 7d 18 5d 8c    	vbroadcastss ymm3,DWORD PTR [rbp-0x74]
+     dbb7ca2:	c4 e2 65 b8 e8       	vfmadd231ps ymm5,ymm3,ymm0
+     dbb7ca7:	c5 fc 10 43 40       	vmovups ymm0,YMMWORD PTR [rbx+0x40]
+     dbb7cac:	c4 62 65 b8 c9       	vfmadd231ps ymm9,ymm3,ymm1
+     dbb7cb1:	c5 fc 10 4b 60       	vmovups ymm1,YMMWORD PTR [rbx+0x60]
+     dbb7cb6:	c4 62 65 b8 ea       	vfmadd231ps ymm13,ymm3,ymm2
+     dbb7cbb:	c5 fc 10 93 80 00 00 	vmovups ymm2,YMMWORD PTR [rbx+0x80]
+     dbb7cc2:	00
+     dbb7cc3:	c4 e2 7d 18 5d 90    	vbroadcastss ymm3,DWORD PTR [rbp-0x70]
+     dbb7cc9:	0f 18 8b 00 03 00 00 	prefetcht0 BYTE PTR [rbx+0x300]
+     dbb7cd0:	c4 e2 65 b8 e0       	vfmadd231ps ymm4,ymm3,ymm0
+     dbb7cd5:	c4 62 65 b8 c1       	vfmadd231ps ymm8,ymm3,ymm1
+     dbb7cda:	c4 62 65 b8 e2       	vfmadd231ps ymm12,ymm3,ymm2
+     dbb7cdf:	c4 e2 7d 18 5d 94    	vbroadcastss ymm3,DWORD PTR [rbp-0x6c]
+     dbb7ce5:	c4 e2 65 b8 e8       	vfmadd231ps ymm5,ymm3,ymm0
+     dbb7cea:	c5 fc 10 83 a0 00 00 	vmovups ymm0,YMMWORD PTR [rbx+0xa0]
+     dbb7cf1:	00
+     dbb7cf2:	c4 62 65 b8 c9       	vfmadd231ps ymm9,ymm3,ymm1
+     dbb7cf7:	c5 fc 10 8b c0 00 00 	vmovups ymm1,YMMWORD PTR [rbx+0xc0]
+     dbb7cfe:	00
+     dbb7cff:	c4 62 65 b8 ea       	vfmadd231ps ymm13,ymm3,ymm2
+     dbb7d04:	c5 fc 10 93 e0 00 00 	vmovups ymm2,YMMWORD PTR [rbx+0xe0]
+     dbb7d0b:	00
+     dbb7d0c:	c4 e2 7d 18 5d 98    	vbroadcastss ymm3,DWORD PTR [rbp-0x68]
+     dbb7d12:	0f 18 8b 40 03 00 00 	prefetcht0 BYTE PTR [rbx+0x340]
+     dbb7d19:	c4 e2 65 b8 e0       	vfmadd231ps ymm4,ymm3,ymm0
+     dbb7d1e:	c4 62 65 b8 c1       	vfmadd231ps ymm8,ymm3,ymm1
+     dbb7d23:	c4 62 65 b8 e2       	vfmadd231ps ymm12,ymm3,ymm2
+     dbb7d28:	c4 e2 7d 18 5d 9c    	vbroadcastss ymm3,DWORD PTR [rbp-0x64]
+     dbb7d2e:	c4 e2 65 b8 e8       	vfmadd231ps ymm5,ymm3,ymm0
+     dbb7d33:	c5 fc 10 83 00 01 00 	vmovups ymm0,YMMWORD PTR [rbx+0x100]
+     dbb7d3a:	00
+     dbb7d3b:	c4 62 65 b8 c9       	vfmadd231ps ymm9,ymm3,ymm1
+     dbb7d40:	c5 fc 10 8b 20 01 00 	vmovups ymm1,YMMWORD PTR [rbx+0x120]
+     dbb7d47:	00
+     dbb7d48:	c4 62 65 b8 ea       	vfmadd231ps ymm13,ymm3,ymm2
+     dbb7d4d:	c5 fc 10 93 40 01 00 	vmovups ymm2,YMMWORD PTR [rbx+0x140]
+     dbb7d54:	00
+     dbb7d55:	c4 e2 7d 18 5d a0    	vbroadcastss ymm3,DWORD PTR [rbp-0x60]
+     dbb7d5b:	0f 18 8b 80 03 00 00 	prefetcht0 BYTE PTR [rbx+0x380]
+     dbb7d62:	48 83 ed e0          	sub    rbp,0xffffffffffffffe0
+     dbb7d66:	48 81 eb 80 fe ff ff 	sub    rbx,0xfffffffffffffe80
+     dbb7d6d:	48 ff c8             	dec    rax
+     dbb7d70:	0f 8f ca fe ff ff    	jg     dbb7c40 <mkl_blas_avx2_sgemm_kernel_0+0x740>
+     dbb7d76:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
+     dbb7d7d:	00 00 00
+     dbb7d80:	48 89 d0             	mov    rax,rdx
+     dbb7d83:	48 83 e0 03          	and    rax,0x3
+     dbb7d87:	74 57                	je     dbb7de0 <mkl_blas_avx2_sgemm_kernel_0+0x8e0>
+     dbb7d89:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+     dbb7d90:	c4 e2 65 b8 e0       	vfmadd231ps ymm4,ymm3,ymm0
+     dbb7d95:	c4 62 65 b8 c1       	vfmadd231ps ymm8,ymm3,ymm1
+     dbb7d9a:	c4 62 65 b8 e2       	vfmadd231ps ymm12,ymm3,ymm2
+     dbb7d9f:	c4 e2 7d 18 5d 84    	vbroadcastss ymm3,DWORD PTR [rbp-0x7c]
+     dbb7da5:	c4 e2 65 b8 e8       	vfmadd231ps ymm5,ymm3,ymm0
+     dbb7daa:	c5 fc 10 43 e0       	vmovups ymm0,YMMWORD PTR [rbx-0x20]
+     dbb7daf:	c4 62 65 b8 c9       	vfmadd231ps ymm9,ymm3,ymm1
+     dbb7db4:	c5 fc 10 0b          	vmovups ymm1,YMMWORD PTR [rbx]
+     dbb7db8:	c4 62 65 b8 ea       	vfmadd231ps ymm13,ymm3,ymm2
+     dbb7dbd:	c5 fc 10 53 20       	vmovups ymm2,YMMWORD PTR [rbx+0x20]
+     dbb7dc2:	c4 e2 7d 18 5d 88    	vbroadcastss ymm3,DWORD PTR [rbp-0x78]
+     dbb7dc8:	48 83 eb a0          	sub    rbx,0xffffffffffffffa0
+     dbb7dcc:	48 83 ed f8          	sub    rbp,0xfffffffffffffff8
+     dbb7dd0:	48 ff c8             	dec    rax
+     dbb7dd3:	7f bb                	jg     dbb7d90 <mkl_blas_avx2_sgemm_kernel_0+0x890>
+     dbb7dd5:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+     dbb7ddc:	00 00 00 00
+     dbb7de0:	c4 c1 7c 10 06       	vmovups ymm0,YMMWORD PTR [r14]
+     dbb7de5:	c5 fc 58 e4          	vaddps ymm4,ymm0,ymm4
+     dbb7de9:	c4 c1 7c 10 4e 20    	vmovups ymm1,YMMWORD PTR [r14+0x20]
+     dbb7def:	c4 41 74 58 c0       	vaddps ymm8,ymm1,ymm8
+     dbb7df4:	c4 c1 7c 10 56 40    	vmovups ymm2,YMMWORD PTR [r14+0x40]
+     dbb7dfa:	c4 41 6c 58 e4       	vaddps ymm12,ymm2,ymm12
+     dbb7dff:	c4 c1 7c 11 26       	vmovups YMMWORD PTR [r14],ymm4
+     dbb7e04:	c4 41 7c 11 46 20    	vmovups YMMWORD PTR [r14+0x20],ymm8
+     dbb7e0a:	c4 41 7c 11 66 40    	vmovups YMMWORD PTR [r14+0x40],ymm12
+     dbb7e10:	c4 81 7c 10 04 1e    	vmovups ymm0,YMMWORD PTR [r14+r11*1]
+     dbb7e16:	c5 fc 58 ed          	vaddps ymm5,ymm0,ymm5
+     dbb7e1a:	c4 81 7c 10 4c 1e 20 	vmovups ymm1,YMMWORD PTR [r14+r11*1+0x20]
+     dbb7e21:	c4 41 74 58 c9       	vaddps ymm9,ymm1,ymm9
+     dbb7e26:	c4 81 7c 10 54 1e 40 	vmovups ymm2,YMMWORD PTR [r14+r11*1+0x40]
+     dbb7e2d:	c4 41 6c 58 ed       	vaddps ymm13,ymm2,ymm13
+     dbb7e32:	0f 18 59 40          	prefetcht2 BYTE PTR [rcx+0x40]
+     dbb7e36:	c4 81 7c 11 2c 1e    	vmovups YMMWORD PTR [r14+r11*1],ymm5
+     dbb7e3c:	c4 01 7c 11 4c 1e 20 	vmovups YMMWORD PTR [r14+r11*1+0x20],ymm9
+     dbb7e43:	c4 01 7c 11 6c 1e 40 	vmovups YMMWORD PTR [r14+r11*1+0x40],ymm13
+     dbb7e4a:	4f 8d 34 5e          	lea    r14,[r14+r11*2]
+     dbb7e4e:	4f 8d 3c 5f          	lea    r15,[r15+r11*2]
+     dbb7e52:	0f 18 99 80 00 00 00 	prefetcht2 BYTE PTR [rcx+0x80]
+     dbb7e59:	48 83 e9 c0          	sub    rcx,0xffffffffffffffc0
+     dbb7e5d:	0f 1f 00             	nop    DWORD PTR [rax]
+     dbb7e60:	48 f7 c6 01 00 00 00 	test   rsi,0x1
+     dbb7e67:	0f 8e d3 01 00 00    	jle    dbb8040 <mkl_blas_avx2_sgemm_kernel_0+0xb40>
+     dbb7e6d:	0f 18 59 80          	prefetcht2 BYTE PTR [rcx-0x80]
+     dbb7e71:	4c 89 c3             	mov    rbx,r8
+     dbb7e74:	c5 dc 57 e4          	vxorps ymm4,ymm4,ymm4
+     dbb7e78:	c4 41 3c 57 c0       	vxorps ymm8,ymm8,ymm8
+     dbb7e7d:	c4 41 1c 57 e4       	vxorps ymm12,ymm12,ymm12
+     dbb7e82:	c5 fc 10 43 80       	vmovups ymm0,YMMWORD PTR [rbx-0x80]
+     dbb7e87:	c5 fc 10 4b a0       	vmovups ymm1,YMMWORD PTR [rbx-0x60]
+     dbb7e8c:	c5 fc 10 53 c0       	vmovups ymm2,YMMWORD PTR [rbx-0x40]
+     dbb7e91:	c4 e2 7d 18 5d 80    	vbroadcastss ymm3,DWORD PTR [rbp-0x80]
+     dbb7e97:	c4 e2 7d 18 6d 84    	vbroadcastss ymm5,DWORD PTR [rbp-0x7c]
+     dbb7e9d:	41 0f 18 4e 1c       	prefetcht0 BYTE PTR [r14+0x1c]
+     dbb7ea2:	41 0f 18 4e 5c       	prefetcht0 BYTE PTR [r14+0x5c]
+     dbb7ea7:	48 89 d0             	mov    rax,rdx
+     dbb7eaa:	48 c1 f8 02          	sar    rax,0x2
+     dbb7eae:	0f 8e fc 00 00 00    	jle    dbb7fb0 <mkl_blas_avx2_sgemm_kernel_0+0xab0>
+     dbb7eb4:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+     dbb7ebb:	00 00 00 00
+     dbb7ebf:	90                   	nop
+     dbb7ec0:	0f 18 8d 00 01 00 00 	prefetcht0 BYTE PTR [rbp+0x100]
+     dbb7ec7:	c4 e2 65 b8 e0       	vfmadd231ps ymm4,ymm3,ymm0
+     dbb7ecc:	c5 fc 10 43 e0       	vmovups ymm0,YMMWORD PTR [rbx-0x20]
+     dbb7ed1:	c4 62 65 b8 c1       	vfmadd231ps ymm8,ymm3,ymm1
+     dbb7ed6:	0f 18 8b 40 02 00 00 	prefetcht0 BYTE PTR [rbx+0x240]
+     dbb7edd:	c5 fc 10 0b          	vmovups ymm1,YMMWORD PTR [rbx]
+     dbb7ee1:	c4 62 65 b8 e2       	vfmadd231ps ymm12,ymm3,ymm2
+     dbb7ee6:	c5 fc 10 53 20       	vmovups ymm2,YMMWORD PTR [rbx+0x20]
+     dbb7eeb:	c4 e2 7d 18 5d 88    	vbroadcastss ymm3,DWORD PTR [rbp-0x78]
+     dbb7ef1:	0f 18 8b 80 02 00 00 	prefetcht0 BYTE PTR [rbx+0x280]
+     dbb7ef8:	c4 e2 55 b8 e0       	vfmadd231ps ymm4,ymm5,ymm0
+     dbb7efd:	c5 fc 10 43 40       	vmovups ymm0,YMMWORD PTR [rbx+0x40]
+     dbb7f02:	c4 62 55 b8 c1       	vfmadd231ps ymm8,ymm5,ymm1
+     dbb7f07:	0f 18 8b c0 02 00 00 	prefetcht0 BYTE PTR [rbx+0x2c0]
+     dbb7f0e:	c5 fc 10 4b 60       	vmovups ymm1,YMMWORD PTR [rbx+0x60]
+     dbb7f13:	c4 62 55 b8 e2       	vfmadd231ps ymm12,ymm5,ymm2
+     dbb7f18:	c5 fc 10 93 80 00 00 	vmovups ymm2,YMMWORD PTR [rbx+0x80]
+     dbb7f1f:	00
+     dbb7f20:	c4 e2 7d 18 6d 8c    	vbroadcastss ymm5,DWORD PTR [rbp-0x74]
+     dbb7f26:	0f 18 8b 00 03 00 00 	prefetcht0 BYTE PTR [rbx+0x300]
+     dbb7f2d:	c4 e2 65 b8 e0       	vfmadd231ps ymm4,ymm3,ymm0
+     dbb7f32:	c5 fc 10 83 a0 00 00 	vmovups ymm0,YMMWORD PTR [rbx+0xa0]
+     dbb7f39:	00
+     dbb7f3a:	c4 62 65 b8 c1       	vfmadd231ps ymm8,ymm3,ymm1
+     dbb7f3f:	0f 18 8b 40 03 00 00 	prefetcht0 BYTE PTR [rbx+0x340]
+     dbb7f46:	c5 fc 10 8b c0 00 00 	vmovups ymm1,YMMWORD PTR [rbx+0xc0]
+     dbb7f4d:	00
+     dbb7f4e:	c4 62 65 b8 e2       	vfmadd231ps ymm12,ymm3,ymm2
+     dbb7f53:	c5 fc 10 93 e0 00 00 	vmovups ymm2,YMMWORD PTR [rbx+0xe0]
+     dbb7f5a:	00
+     dbb7f5b:	c4 e2 7d 18 5d 90    	vbroadcastss ymm3,DWORD PTR [rbp-0x70]
+     dbb7f61:	c4 e2 55 b8 e0       	vfmadd231ps ymm4,ymm5,ymm0
+     dbb7f66:	c5 fc 10 83 00 01 00 	vmovups ymm0,YMMWORD PTR [rbx+0x100]
+     dbb7f6d:	00
+     dbb7f6e:	c4 62 55 b8 c1       	vfmadd231ps ymm8,ymm5,ymm1
+     dbb7f73:	0f 18 8b 80 03 00 00 	prefetcht0 BYTE PTR [rbx+0x380]
+     dbb7f7a:	c5 fc 10 8b 20 01 00 	vmovups ymm1,YMMWORD PTR [rbx+0x120]
+     dbb7f81:	00
+     dbb7f82:	c4 62 55 b8 e2       	vfmadd231ps ymm12,ymm5,ymm2
+     dbb7f87:	c5 fc 10 93 40 01 00 	vmovups ymm2,YMMWORD PTR [rbx+0x140]
+     dbb7f8e:	00
+     dbb7f8f:	c4 e2 7d 18 6d 94    	vbroadcastss ymm5,DWORD PTR [rbp-0x6c]
+     dbb7f95:	48 83 ed f0          	sub    rbp,0xfffffffffffffff0
+     dbb7f99:	48 81 eb 80 fe ff ff 	sub    rbx,0xfffffffffffffe80
+     dbb7fa0:	48 ff c8             	dec    rax
+     dbb7fa3:	0f 8f 17 ff ff ff    	jg     dbb7ec0 <mkl_blas_avx2_sgemm_kernel_0+0x9c0>
+     dbb7fa9:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+     dbb7fb0:	48 89 d0             	mov    rax,rdx
+     dbb7fb3:	48 83 e0 03          	and    rax,0x3
+     dbb7fb7:	74 37                	je     dbb7ff0 <mkl_blas_avx2_sgemm_kernel_0+0xaf0>
+     dbb7fb9:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+     dbb7fc0:	c4 e2 65 b8 e0       	vfmadd231ps ymm4,ymm3,ymm0
+     dbb7fc5:	c5 fc 10 43 e0       	vmovups ymm0,YMMWORD PTR [rbx-0x20]
+     dbb7fca:	c4 62 65 b8 c1       	vfmadd231ps ymm8,ymm3,ymm1
+     dbb7fcf:	c5 fc 10 0b          	vmovups ymm1,YMMWORD PTR [rbx]
+     dbb7fd3:	c4 62 65 b8 e2       	vfmadd231ps ymm12,ymm3,ymm2
+     dbb7fd8:	c5 fc 10 53 20       	vmovups ymm2,YMMWORD PTR [rbx+0x20]
+     dbb7fdd:	c4 e2 7d 18 5d 84    	vbroadcastss ymm3,DWORD PTR [rbp-0x7c]
+     dbb7fe3:	48 83 ed fc          	sub    rbp,0xfffffffffffffffc
+     dbb7fe7:	48 83 eb a0          	sub    rbx,0xffffffffffffffa0
+     dbb7feb:	48 ff c8             	dec    rax
+     dbb7fee:	7f d0                	jg     dbb7fc0 <mkl_blas_avx2_sgemm_kernel_0+0xac0>
+     dbb7ff0:	c4 c1 7c 10 06       	vmovups ymm0,YMMWORD PTR [r14]
+     dbb7ff5:	c5 fc 58 e4          	vaddps ymm4,ymm0,ymm4
+     dbb7ff9:	c4 c1 7c 10 4e 20    	vmovups ymm1,YMMWORD PTR [r14+0x20]
+     dbb7fff:	c4 41 74 58 c0       	vaddps ymm8,ymm1,ymm8
+     dbb8004:	c4 c1 7c 10 56 40    	vmovups ymm2,YMMWORD PTR [r14+0x40]
+     dbb800a:	c4 41 6c 58 e4       	vaddps ymm12,ymm2,ymm12
+     dbb800f:	c4 c1 7c 11 26       	vmovups YMMWORD PTR [r14],ymm4
+     dbb8014:	c4 41 7c 11 46 20    	vmovups YMMWORD PTR [r14+0x20],ymm8
+     dbb801a:	c4 41 7c 11 66 40    	vmovups YMMWORD PTR [r14+0x40],ymm12
+     dbb8020:	0f 18 59 40          	prefetcht2 BYTE PTR [rcx+0x40]
+     dbb8024:	4d 01 de             	add    r14,r11
+     dbb8027:	4d 01 df             	add    r15,r11
+     dbb802a:	0f 18 99 80 00 00 00 	prefetcht2 BYTE PTR [rcx+0x80]
+     dbb8031:	48 83 e9 c0          	sub    rcx,0xffffffffffffffc0
+     dbb8035:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+     dbb803c:	00 00 00 00
+     dbb8040:	49 89 d8             	mov    r8,rbx
+     dbb8043:	49 83 ed 18          	sub    r13,0x18
+     dbb8047:	49 83 fd 18          	cmp    r13,0x18
+     dbb804b:	0f 8d 0f f5 ff ff    	jge    dbb7560 <mkl_blas_avx2_sgemm_kernel_0+0x60>
+     dbb8051:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+     dbb8058:	00 00 00 00
+     dbb805c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+     dbb8060:	49 f7 c5 10 00 00 00 	test   r13,0x10
+     dbb8067:	0f 8e 83 06 00 00    	jle    dbb86f0 <mkl_blas_avx2_sgemm_kernel_0+0x11f0>
+     dbb806d:	48 89 d1             	mov    rcx,rdx
+     dbb8070:	48 6b c9 40          	imul   rcx,rcx,0x40
+     dbb8074:	4c 01 c1             	add    rcx,r8
+     dbb8077:	4d 89 d6             	mov    r14,r10
+     dbb807a:	4f 8d 3c 5a          	lea    r15,[r10+r11*2]
+     dbb807e:	49 83 c2 40          	add    r10,0x40
+     dbb8082:	4c 89 cd             	mov    rbp,r9
+     dbb8085:	49 89 f4             	mov    r12,rsi
+     dbb8088:	49 c1 fc 02          	sar    r12,0x2
+     dbb808c:	0f 8e 1e 03 00 00    	jle    dbb83b0 <mkl_blas_avx2_sgemm_kernel_0+0xeb0>
+     dbb8092:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+     dbb8099:	00 00 00 00
+     dbb809d:	0f 1f 00             	nop    DWORD PTR [rax]
+     dbb80a0:	0f 18 59 80          	prefetcht2 BYTE PTR [rcx-0x80]
+     dbb80a4:	4c 89 c3             	mov    rbx,r8
+     dbb80a7:	c4 41 3c 57 c0       	vxorps ymm8,ymm8,ymm8
+     dbb80ac:	c4 e2 7d 18 75 80    	vbroadcastss ymm6,DWORD PTR [rbp-0x80]
+     dbb80b2:	c4 41 34 57 c9       	vxorps ymm9,ymm9,ymm9
+     dbb80b7:	c4 41 2c 57 d2       	vxorps ymm10,ymm10,ymm10
+     dbb80bc:	c4 41 24 57 db       	vxorps ymm11,ymm11,ymm11
+     dbb80c1:	c4 41 1c 57 e4       	vxorps ymm12,ymm12,ymm12
+     dbb80c6:	c5 fc 10 43 80       	vmovups ymm0,YMMWORD PTR [rbx-0x80]
+     dbb80cb:	c4 41 14 57 ed       	vxorps ymm13,ymm13,ymm13
+     dbb80d0:	c5 fc 10 4b a0       	vmovups ymm1,YMMWORD PTR [rbx-0x60]
+     dbb80d5:	c4 41 0c 57 f6       	vxorps ymm14,ymm14,ymm14
+     dbb80da:	c5 fc 10 53 c0       	vmovups ymm2,YMMWORD PTR [rbx-0x40]
+     dbb80df:	c4 41 04 57 ff       	vxorps ymm15,ymm15,ymm15
+     dbb80e4:	c5 fc 10 5b e0       	vmovups ymm3,YMMWORD PTR [rbx-0x20]
+     dbb80e9:	41 0f 18 4e 3c       	prefetcht0 BYTE PTR [r14+0x3c]
+     dbb80ee:	43 0f 18 4c 1e 3c    	prefetcht0 BYTE PTR [r14+r11*1+0x3c]
+     dbb80f4:	41 0f 18 4f 3c       	prefetcht0 BYTE PTR [r15+0x3c]
+     dbb80f9:	43 0f 18 4c 1f 3c    	prefetcht0 BYTE PTR [r15+r11*1+0x3c]
+     dbb80ff:	48 89 d0             	mov    rax,rdx
+     dbb8102:	48 c1 f8 02          	sar    rax,0x2
+     dbb8106:	0f 8e 84 01 00 00    	jle    dbb8290 <mkl_blas_avx2_sgemm_kernel_0+0xd90>
+     dbb810c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+     dbb8110:	0f 18 8d 00 01 00 00 	prefetcht0 BYTE PTR [rbp+0x100]
+     dbb8117:	c4 62 4d b8 c0       	vfmadd231ps ymm8,ymm6,ymm0
+     dbb811c:	c4 62 4d b8 e1       	vfmadd231ps ymm12,ymm6,ymm1
+     dbb8121:	c4 e2 7d 18 75 84    	vbroadcastss ymm6,DWORD PTR [rbp-0x7c]
+     dbb8127:	c4 62 4d b8 c8       	vfmadd231ps ymm9,ymm6,ymm0
+     dbb812c:	c4 62 4d b8 e9       	vfmadd231ps ymm13,ymm6,ymm1
+     dbb8131:	c4 e2 7d 18 75 88    	vbroadcastss ymm6,DWORD PTR [rbp-0x78]
+     dbb8137:	0f 18 8b 40 02 00 00 	prefetcht0 BYTE PTR [rbx+0x240]
+     dbb813e:	c4 62 4d b8 d0       	vfmadd231ps ymm10,ymm6,ymm0
+     dbb8143:	c4 62 4d b8 f1       	vfmadd231ps ymm14,ymm6,ymm1
+     dbb8148:	c4 e2 7d 18 75 8c    	vbroadcastss ymm6,DWORD PTR [rbp-0x74]
+     dbb814e:	c4 62 4d b8 d8       	vfmadd231ps ymm11,ymm6,ymm0
+     dbb8153:	c4 62 4d b8 f9       	vfmadd231ps ymm15,ymm6,ymm1
+     dbb8158:	c4 e2 7d 18 75 90    	vbroadcastss ymm6,DWORD PTR [rbp-0x70]
+     dbb815e:	c5 fc 10 03          	vmovups ymm0,YMMWORD PTR [rbx]
+     dbb8162:	c5 fc 10 4b 20       	vmovups ymm1,YMMWORD PTR [rbx+0x20]
+     dbb8167:	c4 62 4d b8 c2       	vfmadd231ps ymm8,ymm6,ymm2
+     dbb816c:	c4 62 4d b8 e3       	vfmadd231ps ymm12,ymm6,ymm3
+     dbb8171:	c4 e2 7d 18 75 94    	vbroadcastss ymm6,DWORD PTR [rbp-0x6c]
+     dbb8177:	c4 62 4d b8 ca       	vfmadd231ps ymm9,ymm6,ymm2
+     dbb817c:	c4 62 4d b8 eb       	vfmadd231ps ymm13,ymm6,ymm3
+     dbb8181:	c4 e2 7d 18 75 98    	vbroadcastss ymm6,DWORD PTR [rbp-0x68]
+     dbb8187:	0f 18 8b 80 02 00 00 	prefetcht0 BYTE PTR [rbx+0x280]
+     dbb818e:	c4 62 4d b8 d2       	vfmadd231ps ymm10,ymm6,ymm2
+     dbb8193:	c4 62 4d b8 f3       	vfmadd231ps ymm14,ymm6,ymm3
+     dbb8198:	c4 e2 7d 18 75 9c    	vbroadcastss ymm6,DWORD PTR [rbp-0x64]
+     dbb819e:	c4 62 4d b8 da       	vfmadd231ps ymm11,ymm6,ymm2
+     dbb81a3:	c4 62 4d b8 fb       	vfmadd231ps ymm15,ymm6,ymm3
+     dbb81a8:	c4 e2 7d 18 75 a0    	vbroadcastss ymm6,DWORD PTR [rbp-0x60]
+     dbb81ae:	c5 fc 10 53 40       	vmovups ymm2,YMMWORD PTR [rbx+0x40]
+     dbb81b3:	c5 fc 10 5b 60       	vmovups ymm3,YMMWORD PTR [rbx+0x60]
+     dbb81b8:	0f 18 8d 40 01 00 00 	prefetcht0 BYTE PTR [rbp+0x140]
+     dbb81bf:	c4 62 4d b8 c0       	vfmadd231ps ymm8,ymm6,ymm0
+     dbb81c4:	c4 62 4d b8 e1       	vfmadd231ps ymm12,ymm6,ymm1
+     dbb81c9:	c4 e2 7d 18 75 a4    	vbroadcastss ymm6,DWORD PTR [rbp-0x5c]
+     dbb81cf:	c4 62 4d b8 c8       	vfmadd231ps ymm9,ymm6,ymm0
+     dbb81d4:	c4 62 4d b8 e9       	vfmadd231ps ymm13,ymm6,ymm1
+     dbb81d9:	c4 e2 7d 18 75 a8    	vbroadcastss ymm6,DWORD PTR [rbp-0x58]
+     dbb81df:	0f 18 8b c0 02 00 00 	prefetcht0 BYTE PTR [rbx+0x2c0]
+     dbb81e6:	c4 62 4d b8 d0       	vfmadd231ps ymm10,ymm6,ymm0
+     dbb81eb:	c4 62 4d b8 f1       	vfmadd231ps ymm14,ymm6,ymm1
+     dbb81f0:	c4 e2 7d 18 75 ac    	vbroadcastss ymm6,DWORD PTR [rbp-0x54]
+     dbb81f6:	c4 62 4d b8 d8       	vfmadd231ps ymm11,ymm6,ymm0
+     dbb81fb:	c4 62 4d b8 f9       	vfmadd231ps ymm15,ymm6,ymm1
+     dbb8200:	c4 e2 7d 18 75 b0    	vbroadcastss ymm6,DWORD PTR [rbp-0x50]
+     dbb8206:	c5 fc 10 83 80 00 00 	vmovups ymm0,YMMWORD PTR [rbx+0x80]
+     dbb820d:	00
+     dbb820e:	c5 fc 10 8b a0 00 00 	vmovups ymm1,YMMWORD PTR [rbx+0xa0]
+     dbb8215:	00
+     dbb8216:	c4 62 4d b8 c2       	vfmadd231ps ymm8,ymm6,ymm2
+     dbb821b:	c4 62 4d b8 e3       	vfmadd231ps ymm12,ymm6,ymm3
+     dbb8220:	c4 e2 7d 18 75 b4    	vbroadcastss ymm6,DWORD PTR [rbp-0x4c]
+     dbb8226:	c4 62 4d b8 ca       	vfmadd231ps ymm9,ymm6,ymm2
+     dbb822b:	c4 62 4d b8 eb       	vfmadd231ps ymm13,ymm6,ymm3
+     dbb8230:	c4 e2 7d 18 75 b8    	vbroadcastss ymm6,DWORD PTR [rbp-0x48]
+     dbb8236:	0f 18 8b 00 03 00 00 	prefetcht0 BYTE PTR [rbx+0x300]
+     dbb823d:	c4 62 4d b8 d2       	vfmadd231ps ymm10,ymm6,ymm2
+     dbb8242:	c4 62 4d b8 f3       	vfmadd231ps ymm14,ymm6,ymm3
+     dbb8247:	c4 e2 7d 18 75 bc    	vbroadcastss ymm6,DWORD PTR [rbp-0x44]
+     dbb824d:	c4 62 4d b8 da       	vfmadd231ps ymm11,ymm6,ymm2
+     dbb8252:	c4 62 4d b8 fb       	vfmadd231ps ymm15,ymm6,ymm3
+     dbb8257:	c4 e2 7d 18 75 c0    	vbroadcastss ymm6,DWORD PTR [rbp-0x40]
+     dbb825d:	c5 fc 10 93 c0 00 00 	vmovups ymm2,YMMWORD PTR [rbx+0xc0]
+     dbb8264:	00
+     dbb8265:	c5 fc 10 9b e0 00 00 	vmovups ymm3,YMMWORD PTR [rbx+0xe0]
+     dbb826c:	00
+     dbb826d:	48 83 ed c0          	sub    rbp,0xffffffffffffffc0
+     dbb8271:	48 81 eb 00 ff ff ff 	sub    rbx,0xffffffffffffff00
+     dbb8278:	48 ff c8             	dec    rax
+     dbb827b:	0f 8f 8f fe ff ff    	jg     dbb8110 <mkl_blas_avx2_sgemm_kernel_0+0xc10>
+     dbb8281:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+     dbb8288:	00 00 00 00
+     dbb828c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+     dbb8290:	0f 18 59 c0          	prefetcht2 BYTE PTR [rcx-0x40]
+     dbb8294:	48 89 d0             	mov    rax,rdx
+     dbb8297:	48 83 e0 03          	and    rax,0x3
+     dbb829b:	74 63                	je     dbb8300 <mkl_blas_avx2_sgemm_kernel_0+0xe00>
+     dbb829d:	0f 1f 00             	nop    DWORD PTR [rax]
+     dbb82a0:	c4 62 4d b8 c0       	vfmadd231ps ymm8,ymm6,ymm0
+     dbb82a5:	c4 62 4d b8 e1       	vfmadd231ps ymm12,ymm6,ymm1
+     dbb82aa:	c4 e2 7d 18 75 84    	vbroadcastss ymm6,DWORD PTR [rbp-0x7c]
+     dbb82b0:	c4 62 4d b8 c8       	vfmadd231ps ymm9,ymm6,ymm0
+     dbb82b5:	c4 62 4d b8 e9       	vfmadd231ps ymm13,ymm6,ymm1
+     dbb82ba:	c4 e2 7d 18 75 88    	vbroadcastss ymm6,DWORD PTR [rbp-0x78]
+     dbb82c0:	c4 62 4d b8 d0       	vfmadd231ps ymm10,ymm6,ymm0
+     dbb82c5:	c4 62 4d b8 f1       	vfmadd231ps ymm14,ymm6,ymm1
+     dbb82ca:	c4 e2 7d 18 75 8c    	vbroadcastss ymm6,DWORD PTR [rbp-0x74]
+     dbb82d0:	c4 62 4d b8 d8       	vfmadd231ps ymm11,ymm6,ymm0
+     dbb82d5:	c5 fc 10 43 c0       	vmovups ymm0,YMMWORD PTR [rbx-0x40]
+     dbb82da:	c4 62 4d b8 f9       	vfmadd231ps ymm15,ymm6,ymm1
+     dbb82df:	c5 fc 10 4b e0       	vmovups ymm1,YMMWORD PTR [rbx-0x20]
+     dbb82e4:	c4 e2 7d 18 75 90    	vbroadcastss ymm6,DWORD PTR [rbp-0x70]
+     dbb82ea:	48 83 eb c0          	sub    rbx,0xffffffffffffffc0
+     dbb82ee:	48 83 ed f0          	sub    rbp,0xfffffffffffffff0
+     dbb82f2:	48 ff c8             	dec    rax
+     dbb82f5:	7f a9                	jg     dbb82a0 <mkl_blas_avx2_sgemm_kernel_0+0xda0>
+     dbb82f7:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+     dbb82fe:	00 00
+     dbb8300:	c4 c1 7c 10 0e       	vmovups ymm1,YMMWORD PTR [r14]
+     dbb8305:	c4 41 74 58 c0       	vaddps ymm8,ymm1,ymm8
+     dbb830a:	c4 c1 7c 10 56 20    	vmovups ymm2,YMMWORD PTR [r14+0x20]
+     dbb8310:	c4 41 6c 58 e4       	vaddps ymm12,ymm2,ymm12
+     dbb8315:	c4 41 7c 11 06       	vmovups YMMWORD PTR [r14],ymm8
+     dbb831a:	c4 41 7c 11 66 20    	vmovups YMMWORD PTR [r14+0x20],ymm12
+     dbb8320:	c4 81 7c 10 0c 1e    	vmovups ymm1,YMMWORD PTR [r14+r11*1]
+     dbb8326:	c4 41 74 58 c9       	vaddps ymm9,ymm1,ymm9
+     dbb832b:	c4 81 7c 10 54 1e 20 	vmovups ymm2,YMMWORD PTR [r14+r11*1+0x20]
+     dbb8332:	c4 41 6c 58 ed       	vaddps ymm13,ymm2,ymm13
+     dbb8337:	0f 18 19             	prefetcht2 BYTE PTR [rcx]
+     dbb833a:	c4 01 7c 11 0c 1e    	vmovups YMMWORD PTR [r14+r11*1],ymm9
+     dbb8340:	c4 01 7c 11 6c 1e 20 	vmovups YMMWORD PTR [r14+r11*1+0x20],ymm13
+     dbb8347:	4f 8d 34 9e          	lea    r14,[r14+r11*4]
+     dbb834b:	c4 c1 7c 10 0f       	vmovups ymm1,YMMWORD PTR [r15]
+     dbb8350:	c4 41 74 58 d2       	vaddps ymm10,ymm1,ymm10
+     dbb8355:	c4 c1 7c 10 57 20    	vmovups ymm2,YMMWORD PTR [r15+0x20]
+     dbb835b:	c4 41 6c 58 f6       	vaddps ymm14,ymm2,ymm14
+     dbb8360:	0f 18 59 40          	prefetcht2 BYTE PTR [rcx+0x40]
+     dbb8364:	c4 41 7c 11 17       	vmovups YMMWORD PTR [r15],ymm10
+     dbb8369:	c4 41 7c 11 77 20    	vmovups YMMWORD PTR [r15+0x20],ymm14
+     dbb836f:	c4 81 7c 10 0c 1f    	vmovups ymm1,YMMWORD PTR [r15+r11*1]
+     dbb8375:	c4 41 74 58 db       	vaddps ymm11,ymm1,ymm11
+     dbb837a:	c4 81 7c 10 54 1f 20 	vmovups ymm2,YMMWORD PTR [r15+r11*1+0x20]
+     dbb8381:	c4 41 6c 58 ff       	vaddps ymm15,ymm2,ymm15
+     dbb8386:	0f 18 99 80 00 00 00 	prefetcht2 BYTE PTR [rcx+0x80]
+     dbb838d:	c4 01 7c 11 1c 1f    	vmovups YMMWORD PTR [r15+r11*1],ymm11
+     dbb8393:	c4 01 7c 11 7c 1f 20 	vmovups YMMWORD PTR [r15+r11*1+0x20],ymm15
+     dbb839a:	4f 8d 3c 9f          	lea    r15,[r15+r11*4]
+     dbb839e:	48 81 e9 40 ff ff ff 	sub    rcx,0xffffffffffffff40
+     dbb83a5:	49 ff cc             	dec    r12
+     dbb83a8:	0f 8f f2 fc ff ff    	jg     dbb80a0 <mkl_blas_avx2_sgemm_kernel_0+0xba0>
+     dbb83ae:	66 90                	xchg   ax,ax
+     dbb83b0:	48 f7 c6 02 00 00 00 	test   rsi,0x2
+     dbb83b7:	0f 8e c3 01 00 00    	jle    dbb8580 <mkl_blas_avx2_sgemm_kernel_0+0x1080>
+     dbb83bd:	0f 18 59 80          	prefetcht2 BYTE PTR [rcx-0x80]
+     dbb83c1:	4c 89 c3             	mov    rbx,r8
+     dbb83c4:	c4 41 3c 57 c0       	vxorps ymm8,ymm8,ymm8
+     dbb83c9:	c4 e2 7d 18 65 80    	vbroadcastss ymm4,DWORD PTR [rbp-0x80]
+     dbb83cf:	c4 41 34 57 c9       	vxorps ymm9,ymm9,ymm9
+     dbb83d4:	c4 41 1c 57 e4       	vxorps ymm12,ymm12,ymm12
+     dbb83d9:	c5 fc 10 43 80       	vmovups ymm0,YMMWORD PTR [rbx-0x80]
+     dbb83de:	c4 41 14 57 ed       	vxorps ymm13,ymm13,ymm13
+     dbb83e3:	c5 fc 10 4b a0       	vmovups ymm1,YMMWORD PTR [rbx-0x60]
+     dbb83e8:	41 0f 18 4e 3c       	prefetcht0 BYTE PTR [r14+0x3c]
+     dbb83ed:	43 0f 18 4c 1e 3c    	prefetcht0 BYTE PTR [r14+r11*1+0x3c]
+     dbb83f3:	48 89 d0             	mov    rax,rdx
+     dbb83f6:	48 c1 f8 02          	sar    rax,0x2
+     dbb83fa:	0f 8e d0 00 00 00    	jle    dbb84d0 <mkl_blas_avx2_sgemm_kernel_0+0xfd0>
+     dbb8400:	0f 18 8d 00 01 00 00 	prefetcht0 BYTE PTR [rbp+0x100]
+     dbb8407:	c4 62 5d b8 c0       	vfmadd231ps ymm8,ymm4,ymm0
+     dbb840c:	c4 62 5d b8 e1       	vfmadd231ps ymm12,ymm4,ymm1
+     dbb8411:	c4 e2 7d 18 65 84    	vbroadcastss ymm4,DWORD PTR [rbp-0x7c]
+     dbb8417:	c4 62 5d b8 c8       	vfmadd231ps ymm9,ymm4,ymm0
+     dbb841c:	c5 fc 10 43 c0       	vmovups ymm0,YMMWORD PTR [rbx-0x40]
+     dbb8421:	c4 62 5d b8 e9       	vfmadd231ps ymm13,ymm4,ymm1
+     dbb8426:	c5 fc 10 4b e0       	vmovups ymm1,YMMWORD PTR [rbx-0x20]
+     dbb842b:	c4 e2 7d 18 65 88    	vbroadcastss ymm4,DWORD PTR [rbp-0x78]
+     dbb8431:	c4 62 5d b8 c0       	vfmadd231ps ymm8,ymm4,ymm0
+     dbb8436:	c4 62 5d b8 e1       	vfmadd231ps ymm12,ymm4,ymm1
+     dbb843b:	c4 e2 7d 18 65 8c    	vbroadcastss ymm4,DWORD PTR [rbp-0x74]
+     dbb8441:	c4 62 5d b8 c8       	vfmadd231ps ymm9,ymm4,ymm0
+     dbb8446:	c5 fc 10 03          	vmovups ymm0,YMMWORD PTR [rbx]
+     dbb844a:	c4 62 5d b8 e9       	vfmadd231ps ymm13,ymm4,ymm1
+     dbb844f:	c5 fc 10 4b 20       	vmovups ymm1,YMMWORD PTR [rbx+0x20]
+     dbb8454:	c4 e2 7d 18 65 90    	vbroadcastss ymm4,DWORD PTR [rbp-0x70]
+     dbb845a:	c4 62 5d b8 c0       	vfmadd231ps ymm8,ymm4,ymm0
+     dbb845f:	c4 62 5d b8 e1       	vfmadd231ps ymm12,ymm4,ymm1
+     dbb8464:	c4 e2 7d 18 65 94    	vbroadcastss ymm4,DWORD PTR [rbp-0x6c]
+     dbb846a:	c4 62 5d b8 c8       	vfmadd231ps ymm9,ymm4,ymm0
+     dbb846f:	c5 fc 10 43 40       	vmovups ymm0,YMMWORD PTR [rbx+0x40]
+     dbb8474:	c4 62 5d b8 e9       	vfmadd231ps ymm13,ymm4,ymm1
+     dbb8479:	c5 fc 10 4b 60       	vmovups ymm1,YMMWORD PTR [rbx+0x60]
+     dbb847e:	c4 e2 7d 18 65 98    	vbroadcastss ymm4,DWORD PTR [rbp-0x68]
+     dbb8484:	c4 62 5d b8 c0       	vfmadd231ps ymm8,ymm4,ymm0
+     dbb8489:	c4 62 5d b8 e1       	vfmadd231ps ymm12,ymm4,ymm1
+     dbb848e:	c4 e2 7d 18 65 9c    	vbroadcastss ymm4,DWORD PTR [rbp-0x64]
+     dbb8494:	c4 62 5d b8 c8       	vfmadd231ps ymm9,ymm4,ymm0
+     dbb8499:	c5 fc 10 83 80 00 00 	vmovups ymm0,YMMWORD PTR [rbx+0x80]
+     dbb84a0:	00
+     dbb84a1:	c4 62 5d b8 e9       	vfmadd231ps ymm13,ymm4,ymm1
+     dbb84a6:	c5 fc 10 8b a0 00 00 	vmovups ymm1,YMMWORD PTR [rbx+0xa0]
+     dbb84ad:	00
+     dbb84ae:	c4 e2 7d 18 65 a0    	vbroadcastss ymm4,DWORD PTR [rbp-0x60]
+     dbb84b4:	48 83 ed e0          	sub    rbp,0xffffffffffffffe0
+     dbb84b8:	48 81 eb 00 ff ff ff 	sub    rbx,0xffffffffffffff00
+     dbb84bf:	48 ff c8             	dec    rax
+     dbb84c2:	0f 8f 38 ff ff ff    	jg     dbb8400 <mkl_blas_avx2_sgemm_kernel_0+0xf00>
+     dbb84c8:	0f 1f 84 00 00 00 00 	nop    DWORD PTR [rax+rax*1+0x0]
+     dbb84cf:	00
+     dbb84d0:	48 89 d0             	mov    rax,rdx
+     dbb84d3:	48 83 e0 03          	and    rax,0x3
+     dbb84d7:	74 47                	je     dbb8520 <mkl_blas_avx2_sgemm_kernel_0+0x1020>
+     dbb84d9:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+     dbb84e0:	c4 62 5d b8 c0       	vfmadd231ps ymm8,ymm4,ymm0
+     dbb84e5:	c4 62 5d b8 e1       	vfmadd231ps ymm12,ymm4,ymm1
+     dbb84ea:	c4 e2 7d 18 65 84    	vbroadcastss ymm4,DWORD PTR [rbp-0x7c]
+     dbb84f0:	c4 62 5d b8 c8       	vfmadd231ps ymm9,ymm4,ymm0
+     dbb84f5:	c5 fc 10 43 c0       	vmovups ymm0,YMMWORD PTR [rbx-0x40]
+     dbb84fa:	c4 62 5d b8 e9       	vfmadd231ps ymm13,ymm4,ymm1
+     dbb84ff:	c5 fc 10 4b e0       	vmovups ymm1,YMMWORD PTR [rbx-0x20]
+     dbb8504:	c4 e2 7d 18 65 88    	vbroadcastss ymm4,DWORD PTR [rbp-0x78]
+     dbb850a:	48 83 eb c0          	sub    rbx,0xffffffffffffffc0
+     dbb850e:	48 83 ed f8          	sub    rbp,0xfffffffffffffff8
+     dbb8512:	48 ff c8             	dec    rax
+     dbb8515:	7f c9                	jg     dbb84e0 <mkl_blas_avx2_sgemm_kernel_0+0xfe0>
+     dbb8517:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+     dbb851e:	00 00
+     dbb8520:	c4 c1 7c 10 0e       	vmovups ymm1,YMMWORD PTR [r14]
+     dbb8525:	c4 41 74 58 c0       	vaddps ymm8,ymm1,ymm8
+     dbb852a:	c4 c1 7c 10 56 20    	vmovups ymm2,YMMWORD PTR [r14+0x20]
+     dbb8530:	c4 41 6c 58 e4       	vaddps ymm12,ymm2,ymm12
+     dbb8535:	c4 41 7c 11 06       	vmovups YMMWORD PTR [r14],ymm8
+     dbb853a:	c4 41 7c 11 66 20    	vmovups YMMWORD PTR [r14+0x20],ymm12
+     dbb8540:	c4 81 7c 10 0c 1e    	vmovups ymm1,YMMWORD PTR [r14+r11*1]
+     dbb8546:	c4 41 74 58 c9       	vaddps ymm9,ymm1,ymm9
+     dbb854b:	c4 81 7c 10 54 1e 20 	vmovups ymm2,YMMWORD PTR [r14+r11*1+0x20]
+     dbb8552:	c4 41 6c 58 ed       	vaddps ymm13,ymm2,ymm13
+     dbb8557:	0f 18 59 40          	prefetcht2 BYTE PTR [rcx+0x40]
+     dbb855b:	c4 01 7c 11 0c 1e    	vmovups YMMWORD PTR [r14+r11*1],ymm9
+     dbb8561:	c4 01 7c 11 6c 1e 20 	vmovups YMMWORD PTR [r14+r11*1+0x20],ymm13
+     dbb8568:	4f 8d 34 5e          	lea    r14,[r14+r11*2]
+     dbb856c:	4f 8d 3c 5f          	lea    r15,[r15+r11*2]
+     dbb8570:	0f 18 99 80 00 00 00 	prefetcht2 BYTE PTR [rcx+0x80]
+     dbb8577:	48 83 e9 80          	sub    rcx,0xffffffffffffff80
+     dbb857b:	0f 1f 44 00 00       	nop    DWORD PTR [rax+rax*1+0x0]
+     dbb8580:	48 f7 c6 01 00 00 00 	test   rsi,0x1
+     dbb8587:	0f 8e 53 01 00 00    	jle    dbb86e0 <mkl_blas_avx2_sgemm_kernel_0+0x11e0>
+     dbb858d:	0f 18 59 80          	prefetcht2 BYTE PTR [rcx-0x80]
+     dbb8591:	4c 89 c3             	mov    rbx,r8
+     dbb8594:	c4 e2 7d 18 55 80    	vbroadcastss ymm2,DWORD PTR [rbp-0x80]
+     dbb859a:	c4 e2 7d 18 5d 84    	vbroadcastss ymm3,DWORD PTR [rbp-0x7c]
+     dbb85a0:	c4 41 3c 57 c0       	vxorps ymm8,ymm8,ymm8
+     dbb85a5:	c5 fc 10 43 80       	vmovups ymm0,YMMWORD PTR [rbx-0x80]
+     dbb85aa:	c5 fc 10 4b a0       	vmovups ymm1,YMMWORD PTR [rbx-0x60]
+     dbb85af:	c4 41 1c 57 e4       	vxorps ymm12,ymm12,ymm12
+     dbb85b4:	41 0f 18 4e 3c       	prefetcht0 BYTE PTR [r14+0x3c]
+     dbb85b9:	48 89 d0             	mov    rax,rdx
+     dbb85bc:	48 c1 f8 02          	sar    rax,0x2
+     dbb85c0:	0f 8e 9a 00 00 00    	jle    dbb8660 <mkl_blas_avx2_sgemm_kernel_0+0x1160>
+     dbb85c6:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
+     dbb85cd:	00 00 00
+     dbb85d0:	0f 18 8d 00 01 00 00 	prefetcht0 BYTE PTR [rbp+0x100]
+     dbb85d7:	c4 62 7d b8 c2       	vfmadd231ps ymm8,ymm0,ymm2
+     dbb85dc:	c5 fc 10 43 c0       	vmovups ymm0,YMMWORD PTR [rbx-0x40]
+     dbb85e1:	c4 62 75 b8 e2       	vfmadd231ps ymm12,ymm1,ymm2
+     dbb85e6:	c4 e2 7d 18 55 88    	vbroadcastss ymm2,DWORD PTR [rbp-0x78]
+     dbb85ec:	c5 fc 10 4b e0       	vmovups ymm1,YMMWORD PTR [rbx-0x20]
+     dbb85f1:	c4 62 7d b8 c3       	vfmadd231ps ymm8,ymm0,ymm3
+     dbb85f6:	c5 fc 10 03          	vmovups ymm0,YMMWORD PTR [rbx]
+     dbb85fa:	c4 62 75 b8 e3       	vfmadd231ps ymm12,ymm1,ymm3
+     dbb85ff:	c4 e2 7d 18 5d 8c    	vbroadcastss ymm3,DWORD PTR [rbp-0x74]
+     dbb8605:	c5 fc 10 4b 20       	vmovups ymm1,YMMWORD PTR [rbx+0x20]
+     dbb860a:	c4 62 7d b8 c2       	vfmadd231ps ymm8,ymm0,ymm2
+     dbb860f:	c5 fc 10 43 40       	vmovups ymm0,YMMWORD PTR [rbx+0x40]
+     dbb8614:	c4 62 75 b8 e2       	vfmadd231ps ymm12,ymm1,ymm2
+     dbb8619:	c4 e2 7d 18 55 90    	vbroadcastss ymm2,DWORD PTR [rbp-0x70]
+     dbb861f:	c5 fc 10 4b 60       	vmovups ymm1,YMMWORD PTR [rbx+0x60]
+     dbb8624:	c4 62 7d b8 c3       	vfmadd231ps ymm8,ymm0,ymm3
+     dbb8629:	c5 fc 10 83 80 00 00 	vmovups ymm0,YMMWORD PTR [rbx+0x80]
+     dbb8630:	00
+     dbb8631:	c4 62 75 b8 e3       	vfmadd231ps ymm12,ymm1,ymm3
+     dbb8636:	c4 e2 7d 18 5d 94    	vbroadcastss ymm3,DWORD PTR [rbp-0x6c]
+     dbb863c:	48 83 ed f0          	sub    rbp,0xfffffffffffffff0
+     dbb8640:	c5 fc 10 8b a0 00 00 	vmovups ymm1,YMMWORD PTR [rbx+0xa0]
+     dbb8647:	00
+     dbb8648:	48 81 eb 00 ff ff ff 	sub    rbx,0xffffffffffffff00
+     dbb864f:	48 ff c8             	dec    rax
+     dbb8652:	0f 8f 78 ff ff ff    	jg     dbb85d0 <mkl_blas_avx2_sgemm_kernel_0+0x10d0>
+     dbb8658:	0f 1f 84 00 00 00 00 	nop    DWORD PTR [rax+rax*1+0x0]
+     dbb865f:	00
+     dbb8660:	48 89 d0             	mov    rax,rdx
+     dbb8663:	48 83 e0 03          	and    rax,0x3
+     dbb8667:	74 37                	je     dbb86a0 <mkl_blas_avx2_sgemm_kernel_0+0x11a0>
+     dbb8669:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+     dbb8670:	c4 62 7d b8 c2       	vfmadd231ps ymm8,ymm0,ymm2
+     dbb8675:	c5 fc 10 43 c0       	vmovups ymm0,YMMWORD PTR [rbx-0x40]
+     dbb867a:	c4 62 75 b8 e2       	vfmadd231ps ymm12,ymm1,ymm2
+     dbb867f:	c4 e2 7d 18 55 84    	vbroadcastss ymm2,DWORD PTR [rbp-0x7c]
+     dbb8685:	48 83 ed fc          	sub    rbp,0xfffffffffffffffc
+     dbb8689:	c5 fc 10 4b e0       	vmovups ymm1,YMMWORD PTR [rbx-0x20]
+     dbb868e:	48 83 eb c0          	sub    rbx,0xffffffffffffffc0
+     dbb8692:	48 ff c8             	dec    rax
+     dbb8695:	7f d9                	jg     dbb8670 <mkl_blas_avx2_sgemm_kernel_0+0x1170>
+     dbb8697:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+     dbb869e:	00 00
+     dbb86a0:	c4 c1 7c 10 0e       	vmovups ymm1,YMMWORD PTR [r14]
+     dbb86a5:	c4 41 74 58 c0       	vaddps ymm8,ymm1,ymm8
+     dbb86aa:	c4 c1 7c 10 56 20    	vmovups ymm2,YMMWORD PTR [r14+0x20]
+     dbb86b0:	c4 41 6c 58 e4       	vaddps ymm12,ymm2,ymm12
+     dbb86b5:	c4 41 7c 11 06       	vmovups YMMWORD PTR [r14],ymm8
+     dbb86ba:	c4 41 7c 11 66 20    	vmovups YMMWORD PTR [r14+0x20],ymm12
+     dbb86c0:	4d 01 de             	add    r14,r11
+     dbb86c3:	4d 01 df             	add    r15,r11
+     dbb86c6:	0f 18 99 80 00 00 00 	prefetcht2 BYTE PTR [rcx+0x80]
+     dbb86cd:	48 83 e9 80          	sub    rcx,0xffffffffffffff80
+     dbb86d1:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+     dbb86d8:	00 00 00 00
+     dbb86dc:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+     dbb86e0:	49 89 d8             	mov    r8,rbx
+     dbb86e3:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+     dbb86ea:	00 00 00 00
+     dbb86ee:	66 90                	xchg   ax,ax
+     dbb86f0:	49 f7 c5 08 00 00 00 	test   r13,0x8
+     dbb86f7:	0f 8e c3 04 00 00    	jle    dbb8bc0 <mkl_blas_avx2_sgemm_kernel_0+0x16c0>
+     dbb86fd:	48 89 d1             	mov    rcx,rdx
+     dbb8700:	48 6b c9 20          	imul   rcx,rcx,0x20
+     dbb8704:	4c 01 c1             	add    rcx,r8
+     dbb8707:	4d 89 d6             	mov    r14,r10
+     dbb870a:	4f 8d 3c 5a          	lea    r15,[r10+r11*2]
+     dbb870e:	49 83 c2 20          	add    r10,0x20
+     dbb8712:	4c 89 cd             	mov    rbp,r9
+     dbb8715:	49 89 f4             	mov    r12,rsi
+     dbb8718:	49 c1 fc 02          	sar    r12,0x2
+     dbb871c:	0f 8e 3e 02 00 00    	jle    dbb8960 <mkl_blas_avx2_sgemm_kernel_0+0x1460>
+     dbb8722:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+     dbb8729:	00 00 00 00
+     dbb872d:	0f 1f 00             	nop    DWORD PTR [rax]
+     dbb8730:	0f 18 59 80          	prefetcht2 BYTE PTR [rcx-0x80]
+     dbb8734:	4c 89 c3             	mov    rbx,r8
+     dbb8737:	c4 41 3c 57 c0       	vxorps ymm8,ymm8,ymm8
+     dbb873c:	c4 e2 7d 18 75 80    	vbroadcastss ymm6,DWORD PTR [rbp-0x80]
+     dbb8742:	c4 41 34 57 c9       	vxorps ymm9,ymm9,ymm9
+     dbb8747:	c5 fc 10 43 80       	vmovups ymm0,YMMWORD PTR [rbx-0x80]
+     dbb874c:	c4 41 2c 57 d2       	vxorps ymm10,ymm10,ymm10
+     dbb8751:	c4 41 24 57 db       	vxorps ymm11,ymm11,ymm11
+     dbb8756:	c5 fc 10 4b a0       	vmovups ymm1,YMMWORD PTR [rbx-0x60]
+     dbb875b:	c4 41 1c 57 e4       	vxorps ymm12,ymm12,ymm12
+     dbb8760:	41 0f 18 4e 1c       	prefetcht0 BYTE PTR [r14+0x1c]
+     dbb8765:	c4 41 14 57 ed       	vxorps ymm13,ymm13,ymm13
+     dbb876a:	43 0f 18 4c 1e 1c    	prefetcht0 BYTE PTR [r14+r11*1+0x1c]
+     dbb8770:	c4 41 0c 57 f6       	vxorps ymm14,ymm14,ymm14
+     dbb8775:	41 0f 18 4f 1c       	prefetcht0 BYTE PTR [r15+0x1c]
+     dbb877a:	c4 41 04 57 ff       	vxorps ymm15,ymm15,ymm15
+     dbb877f:	43 0f 18 4c 1f 1c    	prefetcht0 BYTE PTR [r15+r11*1+0x1c]
+     dbb8785:	48 89 d0             	mov    rax,rdx
+     dbb8788:	48 c1 f8 02          	sar    rax,0x2
+     dbb878c:	0f 8e 0e 01 00 00    	jle    dbb88a0 <mkl_blas_avx2_sgemm_kernel_0+0x13a0>
+     dbb8792:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+     dbb8799:	00 00 00 00
+     dbb879d:	0f 1f 00             	nop    DWORD PTR [rax]
+     dbb87a0:	c4 62 4d b8 c0       	vfmadd231ps ymm8,ymm6,ymm0
+     dbb87a5:	0f 18 8d 00 01 00 00 	prefetcht0 BYTE PTR [rbp+0x100]
+     dbb87ac:	c4 e2 7d 18 75 84    	vbroadcastss ymm6,DWORD PTR [rbp-0x7c]
+     dbb87b2:	c4 62 4d b8 c8       	vfmadd231ps ymm9,ymm6,ymm0
+     dbb87b7:	0f 18 8b 40 02 00 00 	prefetcht0 BYTE PTR [rbx+0x240]
+     dbb87be:	c4 e2 7d 18 75 88    	vbroadcastss ymm6,DWORD PTR [rbp-0x78]
+     dbb87c4:	c4 62 4d b8 d0       	vfmadd231ps ymm10,ymm6,ymm0
+     dbb87c9:	c4 e2 7d 18 75 8c    	vbroadcastss ymm6,DWORD PTR [rbp-0x74]
+     dbb87cf:	c4 62 4d b8 d8       	vfmadd231ps ymm11,ymm6,ymm0
+     dbb87d4:	c4 e2 7d 18 75 90    	vbroadcastss ymm6,DWORD PTR [rbp-0x70]
+     dbb87da:	c5 fc 10 43 c0       	vmovups ymm0,YMMWORD PTR [rbx-0x40]
+     dbb87df:	c4 62 4d b8 e1       	vfmadd231ps ymm12,ymm6,ymm1
+     dbb87e4:	c4 e2 7d 18 75 94    	vbroadcastss ymm6,DWORD PTR [rbp-0x6c]
+     dbb87ea:	c4 62 4d b8 e9       	vfmadd231ps ymm13,ymm6,ymm1
+     dbb87ef:	c4 e2 7d 18 75 98    	vbroadcastss ymm6,DWORD PTR [rbp-0x68]
+     dbb87f5:	c4 62 4d b8 f1       	vfmadd231ps ymm14,ymm6,ymm1
+     dbb87fa:	c4 e2 7d 18 75 9c    	vbroadcastss ymm6,DWORD PTR [rbp-0x64]
+     dbb8800:	c4 62 4d b8 f9       	vfmadd231ps ymm15,ymm6,ymm1
+     dbb8805:	c4 e2 7d 18 75 a0    	vbroadcastss ymm6,DWORD PTR [rbp-0x60]
+     dbb880b:	c5 fc 10 4b e0       	vmovups ymm1,YMMWORD PTR [rbx-0x20]
+     dbb8810:	c4 62 4d b8 c0       	vfmadd231ps ymm8,ymm6,ymm0
+     dbb8815:	c4 e2 7d 18 75 a4    	vbroadcastss ymm6,DWORD PTR [rbp-0x5c]
+     dbb881b:	0f 18 8b 80 02 00 00 	prefetcht0 BYTE PTR [rbx+0x280]
+     dbb8822:	c4 62 4d b8 c8       	vfmadd231ps ymm9,ymm6,ymm0
+     dbb8827:	c4 e2 7d 18 75 a8    	vbroadcastss ymm6,DWORD PTR [rbp-0x58]
+     dbb882d:	c4 62 4d b8 d0       	vfmadd231ps ymm10,ymm6,ymm0
+     dbb8832:	c4 e2 7d 18 75 ac    	vbroadcastss ymm6,DWORD PTR [rbp-0x54]
+     dbb8838:	c4 62 4d b8 d8       	vfmadd231ps ymm11,ymm6,ymm0
+     dbb883d:	c4 e2 7d 18 75 b0    	vbroadcastss ymm6,DWORD PTR [rbp-0x50]
+     dbb8843:	c5 fc 10 03          	vmovups ymm0,YMMWORD PTR [rbx]
+     dbb8847:	c4 62 4d b8 e1       	vfmadd231ps ymm12,ymm6,ymm1
+     dbb884c:	c4 e2 7d 18 75 b4    	vbroadcastss ymm6,DWORD PTR [rbp-0x4c]
+     dbb8852:	c4 62 4d b8 e9       	vfmadd231ps ymm13,ymm6,ymm1
+     dbb8857:	c4 e2 7d 18 75 b8    	vbroadcastss ymm6,DWORD PTR [rbp-0x48]
+     dbb885d:	c4 62 4d b8 f1       	vfmadd231ps ymm14,ymm6,ymm1
+     dbb8862:	c4 e2 7d 18 75 bc    	vbroadcastss ymm6,DWORD PTR [rbp-0x44]
+     dbb8868:	c4 62 4d b8 f9       	vfmadd231ps ymm15,ymm6,ymm1
+     dbb886d:	c4 e2 7d 18 75 c0    	vbroadcastss ymm6,DWORD PTR [rbp-0x40]
+     dbb8873:	c5 fc 10 4b 20       	vmovups ymm1,YMMWORD PTR [rbx+0x20]
+     dbb8878:	48 83 eb 80          	sub    rbx,0xffffffffffffff80
+     dbb887c:	48 83 ed c0          	sub    rbp,0xffffffffffffffc0
+     dbb8880:	48 ff c8             	dec    rax
+     dbb8883:	0f 8f 17 ff ff ff    	jg     dbb87a0 <mkl_blas_avx2_sgemm_kernel_0+0x12a0>
+     dbb8889:	c4 41 3c 58 c4       	vaddps ymm8,ymm8,ymm12
+     dbb888e:	c4 41 34 58 cd       	vaddps ymm9,ymm9,ymm13
+     dbb8893:	c4 41 2c 58 d6       	vaddps ymm10,ymm10,ymm14
+     dbb8898:	c4 41 24 58 df       	vaddps ymm11,ymm11,ymm15
+     dbb889d:	0f 1f 00             	nop    DWORD PTR [rax]
+     dbb88a0:	0f 18 59 c0          	prefetcht2 BYTE PTR [rcx-0x40]
+     dbb88a4:	48 89 d0             	mov    rax,rdx
+     dbb88a7:	48 83 e0 03          	and    rax,0x3
+     dbb88ab:	74 43                	je     dbb88f0 <mkl_blas_avx2_sgemm_kernel_0+0x13f0>
+     dbb88ad:	0f 1f 00             	nop    DWORD PTR [rax]
+     dbb88b0:	c4 62 4d b8 c0       	vfmadd231ps ymm8,ymm6,ymm0
+     dbb88b5:	c4 e2 7d 18 75 84    	vbroadcastss ymm6,DWORD PTR [rbp-0x7c]
+     dbb88bb:	c4 62 4d b8 c8       	vfmadd231ps ymm9,ymm6,ymm0
+     dbb88c0:	c4 e2 7d 18 75 88    	vbroadcastss ymm6,DWORD PTR [rbp-0x78]
+     dbb88c6:	c4 62 4d b8 d0       	vfmadd231ps ymm10,ymm6,ymm0
+     dbb88cb:	c4 e2 7d 18 75 8c    	vbroadcastss ymm6,DWORD PTR [rbp-0x74]
+     dbb88d1:	c4 62 4d b8 d8       	vfmadd231ps ymm11,ymm6,ymm0
+     dbb88d6:	c4 e2 7d 18 75 90    	vbroadcastss ymm6,DWORD PTR [rbp-0x70]
+     dbb88dc:	c5 fc 10 43 a0       	vmovups ymm0,YMMWORD PTR [rbx-0x60]
+     dbb88e1:	48 83 eb e0          	sub    rbx,0xffffffffffffffe0
+     dbb88e5:	48 83 ed f0          	sub    rbp,0xfffffffffffffff0
+     dbb88e9:	48 ff c8             	dec    rax
+     dbb88ec:	7f c2                	jg     dbb88b0 <mkl_blas_avx2_sgemm_kernel_0+0x13b0>
+     dbb88ee:	66 90                	xchg   ax,ax
+     dbb88f0:	0f 18 19             	prefetcht2 BYTE PTR [rcx]
+     dbb88f3:	c4 c1 7c 10 0e       	vmovups ymm1,YMMWORD PTR [r14]
+     dbb88f8:	c4 41 74 58 c0       	vaddps ymm8,ymm1,ymm8
+     dbb88fd:	c4 41 7c 11 06       	vmovups YMMWORD PTR [r14],ymm8
+     dbb8902:	c4 81 7c 10 0c 1e    	vmovups ymm1,YMMWORD PTR [r14+r11*1]
+     dbb8908:	c4 41 74 58 c9       	vaddps ymm9,ymm1,ymm9
+     dbb890d:	0f 18 59 40          	prefetcht2 BYTE PTR [rcx+0x40]
+     dbb8911:	c4 01 7c 11 0c 1e    	vmovups YMMWORD PTR [r14+r11*1],ymm9
+     dbb8917:	4f 8d 34 9e          	lea    r14,[r14+r11*4]
+     dbb891b:	c4 c1 7c 10 0f       	vmovups ymm1,YMMWORD PTR [r15]
+     dbb8920:	c4 41 74 58 d2       	vaddps ymm10,ymm1,ymm10
+     dbb8925:	0f 18 99 80 00 00 00 	prefetcht2 BYTE PTR [rcx+0x80]
+     dbb892c:	c4 41 7c 11 17       	vmovups YMMWORD PTR [r15],ymm10
+     dbb8931:	c4 81 7c 10 0c 1f    	vmovups ymm1,YMMWORD PTR [r15+r11*1]
+     dbb8937:	c4 41 74 58 db       	vaddps ymm11,ymm1,ymm11
+     dbb893c:	0f 18 99 c0 00 00 00 	prefetcht2 BYTE PTR [rcx+0xc0]
+     dbb8943:	c4 01 7c 11 1c 1f    	vmovups YMMWORD PTR [r15+r11*1],ymm11
+     dbb8949:	4f 8d 3c 9f          	lea    r15,[r15+r11*4]
+     dbb894d:	48 81 e9 40 ff ff ff 	sub    rcx,0xffffffffffffff40
+     dbb8954:	49 ff cc             	dec    r12
+     dbb8957:	0f 8f d3 fd ff ff    	jg     dbb8730 <mkl_blas_avx2_sgemm_kernel_0+0x1230>
+     dbb895d:	0f 1f 00             	nop    DWORD PTR [rax]
+     dbb8960:	48 f7 c6 02 00 00 00 	test   rsi,0x2
+     dbb8967:	0f 8e 43 01 00 00    	jle    dbb8ab0 <mkl_blas_avx2_sgemm_kernel_0+0x15b0>
+     dbb896d:	0f 18 59 80          	prefetcht2 BYTE PTR [rcx-0x80]
+     dbb8971:	4c 89 c3             	mov    rbx,r8
+     dbb8974:	c4 e2 7d 18 55 80    	vbroadcastss ymm2,DWORD PTR [rbp-0x80]
+     dbb897a:	c4 41 3c 57 c0       	vxorps ymm8,ymm8,ymm8
+     dbb897f:	c5 fc 10 43 80       	vmovups ymm0,YMMWORD PTR [rbx-0x80]
+     dbb8984:	c4 41 34 57 c9       	vxorps ymm9,ymm9,ymm9
+     dbb8989:	c5 fc 10 4b a0       	vmovups ymm1,YMMWORD PTR [rbx-0x60]
+     dbb898e:	41 0f 18 4e 1c       	prefetcht0 BYTE PTR [r14+0x1c]
+     dbb8993:	43 0f 18 4c 1e 1c    	prefetcht0 BYTE PTR [r14+r11*1+0x1c]
+     dbb8999:	48 89 d0             	mov    rax,rdx
+     dbb899c:	48 c1 f8 02          	sar    rax,0x2
+     dbb89a0:	0f 8e 8a 00 00 00    	jle    dbb8a30 <mkl_blas_avx2_sgemm_kernel_0+0x1530>
+     dbb89a6:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
+     dbb89ad:	00 00 00
+     dbb89b0:	0f 18 8d 00 01 00 00 	prefetcht0 BYTE PTR [rbp+0x100]
+     dbb89b7:	c4 62 7d b8 c2       	vfmadd231ps ymm8,ymm0,ymm2
+     dbb89bc:	c4 e2 7d 18 55 84    	vbroadcastss ymm2,DWORD PTR [rbp-0x7c]
+     dbb89c2:	c4 62 7d b8 ca       	vfmadd231ps ymm9,ymm0,ymm2
+     dbb89c7:	c4 e2 7d 18 55 88    	vbroadcastss ymm2,DWORD PTR [rbp-0x78]
+     dbb89cd:	c5 fc 10 43 a0       	vmovups ymm0,YMMWORD PTR [rbx-0x60]
+     dbb89d2:	c4 62 7d b8 c2       	vfmadd231ps ymm8,ymm0,ymm2
+     dbb89d7:	c4 e2 7d 18 55 8c    	vbroadcastss ymm2,DWORD PTR [rbp-0x74]
+     dbb89dd:	c4 62 7d b8 ca       	vfmadd231ps ymm9,ymm0,ymm2
+     dbb89e2:	c4 e2 7d 18 55 90    	vbroadcastss ymm2,DWORD PTR [rbp-0x70]
+     dbb89e8:	c5 fc 10 43 c0       	vmovups ymm0,YMMWORD PTR [rbx-0x40]
+     dbb89ed:	c4 62 7d b8 c2       	vfmadd231ps ymm8,ymm0,ymm2
+     dbb89f2:	c4 e2 7d 18 55 94    	vbroadcastss ymm2,DWORD PTR [rbp-0x6c]
+     dbb89f8:	c4 62 7d b8 ca       	vfmadd231ps ymm9,ymm0,ymm2
+     dbb89fd:	c4 e2 7d 18 55 98    	vbroadcastss ymm2,DWORD PTR [rbp-0x68]
+     dbb8a03:	c5 fc 10 43 e0       	vmovups ymm0,YMMWORD PTR [rbx-0x20]
+     dbb8a08:	c4 62 7d b8 c2       	vfmadd231ps ymm8,ymm0,ymm2
+     dbb8a0d:	c4 e2 7d 18 55 9c    	vbroadcastss ymm2,DWORD PTR [rbp-0x64]
+     dbb8a13:	c4 62 7d b8 ca       	vfmadd231ps ymm9,ymm0,ymm2
+     dbb8a18:	c4 e2 7d 18 55 a0    	vbroadcastss ymm2,DWORD PTR [rbp-0x60]
+     dbb8a1e:	c5 fc 10 03          	vmovups ymm0,YMMWORD PTR [rbx]
+     dbb8a22:	48 83 ed e0          	sub    rbp,0xffffffffffffffe0
+     dbb8a26:	48 83 eb 80          	sub    rbx,0xffffffffffffff80
+     dbb8a2a:	48 ff c8             	dec    rax
+     dbb8a2d:	7f 81                	jg     dbb89b0 <mkl_blas_avx2_sgemm_kernel_0+0x14b0>
+     dbb8a2f:	90                   	nop
+     dbb8a30:	48 89 d0             	mov    rax,rdx
+     dbb8a33:	48 83 e0 03          	and    rax,0x3
+     dbb8a37:	74 37                	je     dbb8a70 <mkl_blas_avx2_sgemm_kernel_0+0x1570>
+     dbb8a39:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+     dbb8a40:	c4 62 7d b8 c2       	vfmadd231ps ymm8,ymm0,ymm2
+     dbb8a45:	c4 e2 7d 18 55 84    	vbroadcastss ymm2,DWORD PTR [rbp-0x7c]
+     dbb8a4b:	c4 62 7d b8 ca       	vfmadd231ps ymm9,ymm0,ymm2
+     dbb8a50:	c4 e2 7d 18 55 88    	vbroadcastss ymm2,DWORD PTR [rbp-0x78]
+     dbb8a56:	c5 fc 10 43 a0       	vmovups ymm0,YMMWORD PTR [rbx-0x60]
+     dbb8a5b:	48 83 ed f8          	sub    rbp,0xfffffffffffffff8
+     dbb8a5f:	48 83 eb e0          	sub    rbx,0xffffffffffffffe0
+     dbb8a63:	48 ff c8             	dec    rax
+     dbb8a66:	7f d8                	jg     dbb8a40 <mkl_blas_avx2_sgemm_kernel_0+0x1540>
+     dbb8a68:	0f 1f 84 00 00 00 00 	nop    DWORD PTR [rax+rax*1+0x0]
+     dbb8a6f:	00
+     dbb8a70:	c4 c1 7c 10 0e       	vmovups ymm1,YMMWORD PTR [r14]
+     dbb8a75:	c4 41 74 58 c0       	vaddps ymm8,ymm1,ymm8
+     dbb8a7a:	c4 41 7c 11 06       	vmovups YMMWORD PTR [r14],ymm8
+     dbb8a7f:	c4 81 7c 10 0c 1e    	vmovups ymm1,YMMWORD PTR [r14+r11*1]
+     dbb8a85:	c4 41 74 58 c9       	vaddps ymm9,ymm1,ymm9
+     dbb8a8a:	0f 18 59 40          	prefetcht2 BYTE PTR [rcx+0x40]
+     dbb8a8e:	c4 01 7c 11 0c 1e    	vmovups YMMWORD PTR [r14+r11*1],ymm9
+     dbb8a94:	4f 8d 34 5e          	lea    r14,[r14+r11*2]
+     dbb8a98:	4f 8d 3c 5f          	lea    r15,[r15+r11*2]
+     dbb8a9c:	0f 18 99 80 00 00 00 	prefetcht2 BYTE PTR [rcx+0x80]
+     dbb8aa3:	48 83 e9 80          	sub    rcx,0xffffffffffffff80
+     dbb8aa7:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+     dbb8aae:	00 00
+     dbb8ab0:	48 f7 c6 01 00 00 00 	test   rsi,0x1
+     dbb8ab7:	0f 8e f3 00 00 00    	jle    dbb8bb0 <mkl_blas_avx2_sgemm_kernel_0+0x16b0>
+     dbb8abd:	0f 18 59 80          	prefetcht2 BYTE PTR [rcx-0x80]
+     dbb8ac1:	4c 89 c3             	mov    rbx,r8
+     dbb8ac4:	c4 e2 7d 18 55 80    	vbroadcastss ymm2,DWORD PTR [rbp-0x80]
+     dbb8aca:	c4 e2 7d 18 5d 84    	vbroadcastss ymm3,DWORD PTR [rbp-0x7c]
+     dbb8ad0:	c4 41 3c 57 c0       	vxorps ymm8,ymm8,ymm8
+     dbb8ad5:	c5 fc 10 43 80       	vmovups ymm0,YMMWORD PTR [rbx-0x80]
+     dbb8ada:	c5 fc 10 4b a0       	vmovups ymm1,YMMWORD PTR [rbx-0x60]
+     dbb8adf:	c4 41 34 57 c9       	vxorps ymm9,ymm9,ymm9
+     dbb8ae4:	41 0f 18 4e 1c       	prefetcht0 BYTE PTR [r14+0x1c]
+     dbb8ae9:	48 89 d0             	mov    rax,rdx
+     dbb8aec:	48 c1 f8 02          	sar    rax,0x2
+     dbb8af0:	7e 6e                	jle    dbb8b60 <mkl_blas_avx2_sgemm_kernel_0+0x1660>
+     dbb8af2:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+     dbb8af9:	00 00 00 00
+     dbb8afd:	0f 1f 00             	nop    DWORD PTR [rax]
+     dbb8b00:	0f 18 8d 00 01 00 00 	prefetcht0 BYTE PTR [rbp+0x100]
+     dbb8b07:	c4 62 7d b8 c2       	vfmadd231ps ymm8,ymm0,ymm2
+     dbb8b0c:	c4 e2 7d 18 55 88    	vbroadcastss ymm2,DWORD PTR [rbp-0x78]
+     dbb8b12:	c5 fc 10 43 c0       	vmovups ymm0,YMMWORD PTR [rbx-0x40]
+     dbb8b17:	c4 62 75 b8 cb       	vfmadd231ps ymm9,ymm1,ymm3
+     dbb8b1c:	c4 e2 7d 18 5d 8c    	vbroadcastss ymm3,DWORD PTR [rbp-0x74]
+     dbb8b22:	c5 fc 10 4b e0       	vmovups ymm1,YMMWORD PTR [rbx-0x20]
+     dbb8b27:	c4 62 7d b8 c2       	vfmadd231ps ymm8,ymm0,ymm2
+     dbb8b2c:	c4 e2 7d 18 55 90    	vbroadcastss ymm2,DWORD PTR [rbp-0x70]
+     dbb8b32:	c5 fc 10 03          	vmovups ymm0,YMMWORD PTR [rbx]
+     dbb8b36:	c4 62 75 b8 cb       	vfmadd231ps ymm9,ymm1,ymm3
+     dbb8b3b:	c4 e2 7d 18 5d 94    	vbroadcastss ymm3,DWORD PTR [rbp-0x6c]
+     dbb8b41:	48 83 ed f0          	sub    rbp,0xfffffffffffffff0
+     dbb8b45:	c5 fc 10 4b 20       	vmovups ymm1,YMMWORD PTR [rbx+0x20]
+     dbb8b4a:	48 83 eb 80          	sub    rbx,0xffffffffffffff80
+     dbb8b4e:	48 ff c8             	dec    rax
+     dbb8b51:	7f ad                	jg     dbb8b00 <mkl_blas_avx2_sgemm_kernel_0+0x1600>
+     dbb8b53:	c4 41 34 58 c0       	vaddps ymm8,ymm9,ymm8
+     dbb8b58:	0f 1f 84 00 00 00 00 	nop    DWORD PTR [rax+rax*1+0x0]
+     dbb8b5f:	00
+     dbb8b60:	48 89 d0             	mov    rax,rdx
+     dbb8b63:	48 83 e0 03          	and    rax,0x3
+     dbb8b67:	74 27                	je     dbb8b90 <mkl_blas_avx2_sgemm_kernel_0+0x1690>
+     dbb8b69:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+     dbb8b70:	c4 62 7d b8 c2       	vfmadd231ps ymm8,ymm0,ymm2
+     dbb8b75:	c4 e2 7d 18 55 84    	vbroadcastss ymm2,DWORD PTR [rbp-0x7c]
+     dbb8b7b:	48 83 ed fc          	sub    rbp,0xfffffffffffffffc
+     dbb8b7f:	c5 fc 10 43 a0       	vmovups ymm0,YMMWORD PTR [rbx-0x60]
+     dbb8b84:	48 83 eb e0          	sub    rbx,0xffffffffffffffe0
+     dbb8b88:	48 ff c8             	dec    rax
+     dbb8b8b:	7f e3                	jg     dbb8b70 <mkl_blas_avx2_sgemm_kernel_0+0x1670>
+     dbb8b8d:	0f 1f 00             	nop    DWORD PTR [rax]
+     dbb8b90:	c4 c1 7c 10 0e       	vmovups ymm1,YMMWORD PTR [r14]
+     dbb8b95:	c4 41 74 58 c0       	vaddps ymm8,ymm1,ymm8
+     dbb8b9a:	c4 41 7c 11 06       	vmovups YMMWORD PTR [r14],ymm8
+     dbb8b9f:	4d 01 de             	add    r14,r11
+     dbb8ba2:	4d 01 df             	add    r15,r11
+     dbb8ba5:	0f 18 99 80 00 00 00 	prefetcht2 BYTE PTR [rcx+0x80]
+     dbb8bac:	48 83 e9 80          	sub    rcx,0xffffffffffffff80
+     dbb8bb0:	49 89 d8             	mov    r8,rbx
+     dbb8bb3:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+     dbb8bba:	00 00 00 00
+     dbb8bbe:	66 90                	xchg   ax,ax
+     dbb8bc0:	49 f7 c5 04 00 00 00 	test   r13,0x4
+     dbb8bc7:	0f 8e b3 04 00 00    	jle    dbb9080 <mkl_blas_avx2_sgemm_kernel_0+0x1b80>
+     dbb8bcd:	48 89 d1             	mov    rcx,rdx
+     dbb8bd0:	48 6b c9 10          	imul   rcx,rcx,0x10
+     dbb8bd4:	4c 01 c1             	add    rcx,r8
+     dbb8bd7:	4d 89 d6             	mov    r14,r10
+     dbb8bda:	4f 8d 3c 5a          	lea    r15,[r10+r11*2]
+     dbb8bde:	49 83 c2 10          	add    r10,0x10
+     dbb8be2:	4c 89 cd             	mov    rbp,r9
+     dbb8be5:	49 89 f4             	mov    r12,rsi
+     dbb8be8:	49 c1 fc 02          	sar    r12,0x2
+     dbb8bec:	0f 8e 3e 02 00 00    	jle    dbb8e30 <mkl_blas_avx2_sgemm_kernel_0+0x1930>
+     dbb8bf2:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+     dbb8bf9:	00 00 00 00
+     dbb8bfd:	0f 1f 00             	nop    DWORD PTR [rax]
+     dbb8c00:	0f 18 59 80          	prefetcht2 BYTE PTR [rcx-0x80]
+     dbb8c04:	4c 89 c3             	mov    rbx,r8
+     dbb8c07:	c4 41 38 57 c0       	vxorps xmm8,xmm8,xmm8
+     dbb8c0c:	c4 e2 79 18 75 80    	vbroadcastss xmm6,DWORD PTR [rbp-0x80]
+     dbb8c12:	c4 41 30 57 c9       	vxorps xmm9,xmm9,xmm9
+     dbb8c17:	c5 f8 10 43 80       	vmovups xmm0,XMMWORD PTR [rbx-0x80]
+     dbb8c1c:	c4 41 28 57 d2       	vxorps xmm10,xmm10,xmm10
+     dbb8c21:	c4 41 20 57 db       	vxorps xmm11,xmm11,xmm11
+     dbb8c26:	c5 f8 10 4b 90       	vmovups xmm1,XMMWORD PTR [rbx-0x70]
+     dbb8c2b:	c4 41 18 57 e4       	vxorps xmm12,xmm12,xmm12
+     dbb8c30:	41 0f 18 4e 0c       	prefetcht0 BYTE PTR [r14+0xc]
+     dbb8c35:	c4 41 10 57 ed       	vxorps xmm13,xmm13,xmm13
+     dbb8c3a:	43 0f 18 4c 1e 0c    	prefetcht0 BYTE PTR [r14+r11*1+0xc]
+     dbb8c40:	c4 41 08 57 f6       	vxorps xmm14,xmm14,xmm14
+     dbb8c45:	41 0f 18 4f 0c       	prefetcht0 BYTE PTR [r15+0xc]
+     dbb8c4a:	c4 41 00 57 ff       	vxorps xmm15,xmm15,xmm15
+     dbb8c4f:	43 0f 18 4c 1f 0c    	prefetcht0 BYTE PTR [r15+r11*1+0xc]
+     dbb8c55:	48 89 d0             	mov    rax,rdx
+     dbb8c58:	48 c1 f8 02          	sar    rax,0x2
+     dbb8c5c:	0f 8e 0e 01 00 00    	jle    dbb8d70 <mkl_blas_avx2_sgemm_kernel_0+0x1870>
+     dbb8c62:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+     dbb8c69:	00 00 00 00
+     dbb8c6d:	0f 1f 00             	nop    DWORD PTR [rax]
+     dbb8c70:	c4 62 49 b8 c0       	vfmadd231ps xmm8,xmm6,xmm0
+     dbb8c75:	0f 18 8d 00 01 00 00 	prefetcht0 BYTE PTR [rbp+0x100]
+     dbb8c7c:	c4 e2 79 18 75 84    	vbroadcastss xmm6,DWORD PTR [rbp-0x7c]
+     dbb8c82:	c4 62 49 b8 c8       	vfmadd231ps xmm9,xmm6,xmm0
+     dbb8c87:	c4 e2 79 18 75 88    	vbroadcastss xmm6,DWORD PTR [rbp-0x78]
+     dbb8c8d:	c4 62 49 b8 d0       	vfmadd231ps xmm10,xmm6,xmm0
+     dbb8c92:	c4 e2 79 18 75 8c    	vbroadcastss xmm6,DWORD PTR [rbp-0x74]
+     dbb8c98:	c4 62 49 b8 d8       	vfmadd231ps xmm11,xmm6,xmm0
+     dbb8c9d:	c4 e2 79 18 75 90    	vbroadcastss xmm6,DWORD PTR [rbp-0x70]
+     dbb8ca3:	c5 f8 10 43 a0       	vmovups xmm0,XMMWORD PTR [rbx-0x60]
+     dbb8ca8:	c4 62 49 b8 e1       	vfmadd231ps xmm12,xmm6,xmm1
+     dbb8cad:	0f 18 8b 40 02 00 00 	prefetcht0 BYTE PTR [rbx+0x240]
+     dbb8cb4:	c4 e2 79 18 75 94    	vbroadcastss xmm6,DWORD PTR [rbp-0x6c]
+     dbb8cba:	c4 62 49 b8 e9       	vfmadd231ps xmm13,xmm6,xmm1
+     dbb8cbf:	c4 e2 79 18 75 98    	vbroadcastss xmm6,DWORD PTR [rbp-0x68]
+     dbb8cc5:	c4 62 49 b8 f1       	vfmadd231ps xmm14,xmm6,xmm1
+     dbb8cca:	c4 e2 79 18 75 9c    	vbroadcastss xmm6,DWORD PTR [rbp-0x64]
+     dbb8cd0:	c4 62 49 b8 f9       	vfmadd231ps xmm15,xmm6,xmm1
+     dbb8cd5:	c4 e2 79 18 75 a0    	vbroadcastss xmm6,DWORD PTR [rbp-0x60]
+     dbb8cdb:	c5 f8 10 4b b0       	vmovups xmm1,XMMWORD PTR [rbx-0x50]
+     dbb8ce0:	c4 62 49 b8 c0       	vfmadd231ps xmm8,xmm6,xmm0
+     dbb8ce5:	c4 e2 79 18 75 a4    	vbroadcastss xmm6,DWORD PTR [rbp-0x5c]
+     dbb8ceb:	c4 62 49 b8 c8       	vfmadd231ps xmm9,xmm6,xmm0
+     dbb8cf0:	c4 e2 79 18 75 a8    	vbroadcastss xmm6,DWORD PTR [rbp-0x58]
+     dbb8cf6:	c4 62 49 b8 d0       	vfmadd231ps xmm10,xmm6,xmm0
+     dbb8cfb:	c4 e2 79 18 75 ac    	vbroadcastss xmm6,DWORD PTR [rbp-0x54]
+     dbb8d01:	c4 62 49 b8 d8       	vfmadd231ps xmm11,xmm6,xmm0
+     dbb8d06:	c4 e2 79 18 75 b0    	vbroadcastss xmm6,DWORD PTR [rbp-0x50]
+     dbb8d0c:	c5 f8 10 43 c0       	vmovups xmm0,XMMWORD PTR [rbx-0x40]
+     dbb8d11:	c4 62 49 b8 e1       	vfmadd231ps xmm12,xmm6,xmm1
+     dbb8d16:	c4 e2 79 18 75 b4    	vbroadcastss xmm6,DWORD PTR [rbp-0x4c]
+     dbb8d1c:	c4 62 49 b8 e9       	vfmadd231ps xmm13,xmm6,xmm1
+     dbb8d21:	c4 e2 79 18 75 b8    	vbroadcastss xmm6,DWORD PTR [rbp-0x48]
+     dbb8d27:	c4 62 49 b8 f1       	vfmadd231ps xmm14,xmm6,xmm1
+     dbb8d2c:	c4 e2 79 18 75 bc    	vbroadcastss xmm6,DWORD PTR [rbp-0x44]
+     dbb8d32:	c4 62 49 b8 f9       	vfmadd231ps xmm15,xmm6,xmm1
+     dbb8d37:	c4 e2 79 18 75 c0    	vbroadcastss xmm6,DWORD PTR [rbp-0x40]
+     dbb8d3d:	c5 f8 10 4b d0       	vmovups xmm1,XMMWORD PTR [rbx-0x30]
+     dbb8d42:	48 83 eb c0          	sub    rbx,0xffffffffffffffc0
+     dbb8d46:	48 83 ed c0          	sub    rbp,0xffffffffffffffc0
+     dbb8d4a:	48 ff c8             	dec    rax
+     dbb8d4d:	0f 8f 1d ff ff ff    	jg     dbb8c70 <mkl_blas_avx2_sgemm_kernel_0+0x1770>
+     dbb8d53:	c4 41 38 58 c4       	vaddps xmm8,xmm8,xmm12
+     dbb8d58:	c4 41 30 58 cd       	vaddps xmm9,xmm9,xmm13
+     dbb8d5d:	c4 41 28 58 d6       	vaddps xmm10,xmm10,xmm14
+     dbb8d62:	c4 41 20 58 df       	vaddps xmm11,xmm11,xmm15
+     dbb8d67:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+     dbb8d6e:	00 00
+     dbb8d70:	48 89 d0             	mov    rax,rdx
+     dbb8d73:	48 83 e0 03          	and    rax,0x3
+     dbb8d77:	74 47                	je     dbb8dc0 <mkl_blas_avx2_sgemm_kernel_0+0x18c0>
+     dbb8d79:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+     dbb8d80:	c4 62 49 b8 c0       	vfmadd231ps xmm8,xmm6,xmm0
+     dbb8d85:	c4 e2 79 18 75 84    	vbroadcastss xmm6,DWORD PTR [rbp-0x7c]
+     dbb8d8b:	c4 62 49 b8 c8       	vfmadd231ps xmm9,xmm6,xmm0
+     dbb8d90:	c4 e2 79 18 75 88    	vbroadcastss xmm6,DWORD PTR [rbp-0x78]
+     dbb8d96:	c4 62 49 b8 d0       	vfmadd231ps xmm10,xmm6,xmm0
+     dbb8d9b:	c4 e2 79 18 75 8c    	vbroadcastss xmm6,DWORD PTR [rbp-0x74]
+     dbb8da1:	c4 62 49 b8 d8       	vfmadd231ps xmm11,xmm6,xmm0
+     dbb8da6:	c4 e2 79 18 75 90    	vbroadcastss xmm6,DWORD PTR [rbp-0x70]
+     dbb8dac:	c5 f8 10 43 90       	vmovups xmm0,XMMWORD PTR [rbx-0x70]
+     dbb8db1:	48 83 eb f0          	sub    rbx,0xfffffffffffffff0
+     dbb8db5:	48 83 ed f0          	sub    rbp,0xfffffffffffffff0
+     dbb8db9:	48 ff c8             	dec    rax
+     dbb8dbc:	7f c2                	jg     dbb8d80 <mkl_blas_avx2_sgemm_kernel_0+0x1880>
+     dbb8dbe:	66 90                	xchg   ax,ax
+     dbb8dc0:	c4 c1 78 10 0e       	vmovups xmm1,XMMWORD PTR [r14]
+     dbb8dc5:	c4 41 70 58 c0       	vaddps xmm8,xmm1,xmm8
+     dbb8dca:	c4 41 78 11 06       	vmovups XMMWORD PTR [r14],xmm8
+     dbb8dcf:	c4 81 78 10 0c 1e    	vmovups xmm1,XMMWORD PTR [r14+r11*1]
+     dbb8dd5:	c4 41 70 58 c9       	vaddps xmm9,xmm1,xmm9
+     dbb8dda:	0f 18 59 40          	prefetcht2 BYTE PTR [rcx+0x40]
+     dbb8dde:	c4 01 78 11 0c 1e    	vmovups XMMWORD PTR [r14+r11*1],xmm9
+     dbb8de4:	4f 8d 34 9e          	lea    r14,[r14+r11*4]
+     dbb8de8:	c4 c1 78 10 0f       	vmovups xmm1,XMMWORD PTR [r15]
+     dbb8ded:	c4 41 70 58 d2       	vaddps xmm10,xmm1,xmm10
+     dbb8df2:	0f 18 99 80 00 00 00 	prefetcht2 BYTE PTR [rcx+0x80]
+     dbb8df9:	c4 41 78 11 17       	vmovups XMMWORD PTR [r15],xmm10
+     dbb8dfe:	c4 81 78 10 0c 1f    	vmovups xmm1,XMMWORD PTR [r15+r11*1]
+     dbb8e04:	c4 41 70 58 db       	vaddps xmm11,xmm1,xmm11
+     dbb8e09:	0f 18 99 c0 00 00 00 	prefetcht2 BYTE PTR [rcx+0xc0]
+     dbb8e10:	c4 01 78 11 1c 1f    	vmovups XMMWORD PTR [r15+r11*1],xmm11
+     dbb8e16:	4f 8d 3c 9f          	lea    r15,[r15+r11*4]
+     dbb8e1a:	48 83 e9 80          	sub    rcx,0xffffffffffffff80
+     dbb8e1e:	49 ff cc             	dec    r12
+     dbb8e21:	0f 8f d9 fd ff ff    	jg     dbb8c00 <mkl_blas_avx2_sgemm_kernel_0+0x1700>
+     dbb8e27:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+     dbb8e2e:	00 00
+     dbb8e30:	48 f7 c6 02 00 00 00 	test   rsi,0x2
+     dbb8e37:	0f 8e 33 01 00 00    	jle    dbb8f70 <mkl_blas_avx2_sgemm_kernel_0+0x1a70>
+     dbb8e3d:	0f 18 59 80          	prefetcht2 BYTE PTR [rcx-0x80]
+     dbb8e41:	4c 89 c3             	mov    rbx,r8
+     dbb8e44:	c4 e2 79 18 55 80    	vbroadcastss xmm2,DWORD PTR [rbp-0x80]
+     dbb8e4a:	c4 41 38 57 c0       	vxorps xmm8,xmm8,xmm8
+     dbb8e4f:	c5 f8 10 43 80       	vmovups xmm0,XMMWORD PTR [rbx-0x80]
+     dbb8e54:	c4 41 30 57 c9       	vxorps xmm9,xmm9,xmm9
+     dbb8e59:	41 0f 18 4e 0c       	prefetcht0 BYTE PTR [r14+0xc]
+     dbb8e5e:	43 0f 18 4c 1e 0c    	prefetcht0 BYTE PTR [r14+r11*1+0xc]
+     dbb8e64:	48 89 d0             	mov    rax,rdx
+     dbb8e67:	48 c1 f8 02          	sar    rax,0x2
+     dbb8e6b:	0f 8e 8f 00 00 00    	jle    dbb8f00 <mkl_blas_avx2_sgemm_kernel_0+0x1a00>
+     dbb8e71:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+     dbb8e78:	00 00 00 00
+     dbb8e7c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+     dbb8e80:	0f 18 8d 00 01 00 00 	prefetcht0 BYTE PTR [rbp+0x100]
+     dbb8e87:	c4 62 79 b8 c2       	vfmadd231ps xmm8,xmm0,xmm2
+     dbb8e8c:	c4 e2 79 18 55 84    	vbroadcastss xmm2,DWORD PTR [rbp-0x7c]
+     dbb8e92:	c4 62 79 b8 ca       	vfmadd231ps xmm9,xmm0,xmm2
+     dbb8e97:	c4 e2 79 18 55 88    	vbroadcastss xmm2,DWORD PTR [rbp-0x78]
+     dbb8e9d:	c5 f8 10 43 90       	vmovups xmm0,XMMWORD PTR [rbx-0x70]
+     dbb8ea2:	c4 62 79 b8 c2       	vfmadd231ps xmm8,xmm0,xmm2
+     dbb8ea7:	c4 e2 79 18 55 8c    	vbroadcastss xmm2,DWORD PTR [rbp-0x74]
+     dbb8ead:	c4 62 79 b8 ca       	vfmadd231ps xmm9,xmm0,xmm2
+     dbb8eb2:	c4 e2 79 18 55 90    	vbroadcastss xmm2,DWORD PTR [rbp-0x70]
+     dbb8eb8:	c5 f8 10 43 a0       	vmovups xmm0,XMMWORD PTR [rbx-0x60]
+     dbb8ebd:	c4 62 79 b8 c2       	vfmadd231ps xmm8,xmm0,xmm2
+     dbb8ec2:	c4 e2 79 18 55 94    	vbroadcastss xmm2,DWORD PTR [rbp-0x6c]
+     dbb8ec8:	c4 62 79 b8 ca       	vfmadd231ps xmm9,xmm0,xmm2
+     dbb8ecd:	c4 e2 79 18 55 98    	vbroadcastss xmm2,DWORD PTR [rbp-0x68]
+     dbb8ed3:	c5 f8 10 43 b0       	vmovups xmm0,XMMWORD PTR [rbx-0x50]
+     dbb8ed8:	c4 62 79 b8 c2       	vfmadd231ps xmm8,xmm0,xmm2
+     dbb8edd:	c4 e2 79 18 55 9c    	vbroadcastss xmm2,DWORD PTR [rbp-0x64]
+     dbb8ee3:	c4 62 79 b8 ca       	vfmadd231ps xmm9,xmm0,xmm2
+     dbb8ee8:	c4 e2 79 18 55 a0    	vbroadcastss xmm2,DWORD PTR [rbp-0x60]
+     dbb8eee:	c5 f8 10 43 c0       	vmovups xmm0,XMMWORD PTR [rbx-0x40]
+     dbb8ef3:	48 83 ed e0          	sub    rbp,0xffffffffffffffe0
+     dbb8ef7:	48 83 eb c0          	sub    rbx,0xffffffffffffffc0
+     dbb8efb:	48 ff c8             	dec    rax
+     dbb8efe:	7f 80                	jg     dbb8e80 <mkl_blas_avx2_sgemm_kernel_0+0x1980>
+     dbb8f00:	48 89 d0             	mov    rax,rdx
+     dbb8f03:	48 83 e0 03          	and    rax,0x3
+     dbb8f07:	74 37                	je     dbb8f40 <mkl_blas_avx2_sgemm_kernel_0+0x1a40>
+     dbb8f09:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+     dbb8f10:	c4 62 79 b8 c2       	vfmadd231ps xmm8,xmm0,xmm2
+     dbb8f15:	c4 e2 79 18 55 84    	vbroadcastss xmm2,DWORD PTR [rbp-0x7c]
+     dbb8f1b:	c4 62 79 b8 ca       	vfmadd231ps xmm9,xmm0,xmm2
+     dbb8f20:	c4 e2 79 18 55 88    	vbroadcastss xmm2,DWORD PTR [rbp-0x78]
+     dbb8f26:	c5 f8 10 43 90       	vmovups xmm0,XMMWORD PTR [rbx-0x70]
+     dbb8f2b:	48 83 ed f8          	sub    rbp,0xfffffffffffffff8
+     dbb8f2f:	48 83 eb f0          	sub    rbx,0xfffffffffffffff0
+     dbb8f33:	48 ff c8             	dec    rax
+     dbb8f36:	7f d8                	jg     dbb8f10 <mkl_blas_avx2_sgemm_kernel_0+0x1a10>
+     dbb8f38:	0f 1f 84 00 00 00 00 	nop    DWORD PTR [rax+rax*1+0x0]
+     dbb8f3f:	00
+     dbb8f40:	c4 c1 78 10 0e       	vmovups xmm1,XMMWORD PTR [r14]
+     dbb8f45:	c4 41 70 58 c0       	vaddps xmm8,xmm1,xmm8
+     dbb8f4a:	c4 41 78 11 06       	vmovups XMMWORD PTR [r14],xmm8
+     dbb8f4f:	c4 81 78 10 0c 1e    	vmovups xmm1,XMMWORD PTR [r14+r11*1]
+     dbb8f55:	c4 41 70 58 c9       	vaddps xmm9,xmm1,xmm9
+     dbb8f5a:	0f 18 59 40          	prefetcht2 BYTE PTR [rcx+0x40]
+     dbb8f5e:	c4 01 78 11 0c 1e    	vmovups XMMWORD PTR [r14+r11*1],xmm9
+     dbb8f64:	4f 8d 34 5e          	lea    r14,[r14+r11*2]
+     dbb8f68:	4f 8d 3c 5f          	lea    r15,[r15+r11*2]
+     dbb8f6c:	48 83 e9 80          	sub    rcx,0xffffffffffffff80
+     dbb8f70:	48 f7 c6 01 00 00 00 	test   rsi,0x1
+     dbb8f77:	0f 8e f3 00 00 00    	jle    dbb9070 <mkl_blas_avx2_sgemm_kernel_0+0x1b70>
+     dbb8f7d:	0f 18 59 80          	prefetcht2 BYTE PTR [rcx-0x80]
+     dbb8f81:	4c 89 c3             	mov    rbx,r8
+     dbb8f84:	c4 e2 79 18 55 80    	vbroadcastss xmm2,DWORD PTR [rbp-0x80]
+     dbb8f8a:	c4 e2 79 18 5d 84    	vbroadcastss xmm3,DWORD PTR [rbp-0x7c]
+     dbb8f90:	c4 41 38 57 c0       	vxorps xmm8,xmm8,xmm8
+     dbb8f95:	c5 f8 10 43 80       	vmovups xmm0,XMMWORD PTR [rbx-0x80]
+     dbb8f9a:	c5 f8 10 4b 90       	vmovups xmm1,XMMWORD PTR [rbx-0x70]
+     dbb8f9f:	c4 41 30 57 c9       	vxorps xmm9,xmm9,xmm9
+     dbb8fa4:	41 0f 18 4e 0c       	prefetcht0 BYTE PTR [r14+0xc]
+     dbb8fa9:	48 89 d0             	mov    rax,rdx
+     dbb8fac:	48 c1 f8 02          	sar    rax,0x2
+     dbb8fb0:	7e 6e                	jle    dbb9020 <mkl_blas_avx2_sgemm_kernel_0+0x1b20>
+     dbb8fb2:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+     dbb8fb9:	00 00 00 00
+     dbb8fbd:	0f 1f 00             	nop    DWORD PTR [rax]
+     dbb8fc0:	0f 18 8d 00 01 00 00 	prefetcht0 BYTE PTR [rbp+0x100]
+     dbb8fc7:	c4 62 79 b8 c2       	vfmadd231ps xmm8,xmm0,xmm2
+     dbb8fcc:	c4 e2 79 18 55 88    	vbroadcastss xmm2,DWORD PTR [rbp-0x78]
+     dbb8fd2:	c5 f8 10 43 a0       	vmovups xmm0,XMMWORD PTR [rbx-0x60]
+     dbb8fd7:	c4 62 71 b8 cb       	vfmadd231ps xmm9,xmm1,xmm3
+     dbb8fdc:	c4 e2 79 18 5d 8c    	vbroadcastss xmm3,DWORD PTR [rbp-0x74]
+     dbb8fe2:	c5 f8 10 4b b0       	vmovups xmm1,XMMWORD PTR [rbx-0x50]
+     dbb8fe7:	c4 62 79 b8 c2       	vfmadd231ps xmm8,xmm0,xmm2
+     dbb8fec:	c4 e2 79 18 55 90    	vbroadcastss xmm2,DWORD PTR [rbp-0x70]
+     dbb8ff2:	c5 f8 10 43 c0       	vmovups xmm0,XMMWORD PTR [rbx-0x40]
+     dbb8ff7:	c4 62 71 b8 cb       	vfmadd231ps xmm9,xmm1,xmm3
+     dbb8ffc:	c4 e2 79 18 5d 94    	vbroadcastss xmm3,DWORD PTR [rbp-0x6c]
+     dbb9002:	48 83 ed f0          	sub    rbp,0xfffffffffffffff0
+     dbb9006:	c5 f8 10 4b d0       	vmovups xmm1,XMMWORD PTR [rbx-0x30]
+     dbb900b:	48 83 eb c0          	sub    rbx,0xffffffffffffffc0
+     dbb900f:	48 ff c8             	dec    rax
+     dbb9012:	7f ac                	jg     dbb8fc0 <mkl_blas_avx2_sgemm_kernel_0+0x1ac0>
+     dbb9014:	c4 41 30 58 c0       	vaddps xmm8,xmm9,xmm8
+     dbb9019:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+     dbb9020:	48 89 d0             	mov    rax,rdx
+     dbb9023:	48 83 e0 03          	and    rax,0x3
+     dbb9027:	74 27                	je     dbb9050 <mkl_blas_avx2_sgemm_kernel_0+0x1b50>
+     dbb9029:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+     dbb9030:	c4 62 79 b8 c2       	vfmadd231ps xmm8,xmm0,xmm2
+     dbb9035:	c4 e2 79 18 55 84    	vbroadcastss xmm2,DWORD PTR [rbp-0x7c]
+     dbb903b:	48 83 ed fc          	sub    rbp,0xfffffffffffffffc
+     dbb903f:	c5 f8 10 43 90       	vmovups xmm0,XMMWORD PTR [rbx-0x70]
+     dbb9044:	48 83 eb f0          	sub    rbx,0xfffffffffffffff0
+     dbb9048:	48 ff c8             	dec    rax
+     dbb904b:	7f e3                	jg     dbb9030 <mkl_blas_avx2_sgemm_kernel_0+0x1b30>
+     dbb904d:	0f 1f 00             	nop    DWORD PTR [rax]
+     dbb9050:	c4 c1 78 10 0e       	vmovups xmm1,XMMWORD PTR [r14]
+     dbb9055:	c4 41 70 58 c0       	vaddps xmm8,xmm1,xmm8
+     dbb905a:	c4 41 78 11 06       	vmovups XMMWORD PTR [r14],xmm8
+     dbb905f:	4d 01 de             	add    r14,r11
+     dbb9062:	4d 01 df             	add    r15,r11
+     dbb9065:	48 83 e9 80          	sub    rcx,0xffffffffffffff80
+     dbb9069:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+     dbb9070:	49 89 d8             	mov    r8,rbx
+     dbb9073:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+     dbb907a:	00 00 00 00
+     dbb907e:	66 90                	xchg   ax,ax
+     dbb9080:	49 f7 c5 02 00 00 00 	test   r13,0x2
+     dbb9087:	0f 8e b3 04 00 00    	jle    dbb9540 <mkl_blas_avx2_sgemm_kernel_0+0x2040>
+     dbb908d:	48 89 d1             	mov    rcx,rdx
+     dbb9090:	48 6b c9 08          	imul   rcx,rcx,0x8
+     dbb9094:	4c 01 c1             	add    rcx,r8
+     dbb9097:	4d 89 d6             	mov    r14,r10
+     dbb909a:	4f 8d 3c 5a          	lea    r15,[r10+r11*2]
+     dbb909e:	49 83 c2 08          	add    r10,0x8
+     dbb90a2:	4c 89 cd             	mov    rbp,r9
+     dbb90a5:	49 89 f4             	mov    r12,rsi
+     dbb90a8:	49 c1 fc 02          	sar    r12,0x2
+     dbb90ac:	0f 8e 3e 02 00 00    	jle    dbb92f0 <mkl_blas_avx2_sgemm_kernel_0+0x1df0>
+     dbb90b2:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+     dbb90b9:	00 00 00 00
+     dbb90bd:	0f 1f 00             	nop    DWORD PTR [rax]
+     dbb90c0:	0f 18 59 80          	prefetcht2 BYTE PTR [rcx-0x80]
+     dbb90c4:	4c 89 c3             	mov    rbx,r8
+     dbb90c7:	c4 41 38 57 c0       	vxorps xmm8,xmm8,xmm8
+     dbb90cc:	c4 e2 79 18 75 80    	vbroadcastss xmm6,DWORD PTR [rbp-0x80]
+     dbb90d2:	c4 41 30 57 c9       	vxorps xmm9,xmm9,xmm9
+     dbb90d7:	c5 fb 12 43 80       	vmovddup xmm0,QWORD PTR [rbx-0x80]
+     dbb90dc:	c4 41 28 57 d2       	vxorps xmm10,xmm10,xmm10
+     dbb90e1:	c4 41 20 57 db       	vxorps xmm11,xmm11,xmm11
+     dbb90e6:	c5 fb 12 4b 88       	vmovddup xmm1,QWORD PTR [rbx-0x78]
+     dbb90eb:	c4 41 18 57 e4       	vxorps xmm12,xmm12,xmm12
+     dbb90f0:	41 0f 18 4e 04       	prefetcht0 BYTE PTR [r14+0x4]
+     dbb90f5:	c4 41 10 57 ed       	vxorps xmm13,xmm13,xmm13
+     dbb90fa:	43 0f 18 4c 1e 04    	prefetcht0 BYTE PTR [r14+r11*1+0x4]
+     dbb9100:	c4 41 08 57 f6       	vxorps xmm14,xmm14,xmm14
+     dbb9105:	41 0f 18 4f 04       	prefetcht0 BYTE PTR [r15+0x4]
+     dbb910a:	c4 41 00 57 ff       	vxorps xmm15,xmm15,xmm15
+     dbb910f:	43 0f 18 4c 1f 04    	prefetcht0 BYTE PTR [r15+r11*1+0x4]
+     dbb9115:	48 89 d0             	mov    rax,rdx
+     dbb9118:	48 c1 f8 02          	sar    rax,0x2
+     dbb911c:	0f 8e 0e 01 00 00    	jle    dbb9230 <mkl_blas_avx2_sgemm_kernel_0+0x1d30>
+     dbb9122:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+     dbb9129:	00 00 00 00
+     dbb912d:	0f 1f 00             	nop    DWORD PTR [rax]
+     dbb9130:	c4 62 49 b8 c0       	vfmadd231ps xmm8,xmm6,xmm0
+     dbb9135:	0f 18 8d 00 01 00 00 	prefetcht0 BYTE PTR [rbp+0x100]
+     dbb913c:	c4 e2 79 18 75 84    	vbroadcastss xmm6,DWORD PTR [rbp-0x7c]
+     dbb9142:	c4 62 49 b8 c8       	vfmadd231ps xmm9,xmm6,xmm0
+     dbb9147:	c4 e2 79 18 75 88    	vbroadcastss xmm6,DWORD PTR [rbp-0x78]
+     dbb914d:	c4 62 49 b8 d0       	vfmadd231ps xmm10,xmm6,xmm0
+     dbb9152:	c4 e2 79 18 75 8c    	vbroadcastss xmm6,DWORD PTR [rbp-0x74]
+     dbb9158:	c4 62 49 b8 d8       	vfmadd231ps xmm11,xmm6,xmm0
+     dbb915d:	c4 e2 79 18 75 90    	vbroadcastss xmm6,DWORD PTR [rbp-0x70]
+     dbb9163:	c5 fb 12 43 90       	vmovddup xmm0,QWORD PTR [rbx-0x70]
+     dbb9168:	c4 62 49 b8 e1       	vfmadd231ps xmm12,xmm6,xmm1
+     dbb916d:	c4 e2 79 18 75 94    	vbroadcastss xmm6,DWORD PTR [rbp-0x6c]
+     dbb9173:	c4 62 49 b8 e9       	vfmadd231ps xmm13,xmm6,xmm1
+     dbb9178:	c4 e2 79 18 75 98    	vbroadcastss xmm6,DWORD PTR [rbp-0x68]
+     dbb917e:	c4 62 49 b8 f1       	vfmadd231ps xmm14,xmm6,xmm1
+     dbb9183:	c4 e2 79 18 75 9c    	vbroadcastss xmm6,DWORD PTR [rbp-0x64]
+     dbb9189:	c4 62 49 b8 f9       	vfmadd231ps xmm15,xmm6,xmm1
+     dbb918e:	c4 e2 79 18 75 a0    	vbroadcastss xmm6,DWORD PTR [rbp-0x60]
+     dbb9194:	c5 fb 12 4b 98       	vmovddup xmm1,QWORD PTR [rbx-0x68]
+     dbb9199:	c4 62 49 b8 c0       	vfmadd231ps xmm8,xmm6,xmm0
+     dbb919e:	0f 18 8b 40 02 00 00 	prefetcht0 BYTE PTR [rbx+0x240]
+     dbb91a5:	c4 e2 79 18 75 a4    	vbroadcastss xmm6,DWORD PTR [rbp-0x5c]
+     dbb91ab:	c4 62 49 b8 c8       	vfmadd231ps xmm9,xmm6,xmm0
+     dbb91b0:	c4 e2 79 18 75 a8    	vbroadcastss xmm6,DWORD PTR [rbp-0x58]
+     dbb91b6:	c4 62 49 b8 d0       	vfmadd231ps xmm10,xmm6,xmm0
+     dbb91bb:	c4 e2 79 18 75 ac    	vbroadcastss xmm6,DWORD PTR [rbp-0x54]
+     dbb91c1:	c4 62 49 b8 d8       	vfmadd231ps xmm11,xmm6,xmm0
+     dbb91c6:	c4 e2 79 18 75 b0    	vbroadcastss xmm6,DWORD PTR [rbp-0x50]
+     dbb91cc:	c5 fb 12 43 a0       	vmovddup xmm0,QWORD PTR [rbx-0x60]
+     dbb91d1:	c4 62 49 b8 e1       	vfmadd231ps xmm12,xmm6,xmm1
+     dbb91d6:	c4 e2 79 18 75 b4    	vbroadcastss xmm6,DWORD PTR [rbp-0x4c]
+     dbb91dc:	c4 62 49 b8 e9       	vfmadd231ps xmm13,xmm6,xmm1
+     dbb91e1:	c4 e2 79 18 75 b8    	vbroadcastss xmm6,DWORD PTR [rbp-0x48]
+     dbb91e7:	c4 62 49 b8 f1       	vfmadd231ps xmm14,xmm6,xmm1
+     dbb91ec:	c4 e2 79 18 75 bc    	vbroadcastss xmm6,DWORD PTR [rbp-0x44]
+     dbb91f2:	c4 62 49 b8 f9       	vfmadd231ps xmm15,xmm6,xmm1
+     dbb91f7:	c4 e2 79 18 75 c0    	vbroadcastss xmm6,DWORD PTR [rbp-0x40]
+     dbb91fd:	c5 fb 12 4b a8       	vmovddup xmm1,QWORD PTR [rbx-0x58]
+     dbb9202:	48 83 eb e0          	sub    rbx,0xffffffffffffffe0
+     dbb9206:	48 83 ed c0          	sub    rbp,0xffffffffffffffc0
+     dbb920a:	48 ff c8             	dec    rax
+     dbb920d:	0f 8f 1d ff ff ff    	jg     dbb9130 <mkl_blas_avx2_sgemm_kernel_0+0x1c30>
+     dbb9213:	c4 41 38 58 c4       	vaddps xmm8,xmm8,xmm12
+     dbb9218:	c4 41 30 58 cd       	vaddps xmm9,xmm9,xmm13
+     dbb921d:	c4 41 28 58 d6       	vaddps xmm10,xmm10,xmm14
+     dbb9222:	c4 41 20 58 df       	vaddps xmm11,xmm11,xmm15
+     dbb9227:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+     dbb922e:	00 00
+     dbb9230:	48 89 d0             	mov    rax,rdx
+     dbb9233:	48 83 e0 03          	and    rax,0x3
+     dbb9237:	74 47                	je     dbb9280 <mkl_blas_avx2_sgemm_kernel_0+0x1d80>
+     dbb9239:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+     dbb9240:	c4 62 49 b8 c0       	vfmadd231ps xmm8,xmm6,xmm0
+     dbb9245:	c4 e2 79 18 75 84    	vbroadcastss xmm6,DWORD PTR [rbp-0x7c]
+     dbb924b:	c4 62 49 b8 c8       	vfmadd231ps xmm9,xmm6,xmm0
+     dbb9250:	c4 e2 79 18 75 88    	vbroadcastss xmm6,DWORD PTR [rbp-0x78]
+     dbb9256:	c4 62 49 b8 d0       	vfmadd231ps xmm10,xmm6,xmm0
+     dbb925b:	c4 e2 79 18 75 8c    	vbroadcastss xmm6,DWORD PTR [rbp-0x74]
+     dbb9261:	c4 62 49 b8 d8       	vfmadd231ps xmm11,xmm6,xmm0
+     dbb9266:	c4 e2 79 18 75 90    	vbroadcastss xmm6,DWORD PTR [rbp-0x70]
+     dbb926c:	c5 fb 12 43 88       	vmovddup xmm0,QWORD PTR [rbx-0x78]
+     dbb9271:	48 83 eb f8          	sub    rbx,0xfffffffffffffff8
+     dbb9275:	48 83 ed f0          	sub    rbp,0xfffffffffffffff0
+     dbb9279:	48 ff c8             	dec    rax
+     dbb927c:	7f c2                	jg     dbb9240 <mkl_blas_avx2_sgemm_kernel_0+0x1d40>
+     dbb927e:	66 90                	xchg   ax,ax
+     dbb9280:	c4 c1 7b 10 0e       	vmovsd xmm1,QWORD PTR [r14]
+     dbb9285:	c4 41 70 58 c0       	vaddps xmm8,xmm1,xmm8
+     dbb928a:	c4 41 78 13 06       	vmovlps QWORD PTR [r14],xmm8
+     dbb928f:	c4 81 7b 10 0c 1e    	vmovsd xmm1,QWORD PTR [r14+r11*1]
+     dbb9295:	c4 41 70 58 c9       	vaddps xmm9,xmm1,xmm9
+     dbb929a:	0f 18 59 40          	prefetcht2 BYTE PTR [rcx+0x40]
+     dbb929e:	c4 01 78 13 0c 1e    	vmovlps QWORD PTR [r14+r11*1],xmm9
+     dbb92a4:	4f 8d 34 9e          	lea    r14,[r14+r11*4]
+     dbb92a8:	c4 c1 7b 10 0f       	vmovsd xmm1,QWORD PTR [r15]
+     dbb92ad:	c4 41 70 58 d2       	vaddps xmm10,xmm1,xmm10
+     dbb92b2:	0f 18 99 80 00 00 00 	prefetcht2 BYTE PTR [rcx+0x80]
+     dbb92b9:	c4 41 78 13 17       	vmovlps QWORD PTR [r15],xmm10
+     dbb92be:	c4 81 7b 10 0c 1f    	vmovsd xmm1,QWORD PTR [r15+r11*1]
+     dbb92c4:	c4 41 70 58 db       	vaddps xmm11,xmm1,xmm11
+     dbb92c9:	0f 18 99 c0 00 00 00 	prefetcht2 BYTE PTR [rcx+0xc0]
+     dbb92d0:	c4 01 78 13 1c 1f    	vmovlps QWORD PTR [r15+r11*1],xmm11
+     dbb92d6:	4f 8d 3c 9f          	lea    r15,[r15+r11*4]
+     dbb92da:	48 83 e9 80          	sub    rcx,0xffffffffffffff80
+     dbb92de:	49 ff cc             	dec    r12
+     dbb92e1:	0f 8f d9 fd ff ff    	jg     dbb90c0 <mkl_blas_avx2_sgemm_kernel_0+0x1bc0>
+     dbb92e7:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+     dbb92ee:	00 00
+     dbb92f0:	48 f7 c6 02 00 00 00 	test   rsi,0x2
+     dbb92f7:	0f 8e 33 01 00 00    	jle    dbb9430 <mkl_blas_avx2_sgemm_kernel_0+0x1f30>
+     dbb92fd:	0f 18 59 80          	prefetcht2 BYTE PTR [rcx-0x80]
+     dbb9301:	4c 89 c3             	mov    rbx,r8
+     dbb9304:	c4 e2 79 18 55 80    	vbroadcastss xmm2,DWORD PTR [rbp-0x80]
+     dbb930a:	c4 41 38 57 c0       	vxorps xmm8,xmm8,xmm8
+     dbb930f:	c5 fb 12 43 80       	vmovddup xmm0,QWORD PTR [rbx-0x80]
+     dbb9314:	c4 41 30 57 c9       	vxorps xmm9,xmm9,xmm9
+     dbb9319:	41 0f 18 4e 04       	prefetcht0 BYTE PTR [r14+0x4]
+     dbb931e:	43 0f 18 4c 1e 04    	prefetcht0 BYTE PTR [r14+r11*1+0x4]
+     dbb9324:	48 89 d0             	mov    rax,rdx
+     dbb9327:	48 c1 f8 02          	sar    rax,0x2
+     dbb932b:	0f 8e 8f 00 00 00    	jle    dbb93c0 <mkl_blas_avx2_sgemm_kernel_0+0x1ec0>
+     dbb9331:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+     dbb9338:	00 00 00 00
+     dbb933c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+     dbb9340:	0f 18 8d 00 01 00 00 	prefetcht0 BYTE PTR [rbp+0x100]
+     dbb9347:	c4 62 79 b8 c2       	vfmadd231ps xmm8,xmm0,xmm2
+     dbb934c:	c4 e2 79 18 55 84    	vbroadcastss xmm2,DWORD PTR [rbp-0x7c]
+     dbb9352:	c4 62 79 b8 ca       	vfmadd231ps xmm9,xmm0,xmm2
+     dbb9357:	c4 e2 79 18 55 88    	vbroadcastss xmm2,DWORD PTR [rbp-0x78]
+     dbb935d:	c5 fb 12 43 88       	vmovddup xmm0,QWORD PTR [rbx-0x78]
+     dbb9362:	c4 62 79 b8 c2       	vfmadd231ps xmm8,xmm0,xmm2
+     dbb9367:	c4 e2 79 18 55 8c    	vbroadcastss xmm2,DWORD PTR [rbp-0x74]
+     dbb936d:	c4 62 79 b8 ca       	vfmadd231ps xmm9,xmm0,xmm2
+     dbb9372:	c4 e2 79 18 55 90    	vbroadcastss xmm2,DWORD PTR [rbp-0x70]
+     dbb9378:	c5 fb 12 43 90       	vmovddup xmm0,QWORD PTR [rbx-0x70]
+     dbb937d:	c4 62 79 b8 c2       	vfmadd231ps xmm8,xmm0,xmm2
+     dbb9382:	c4 e2 79 18 55 94    	vbroadcastss xmm2,DWORD PTR [rbp-0x6c]
+     dbb9388:	c4 62 79 b8 ca       	vfmadd231ps xmm9,xmm0,xmm2
+     dbb938d:	c4 e2 79 18 55 98    	vbroadcastss xmm2,DWORD PTR [rbp-0x68]
+     dbb9393:	c5 fb 12 43 98       	vmovddup xmm0,QWORD PTR [rbx-0x68]
+     dbb9398:	c4 62 79 b8 c2       	vfmadd231ps xmm8,xmm0,xmm2
+     dbb939d:	c4 e2 79 18 55 9c    	vbroadcastss xmm2,DWORD PTR [rbp-0x64]
+     dbb93a3:	c4 62 79 b8 ca       	vfmadd231ps xmm9,xmm0,xmm2
+     dbb93a8:	c4 e2 79 18 55 a0    	vbroadcastss xmm2,DWORD PTR [rbp-0x60]
+     dbb93ae:	c5 fb 12 43 a0       	vmovddup xmm0,QWORD PTR [rbx-0x60]
+     dbb93b3:	48 83 ed e0          	sub    rbp,0xffffffffffffffe0
+     dbb93b7:	48 83 eb e0          	sub    rbx,0xffffffffffffffe0
+     dbb93bb:	48 ff c8             	dec    rax
+     dbb93be:	7f 80                	jg     dbb9340 <mkl_blas_avx2_sgemm_kernel_0+0x1e40>
+     dbb93c0:	48 89 d0             	mov    rax,rdx
+     dbb93c3:	48 83 e0 03          	and    rax,0x3
+     dbb93c7:	74 37                	je     dbb9400 <mkl_blas_avx2_sgemm_kernel_0+0x1f00>
+     dbb93c9:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+     dbb93d0:	c4 62 79 b8 c2       	vfmadd231ps xmm8,xmm0,xmm2
+     dbb93d5:	c4 e2 79 18 55 84    	vbroadcastss xmm2,DWORD PTR [rbp-0x7c]
+     dbb93db:	c4 62 79 b8 ca       	vfmadd231ps xmm9,xmm0,xmm2
+     dbb93e0:	c4 e2 79 18 55 88    	vbroadcastss xmm2,DWORD PTR [rbp-0x78]
+     dbb93e6:	c5 fb 12 43 88       	vmovddup xmm0,QWORD PTR [rbx-0x78]
+     dbb93eb:	48 83 ed f8          	sub    rbp,0xfffffffffffffff8
+     dbb93ef:	48 83 eb f8          	sub    rbx,0xfffffffffffffff8
+     dbb93f3:	48 ff c8             	dec    rax
+     dbb93f6:	7f d8                	jg     dbb93d0 <mkl_blas_avx2_sgemm_kernel_0+0x1ed0>
+     dbb93f8:	0f 1f 84 00 00 00 00 	nop    DWORD PTR [rax+rax*1+0x0]
+     dbb93ff:	00
+     dbb9400:	c4 c1 7b 10 0e       	vmovsd xmm1,QWORD PTR [r14]
+     dbb9405:	c4 41 70 58 c0       	vaddps xmm8,xmm1,xmm8
+     dbb940a:	c4 41 78 13 06       	vmovlps QWORD PTR [r14],xmm8
+     dbb940f:	c4 81 7b 10 0c 1e    	vmovsd xmm1,QWORD PTR [r14+r11*1]
+     dbb9415:	c4 41 70 58 c9       	vaddps xmm9,xmm1,xmm9
+     dbb941a:	0f 18 59 40          	prefetcht2 BYTE PTR [rcx+0x40]
+     dbb941e:	c4 01 78 13 0c 1e    	vmovlps QWORD PTR [r14+r11*1],xmm9
+     dbb9424:	4f 8d 34 5e          	lea    r14,[r14+r11*2]
+     dbb9428:	4f 8d 3c 5f          	lea    r15,[r15+r11*2]
+     dbb942c:	48 83 e9 80          	sub    rcx,0xffffffffffffff80
+     dbb9430:	48 f7 c6 01 00 00 00 	test   rsi,0x1
+     dbb9437:	0f 8e f3 00 00 00    	jle    dbb9530 <mkl_blas_avx2_sgemm_kernel_0+0x2030>
+     dbb943d:	0f 18 59 80          	prefetcht2 BYTE PTR [rcx-0x80]
+     dbb9441:	4c 89 c3             	mov    rbx,r8
+     dbb9444:	c4 e2 79 18 55 80    	vbroadcastss xmm2,DWORD PTR [rbp-0x80]
+     dbb944a:	c4 e2 79 18 5d 84    	vbroadcastss xmm3,DWORD PTR [rbp-0x7c]
+     dbb9450:	c4 41 38 57 c0       	vxorps xmm8,xmm8,xmm8
+     dbb9455:	c5 fb 12 43 80       	vmovddup xmm0,QWORD PTR [rbx-0x80]
+     dbb945a:	c4 41 30 57 c9       	vxorps xmm9,xmm9,xmm9
+     dbb945f:	c5 fb 12 4b 88       	vmovddup xmm1,QWORD PTR [rbx-0x78]
+     dbb9464:	41 0f 18 4e 04       	prefetcht0 BYTE PTR [r14+0x4]
+     dbb9469:	48 89 d0             	mov    rax,rdx
+     dbb946c:	48 c1 f8 02          	sar    rax,0x2
+     dbb9470:	7e 6e                	jle    dbb94e0 <mkl_blas_avx2_sgemm_kernel_0+0x1fe0>
+     dbb9472:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+     dbb9479:	00 00 00 00
+     dbb947d:	0f 1f 00             	nop    DWORD PTR [rax]
+     dbb9480:	0f 18 8d 00 01 00 00 	prefetcht0 BYTE PTR [rbp+0x100]
+     dbb9487:	c4 62 79 b8 c2       	vfmadd231ps xmm8,xmm0,xmm2
+     dbb948c:	c4 e2 79 18 55 88    	vbroadcastss xmm2,DWORD PTR [rbp-0x78]
+     dbb9492:	c5 fb 12 43 90       	vmovddup xmm0,QWORD PTR [rbx-0x70]
+     dbb9497:	c4 62 71 b8 cb       	vfmadd231ps xmm9,xmm1,xmm3
+     dbb949c:	c4 e2 79 18 5d 8c    	vbroadcastss xmm3,DWORD PTR [rbp-0x74]
+     dbb94a2:	c5 fb 12 4b 98       	vmovddup xmm1,QWORD PTR [rbx-0x68]
+     dbb94a7:	c4 62 79 b8 c2       	vfmadd231ps xmm8,xmm0,xmm2
+     dbb94ac:	c4 e2 79 18 55 90    	vbroadcastss xmm2,DWORD PTR [rbp-0x70]
+     dbb94b2:	c5 fb 12 43 a0       	vmovddup xmm0,QWORD PTR [rbx-0x60]
+     dbb94b7:	c4 62 71 b8 cb       	vfmadd231ps xmm9,xmm1,xmm3
+     dbb94bc:	c4 e2 79 18 5d 94    	vbroadcastss xmm3,DWORD PTR [rbp-0x6c]
+     dbb94c2:	48 83 ed f0          	sub    rbp,0xfffffffffffffff0
+     dbb94c6:	c5 fb 12 4b a8       	vmovddup xmm1,QWORD PTR [rbx-0x58]
+     dbb94cb:	48 83 eb e0          	sub    rbx,0xffffffffffffffe0
+     dbb94cf:	48 ff c8             	dec    rax
+     dbb94d2:	7f ac                	jg     dbb9480 <mkl_blas_avx2_sgemm_kernel_0+0x1f80>
+     dbb94d4:	c4 41 30 58 c0       	vaddps xmm8,xmm9,xmm8
+     dbb94d9:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+     dbb94e0:	48 89 d0             	mov    rax,rdx
+     dbb94e3:	48 83 e0 03          	and    rax,0x3
+     dbb94e7:	74 27                	je     dbb9510 <mkl_blas_avx2_sgemm_kernel_0+0x2010>
+     dbb94e9:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+     dbb94f0:	c4 62 79 b8 c2       	vfmadd231ps xmm8,xmm0,xmm2
+     dbb94f5:	c4 e2 79 18 55 84    	vbroadcastss xmm2,DWORD PTR [rbp-0x7c]
+     dbb94fb:	48 83 ed fc          	sub    rbp,0xfffffffffffffffc
+     dbb94ff:	c5 fb 12 43 88       	vmovddup xmm0,QWORD PTR [rbx-0x78]
+     dbb9504:	48 83 eb f8          	sub    rbx,0xfffffffffffffff8
+     dbb9508:	48 ff c8             	dec    rax
+     dbb950b:	7f e3                	jg     dbb94f0 <mkl_blas_avx2_sgemm_kernel_0+0x1ff0>
+     dbb950d:	0f 1f 00             	nop    DWORD PTR [rax]
+     dbb9510:	c4 c1 7b 10 0e       	vmovsd xmm1,QWORD PTR [r14]
+     dbb9515:	c4 41 70 58 c0       	vaddps xmm8,xmm1,xmm8
+     dbb951a:	c4 41 78 13 06       	vmovlps QWORD PTR [r14],xmm8
+     dbb951f:	4d 01 de             	add    r14,r11
+     dbb9522:	4d 01 df             	add    r15,r11
+     dbb9525:	48 83 e9 80          	sub    rcx,0xffffffffffffff80
+     dbb9529:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+     dbb9530:	49 89 d8             	mov    r8,rbx
+     dbb9533:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+     dbb953a:	00 00 00 00
+     dbb953e:	66 90                	xchg   ax,ax
+     dbb9540:	49 f7 c5 01 00 00 00 	test   r13,0x1
+     dbb9547:	0f 8e 53 04 00 00    	jle    dbb99a0 <mkl_blas_avx2_sgemm_kernel_0+0x24a0>
+     dbb954d:	48 89 d1             	mov    rcx,rdx
+     dbb9550:	48 6b c9 04          	imul   rcx,rcx,0x4
+     dbb9554:	4c 01 c1             	add    rcx,r8
+     dbb9557:	4d 89 d6             	mov    r14,r10
+     dbb955a:	4f 8d 3c 5a          	lea    r15,[r10+r11*2]
+     dbb955e:	49 83 c2 04          	add    r10,0x4
+     dbb9562:	4c 89 cd             	mov    rbp,r9
+     dbb9565:	49 89 f4             	mov    r12,rsi
+     dbb9568:	49 c1 fc 02          	sar    r12,0x2
+     dbb956c:	0f 8e fe 01 00 00    	jle    dbb9770 <mkl_blas_avx2_sgemm_kernel_0+0x2270>
+     dbb9572:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+     dbb9579:	00 00 00 00
+     dbb957d:	0f 1f 00             	nop    DWORD PTR [rax]
+     dbb9580:	0f 18 59 80          	prefetcht2 BYTE PTR [rcx-0x80]
+     dbb9584:	4c 89 c3             	mov    rbx,r8
+     dbb9587:	c4 41 38 57 c0       	vxorps xmm8,xmm8,xmm8
+     dbb958c:	c5 fa 10 75 80       	vmovss xmm6,DWORD PTR [rbp-0x80]
+     dbb9591:	c4 41 30 57 c9       	vxorps xmm9,xmm9,xmm9
+     dbb9596:	c5 fa 10 43 80       	vmovss xmm0,DWORD PTR [rbx-0x80]
+     dbb959b:	c4 41 28 57 d2       	vxorps xmm10,xmm10,xmm10
+     dbb95a0:	c4 41 20 57 db       	vxorps xmm11,xmm11,xmm11
+     dbb95a5:	c5 fa 10 4b 84       	vmovss xmm1,DWORD PTR [rbx-0x7c]
+     dbb95aa:	41 0f 18 0e          	prefetcht0 BYTE PTR [r14]
+     dbb95ae:	43 0f 18 0c 1e       	prefetcht0 BYTE PTR [r14+r11*1]
+     dbb95b3:	41 0f 18 0f          	prefetcht0 BYTE PTR [r15]
+     dbb95b7:	43 0f 18 0c 1f       	prefetcht0 BYTE PTR [r15+r11*1]
+     dbb95bc:	48 89 d0             	mov    rax,rdx
+     dbb95bf:	48 c1 f8 02          	sar    rax,0x2
+     dbb95c3:	0f 8e e7 00 00 00    	jle    dbb96b0 <mkl_blas_avx2_sgemm_kernel_0+0x21b0>
+     dbb95c9:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+     dbb95d0:	c4 62 49 b9 c0       	vfmadd231ss xmm8,xmm6,xmm0
+     dbb95d5:	0f 18 8d 00 01 00 00 	prefetcht0 BYTE PTR [rbp+0x100]
+     dbb95dc:	c5 fa 10 75 84       	vmovss xmm6,DWORD PTR [rbp-0x7c]
+     dbb95e1:	c4 62 49 b9 c8       	vfmadd231ss xmm9,xmm6,xmm0
+     dbb95e6:	c5 fa 10 75 88       	vmovss xmm6,DWORD PTR [rbp-0x78]
+     dbb95eb:	c4 62 49 b9 d0       	vfmadd231ss xmm10,xmm6,xmm0
+     dbb95f0:	c5 fa 10 75 8c       	vmovss xmm6,DWORD PTR [rbp-0x74]
+     dbb95f5:	c4 62 49 b9 d8       	vfmadd231ss xmm11,xmm6,xmm0
+     dbb95fa:	c5 fa 10 75 90       	vmovss xmm6,DWORD PTR [rbp-0x70]
+     dbb95ff:	c5 fa 10 43 88       	vmovss xmm0,DWORD PTR [rbx-0x78]
+     dbb9604:	c4 62 49 b9 c1       	vfmadd231ss xmm8,xmm6,xmm1
+     dbb9609:	c5 fa 10 75 94       	vmovss xmm6,DWORD PTR [rbp-0x6c]
+     dbb960e:	c4 62 49 b9 c9       	vfmadd231ss xmm9,xmm6,xmm1
+     dbb9613:	c5 fa 10 75 98       	vmovss xmm6,DWORD PTR [rbp-0x68]
+     dbb9618:	c4 62 49 b9 d1       	vfmadd231ss xmm10,xmm6,xmm1
+     dbb961d:	c5 fa 10 75 9c       	vmovss xmm6,DWORD PTR [rbp-0x64]
+     dbb9622:	c4 62 49 b9 d9       	vfmadd231ss xmm11,xmm6,xmm1
+     dbb9627:	c5 fa 10 75 a0       	vmovss xmm6,DWORD PTR [rbp-0x60]
+     dbb962c:	c5 fa 10 4b 8c       	vmovss xmm1,DWORD PTR [rbx-0x74]
+     dbb9631:	c4 62 49 b9 c0       	vfmadd231ss xmm8,xmm6,xmm0
+     dbb9636:	0f 18 8b 40 02 00 00 	prefetcht0 BYTE PTR [rbx+0x240]
+     dbb963d:	c5 fa 10 75 a4       	vmovss xmm6,DWORD PTR [rbp-0x5c]
+     dbb9642:	c4 62 49 b9 c8       	vfmadd231ss xmm9,xmm6,xmm0
+     dbb9647:	c5 fa 10 75 a8       	vmovss xmm6,DWORD PTR [rbp-0x58]
+     dbb964c:	c4 62 49 b9 d0       	vfmadd231ss xmm10,xmm6,xmm0
+     dbb9651:	c5 fa 10 75 ac       	vmovss xmm6,DWORD PTR [rbp-0x54]
+     dbb9656:	c4 62 49 b9 d8       	vfmadd231ss xmm11,xmm6,xmm0
+     dbb965b:	c5 fa 10 75 b0       	vmovss xmm6,DWORD PTR [rbp-0x50]
+     dbb9660:	c5 fa 10 43 90       	vmovss xmm0,DWORD PTR [rbx-0x70]
+     dbb9665:	c4 62 49 b9 c1       	vfmadd231ss xmm8,xmm6,xmm1
+     dbb966a:	c5 fa 10 75 b4       	vmovss xmm6,DWORD PTR [rbp-0x4c]
+     dbb966f:	c4 62 49 b9 c9       	vfmadd231ss xmm9,xmm6,xmm1
+     dbb9674:	c5 fa 10 75 b8       	vmovss xmm6,DWORD PTR [rbp-0x48]
+     dbb9679:	c4 62 49 b9 d1       	vfmadd231ss xmm10,xmm6,xmm1
+     dbb967e:	c5 fa 10 75 bc       	vmovss xmm6,DWORD PTR [rbp-0x44]
+     dbb9683:	c4 62 49 b9 d9       	vfmadd231ss xmm11,xmm6,xmm1
+     dbb9688:	c5 fa 10 75 c0       	vmovss xmm6,DWORD PTR [rbp-0x40]
+     dbb968d:	c5 fa 10 4b 94       	vmovss xmm1,DWORD PTR [rbx-0x6c]
+     dbb9692:	48 83 eb f0          	sub    rbx,0xfffffffffffffff0
+     dbb9696:	48 83 ed c0          	sub    rbp,0xffffffffffffffc0
+     dbb969a:	48 ff c8             	dec    rax
+     dbb969d:	0f 8f 2d ff ff ff    	jg     dbb95d0 <mkl_blas_avx2_sgemm_kernel_0+0x20d0>
+     dbb96a3:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+     dbb96aa:	00 00 00 00
+     dbb96ae:	66 90                	xchg   ax,ax
+     dbb96b0:	48 89 d0             	mov    rax,rdx
+     dbb96b3:	48 83 e0 03          	and    rax,0x3
+     dbb96b7:	74 47                	je     dbb9700 <mkl_blas_avx2_sgemm_kernel_0+0x2200>
+     dbb96b9:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+     dbb96c0:	c4 62 49 b9 c0       	vfmadd231ss xmm8,xmm6,xmm0
+     dbb96c5:	c5 fa 10 75 84       	vmovss xmm6,DWORD PTR [rbp-0x7c]
+     dbb96ca:	c4 62 49 b9 c8       	vfmadd231ss xmm9,xmm6,xmm0
+     dbb96cf:	c5 fa 10 75 88       	vmovss xmm6,DWORD PTR [rbp-0x78]
+     dbb96d4:	c4 62 49 b9 d0       	vfmadd231ss xmm10,xmm6,xmm0
+     dbb96d9:	c5 fa 10 75 8c       	vmovss xmm6,DWORD PTR [rbp-0x74]
+     dbb96de:	c4 62 49 b9 d8       	vfmadd231ss xmm11,xmm6,xmm0
+     dbb96e3:	c5 fa 10 75 90       	vmovss xmm6,DWORD PTR [rbp-0x70]
+     dbb96e8:	c5 fa 10 43 84       	vmovss xmm0,DWORD PTR [rbx-0x7c]
+     dbb96ed:	48 83 eb fc          	sub    rbx,0xfffffffffffffffc
+     dbb96f1:	48 83 ed f0          	sub    rbp,0xfffffffffffffff0
+     dbb96f5:	48 ff c8             	dec    rax
+     dbb96f8:	7f c6                	jg     dbb96c0 <mkl_blas_avx2_sgemm_kernel_0+0x21c0>
+     dbb96fa:	66 0f 1f 44 00 00    	nop    WORD PTR [rax+rax*1+0x0]
+     dbb9700:	c4 c1 7a 10 0e       	vmovss xmm1,DWORD PTR [r14]
+     dbb9705:	c4 41 72 58 c0       	vaddss xmm8,xmm1,xmm8
+     dbb970a:	c4 41 7a 11 06       	vmovss DWORD PTR [r14],xmm8
+     dbb970f:	c4 81 7a 10 0c 1e    	vmovss xmm1,DWORD PTR [r14+r11*1]
+     dbb9715:	c4 41 72 58 c9       	vaddss xmm9,xmm1,xmm9
+     dbb971a:	0f 18 59 40          	prefetcht2 BYTE PTR [rcx+0x40]
+     dbb971e:	c4 01 7a 11 0c 1e    	vmovss DWORD PTR [r14+r11*1],xmm9
+     dbb9724:	4f 8d 34 9e          	lea    r14,[r14+r11*4]
+     dbb9728:	c4 c1 7a 10 0f       	vmovss xmm1,DWORD PTR [r15]
+     dbb972d:	c4 41 72 58 d2       	vaddss xmm10,xmm1,xmm10
+     dbb9732:	0f 18 99 80 00 00 00 	prefetcht2 BYTE PTR [rcx+0x80]
+     dbb9739:	c4 41 7a 11 17       	vmovss DWORD PTR [r15],xmm10
+     dbb973e:	c4 81 7a 10 0c 1f    	vmovss xmm1,DWORD PTR [r15+r11*1]
+     dbb9744:	c4 41 72 58 db       	vaddss xmm11,xmm1,xmm11
+     dbb9749:	0f 18 99 c0 00 00 00 	prefetcht2 BYTE PTR [rcx+0xc0]
+     dbb9750:	c4 01 7a 11 1c 1f    	vmovss DWORD PTR [r15+r11*1],xmm11
+     dbb9756:	4f 8d 3c 9f          	lea    r15,[r15+r11*4]
+     dbb975a:	48 83 e9 80          	sub    rcx,0xffffffffffffff80
+     dbb975e:	49 ff cc             	dec    r12
+     dbb9761:	0f 8f 19 fe ff ff    	jg     dbb9580 <mkl_blas_avx2_sgemm_kernel_0+0x2080>
+     dbb9767:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+     dbb976e:	00 00
+     dbb9770:	48 f7 c6 02 00 00 00 	test   rsi,0x2
+     dbb9777:	0f 8e 23 01 00 00    	jle    dbb98a0 <mkl_blas_avx2_sgemm_kernel_0+0x23a0>
+     dbb977d:	0f 18 59 80          	prefetcht2 BYTE PTR [rcx-0x80]
+     dbb9781:	4c 89 c3             	mov    rbx,r8
+     dbb9784:	c5 fa 10 55 80       	vmovss xmm2,DWORD PTR [rbp-0x80]
+     dbb9789:	c4 41 38 57 c0       	vxorps xmm8,xmm8,xmm8
+     dbb978e:	c5 fa 10 43 80       	vmovss xmm0,DWORD PTR [rbx-0x80]
+     dbb9793:	c4 41 30 57 c9       	vxorps xmm9,xmm9,xmm9
+     dbb9798:	41 0f 18 0e          	prefetcht0 BYTE PTR [r14]
+     dbb979c:	43 0f 18 0c 1e       	prefetcht0 BYTE PTR [r14+r11*1]
+     dbb97a1:	48 89 d0             	mov    rax,rdx
+     dbb97a4:	48 c1 f8 02          	sar    rax,0x2
+     dbb97a8:	0f 8e 82 00 00 00    	jle    dbb9830 <mkl_blas_avx2_sgemm_kernel_0+0x2330>
+     dbb97ae:	66 90                	xchg   ax,ax
+     dbb97b0:	0f 18 8d 00 01 00 00 	prefetcht0 BYTE PTR [rbp+0x100]
+     dbb97b7:	c4 62 79 b9 c2       	vfmadd231ss xmm8,xmm0,xmm2
+     dbb97bc:	c5 fa 10 55 84       	vmovss xmm2,DWORD PTR [rbp-0x7c]
+     dbb97c1:	c4 62 79 b9 ca       	vfmadd231ss xmm9,xmm0,xmm2
+     dbb97c6:	c5 fa 10 55 88       	vmovss xmm2,DWORD PTR [rbp-0x78]
+     dbb97cb:	c5 fa 10 43 84       	vmovss xmm0,DWORD PTR [rbx-0x7c]
+     dbb97d0:	c4 62 79 b9 c2       	vfmadd231ss xmm8,xmm0,xmm2
+     dbb97d5:	c5 fa 10 55 8c       	vmovss xmm2,DWORD PTR [rbp-0x74]
+     dbb97da:	c4 62 79 b9 ca       	vfmadd231ss xmm9,xmm0,xmm2
+     dbb97df:	c5 fa 10 55 90       	vmovss xmm2,DWORD PTR [rbp-0x70]
+     dbb97e4:	c5 fa 10 43 88       	vmovss xmm0,DWORD PTR [rbx-0x78]
+     dbb97e9:	c4 62 79 b9 c2       	vfmadd231ss xmm8,xmm0,xmm2
+     dbb97ee:	c5 fa 10 55 94       	vmovss xmm2,DWORD PTR [rbp-0x6c]
+     dbb97f3:	c4 62 79 b9 ca       	vfmadd231ss xmm9,xmm0,xmm2
+     dbb97f8:	c5 fa 10 55 98       	vmovss xmm2,DWORD PTR [rbp-0x68]
+     dbb97fd:	c5 fa 10 43 8c       	vmovss xmm0,DWORD PTR [rbx-0x74]
+     dbb9802:	c4 62 79 b9 c2       	vfmadd231ss xmm8,xmm0,xmm2
+     dbb9807:	c5 fa 10 55 9c       	vmovss xmm2,DWORD PTR [rbp-0x64]
+     dbb980c:	c4 62 79 b9 ca       	vfmadd231ss xmm9,xmm0,xmm2
+     dbb9811:	c5 fa 10 55 a0       	vmovss xmm2,DWORD PTR [rbp-0x60]
+     dbb9816:	c5 fa 10 43 90       	vmovss xmm0,DWORD PTR [rbx-0x70]
+     dbb981b:	48 83 ed e0          	sub    rbp,0xffffffffffffffe0
+     dbb981f:	48 83 eb f0          	sub    rbx,0xfffffffffffffff0
+     dbb9823:	48 ff c8             	dec    rax
+     dbb9826:	7f 88                	jg     dbb97b0 <mkl_blas_avx2_sgemm_kernel_0+0x22b0>
+     dbb9828:	0f 1f 84 00 00 00 00 	nop    DWORD PTR [rax+rax*1+0x0]
+     dbb982f:	00
+     dbb9830:	48 89 d0             	mov    rax,rdx
+     dbb9833:	48 83 e0 03          	and    rax,0x3
+     dbb9837:	74 37                	je     dbb9870 <mkl_blas_avx2_sgemm_kernel_0+0x2370>
+     dbb9839:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+     dbb9840:	c4 62 79 b9 c2       	vfmadd231ss xmm8,xmm0,xmm2
+     dbb9845:	c5 fa 10 55 84       	vmovss xmm2,DWORD PTR [rbp-0x7c]
+     dbb984a:	c4 62 79 b9 ca       	vfmadd231ss xmm9,xmm0,xmm2
+     dbb984f:	c5 fa 10 55 88       	vmovss xmm2,DWORD PTR [rbp-0x78]
+     dbb9854:	c5 fa 10 43 84       	vmovss xmm0,DWORD PTR [rbx-0x7c]
+     dbb9859:	48 83 ed f8          	sub    rbp,0xfffffffffffffff8
+     dbb985d:	48 83 eb fc          	sub    rbx,0xfffffffffffffffc
+     dbb9861:	48 ff c8             	dec    rax
+     dbb9864:	7f da                	jg     dbb9840 <mkl_blas_avx2_sgemm_kernel_0+0x2340>
+     dbb9866:	66 2e 0f 1f 84 00 00 	cs nop WORD PTR [rax+rax*1+0x0]
+     dbb986d:	00 00 00
+     dbb9870:	c4 c1 7a 10 0e       	vmovss xmm1,DWORD PTR [r14]
+     dbb9875:	c4 41 72 58 c0       	vaddss xmm8,xmm1,xmm8
+     dbb987a:	c4 41 7a 11 06       	vmovss DWORD PTR [r14],xmm8
+     dbb987f:	c4 81 7a 10 0c 1e    	vmovss xmm1,DWORD PTR [r14+r11*1]
+     dbb9885:	c4 41 72 58 c9       	vaddss xmm9,xmm1,xmm9
+     dbb988a:	0f 18 59 40          	prefetcht2 BYTE PTR [rcx+0x40]
+     dbb988e:	c4 01 7a 11 0c 1e    	vmovss DWORD PTR [r14+r11*1],xmm9
+     dbb9894:	4f 8d 34 5e          	lea    r14,[r14+r11*2]
+     dbb9898:	4f 8d 3c 5f          	lea    r15,[r15+r11*2]
+     dbb989c:	48 83 e9 80          	sub    rcx,0xffffffffffffff80
+     dbb98a0:	48 f7 c6 01 00 00 00 	test   rsi,0x1
+     dbb98a7:	0f 8e e3 00 00 00    	jle    dbb9990 <mkl_blas_avx2_sgemm_kernel_0+0x2490>
+     dbb98ad:	0f 18 59 80          	prefetcht2 BYTE PTR [rcx-0x80]
+     dbb98b1:	4c 89 c3             	mov    rbx,r8
+     dbb98b4:	c5 fa 10 55 80       	vmovss xmm2,DWORD PTR [rbp-0x80]
+     dbb98b9:	c5 fa 10 5d 84       	vmovss xmm3,DWORD PTR [rbp-0x7c]
+     dbb98be:	c5 fa 10 43 80       	vmovss xmm0,DWORD PTR [rbx-0x80]
+     dbb98c3:	c5 fa 10 4b 84       	vmovss xmm1,DWORD PTR [rbx-0x7c]
+     dbb98c8:	c4 41 38 57 c0       	vxorps xmm8,xmm8,xmm8
+     dbb98cd:	c4 41 30 57 c9       	vxorps xmm9,xmm9,xmm9
+     dbb98d2:	41 0f 18 0e          	prefetcht0 BYTE PTR [r14]
+     dbb98d6:	48 89 d0             	mov    rax,rdx
+     dbb98d9:	48 c1 f8 02          	sar    rax,0x2
+     dbb98dd:	7e 61                	jle    dbb9940 <mkl_blas_avx2_sgemm_kernel_0+0x2440>
+     dbb98df:	90                   	nop
+     dbb98e0:	0f 18 8d 00 01 00 00 	prefetcht0 BYTE PTR [rbp+0x100]
+     dbb98e7:	c4 62 79 b9 c2       	vfmadd231ss xmm8,xmm0,xmm2
+     dbb98ec:	c5 fa 10 55 88       	vmovss xmm2,DWORD PTR [rbp-0x78]
+     dbb98f1:	c5 fa 10 43 88       	vmovss xmm0,DWORD PTR [rbx-0x78]
+     dbb98f6:	c4 62 71 b9 cb       	vfmadd231ss xmm9,xmm1,xmm3
+     dbb98fb:	c5 fa 10 5d 8c       	vmovss xmm3,DWORD PTR [rbp-0x74]
+     dbb9900:	c5 fa 10 4b 8c       	vmovss xmm1,DWORD PTR [rbx-0x74]
+     dbb9905:	c4 62 79 b9 c2       	vfmadd231ss xmm8,xmm0,xmm2
+     dbb990a:	c5 fa 10 55 90       	vmovss xmm2,DWORD PTR [rbp-0x70]
+     dbb990f:	c5 fa 10 43 90       	vmovss xmm0,DWORD PTR [rbx-0x70]
+     dbb9914:	c4 62 71 b9 cb       	vfmadd231ss xmm9,xmm1,xmm3
+     dbb9919:	c5 fa 10 5d 94       	vmovss xmm3,DWORD PTR [rbp-0x6c]
+     dbb991e:	48 83 ed f0          	sub    rbp,0xfffffffffffffff0
+     dbb9922:	c5 fa 10 4b 94       	vmovss xmm1,DWORD PTR [rbx-0x6c]
+     dbb9927:	48 83 eb f0          	sub    rbx,0xfffffffffffffff0
+     dbb992b:	48 ff c8             	dec    rax
+     dbb992e:	7f b0                	jg     dbb98e0 <mkl_blas_avx2_sgemm_kernel_0+0x23e0>
+     dbb9930:	c4 41 32 58 c0       	vaddss xmm8,xmm9,xmm8
+     dbb9935:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+     dbb993c:	00 00 00 00
+     dbb9940:	48 89 d0             	mov    rax,rdx
+     dbb9943:	48 83 e0 03          	and    rax,0x3
+     dbb9947:	74 27                	je     dbb9970 <mkl_blas_avx2_sgemm_kernel_0+0x2470>
+     dbb9949:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+     dbb9950:	c4 62 79 b9 c2       	vfmadd231ss xmm8,xmm0,xmm2
+     dbb9955:	c5 fa 10 55 84       	vmovss xmm2,DWORD PTR [rbp-0x7c]
+     dbb995a:	48 83 ed fc          	sub    rbp,0xfffffffffffffffc
+     dbb995e:	c5 fa 10 43 84       	vmovss xmm0,DWORD PTR [rbx-0x7c]
+     dbb9963:	48 83 eb fc          	sub    rbx,0xfffffffffffffffc
+     dbb9967:	48 ff c8             	dec    rax
+     dbb996a:	7f e4                	jg     dbb9950 <mkl_blas_avx2_sgemm_kernel_0+0x2450>
+     dbb996c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+     dbb9970:	c4 c1 7a 10 0e       	vmovss xmm1,DWORD PTR [r14]
+     dbb9975:	c4 41 72 58 c0       	vaddss xmm8,xmm1,xmm8
+     dbb997a:	c4 41 7a 11 06       	vmovss DWORD PTR [r14],xmm8
+     dbb997f:	4d 01 de             	add    r14,r11
+     dbb9982:	4d 01 df             	add    r15,r11
+     dbb9985:	48 83 e9 80          	sub    rcx,0xffffffffffffff80
+     dbb9989:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]
+     dbb9990:	49 89 d8             	mov    r8,rbx
+     dbb9993:	66 66 2e 0f 1f 84 00 	data16 cs nop WORD PTR [rax+rax*1+0x0]
+     dbb999a:	00 00 00 00
+     dbb999e:	66 90                	xchg   ax,ax
+     dbb99a0:	48 8b 1c 24          	mov    rbx,QWORD PTR [rsp]
+     dbb99a4:	48 8b 6c 24 08       	mov    rbp,QWORD PTR [rsp+0x8]
+     dbb99a9:	4c 8b 64 24 10       	mov    r12,QWORD PTR [rsp+0x10]
+     dbb99ae:	4c 8b 6c 24 18       	mov    r13,QWORD PTR [rsp+0x18]
+     dbb99b3:	4c 8b 74 24 20       	mov    r14,QWORD PTR [rsp+0x20]
+     dbb99b8:	4c 8b 7c 24 28       	mov    r15,QWORD PTR [rsp+0x28]
+     dbb99bd:	c5 f8 77             	vzeroupper
+     dbb99c0:	48 83 c4 40          	add    rsp,0x40
+     dbb99c4:	c3                   	ret
+
+Disassembly of section .fini:

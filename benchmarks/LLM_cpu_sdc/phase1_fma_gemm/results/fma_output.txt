@@ -1,0 +1,24 @@
+FAULT INJECTED at row=1, k=2, lane=2, before=28.00, after=128.00
+
+BASELINE MATRIX:
+     11.00     13.00     12.00     14.00
+     27.00     29.00     36.00     38.00
+      7.00      7.00      7.00      5.00
+      9.00      5.00     12.00     12.00
+
+FAULTY MATRIX:
+     11.00     13.00     12.00     14.00
+     27.00     29.00    136.00     38.00
+      7.00      7.00      7.00      5.00
+      9.00      5.00     12.00     12.00
+
+DIFFERENCE MATRIX:
+      0.00      0.00      0.00      0.00
+      0.00      0.00    100.00      0.00
+      0.00      0.00      0.00      0.00
+      0.00      0.00      0.00      0.00
+
+Changed elements: 1
+Maximum difference: 100.00
+Baseline check: PASS
+Fault check: PASS
