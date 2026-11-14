@@ -1,0 +1,24 @@
+cat > .gitignore <<'EOF'
+__pycache__/
+*.pyc
+.venv/
+venv/
+llama-cpu-env/
+.cache/
+.huggingface/
+*.safetensors
+*.bin
+*.pth
+*.ckpt
+*.data
+*.core
+core.*
+*.log
+*.gdb_history
+.env
+.env.*
+*.pem
+*.key
+token
+token.*
+EOF

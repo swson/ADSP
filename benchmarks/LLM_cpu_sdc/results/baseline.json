@@ -1,0 +1,13 @@
+{
+  "model": "meta-llama/Llama-3.2-1B-Instruct",
+  "torch_version": "2.14.1+cpu",
+  "transformers_version": "4.46.3",
+  "device": "cpu",
+  "weight_dtype": "torch.float32",
+  "prompt": "What is 12 multiplied by 8? Answer with only the number.",
+  "answer": "96",
+  "generated_token_ids": [
+    4161,
+    128009
+  ]
+}
