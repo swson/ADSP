@@ -1,24 +1,38 @@
-cat > .gitignore <<'EOF'
+# Python generated files
 __pycache__/
 *.pyc
+*.pyo
+.pytest_cache/
+
+# Virtual environments
 .venv/
 venv/
 llama-cpu-env/
-.cache/
-.huggingface/
+
+# Model weights and checkpoints
 *.safetensors
-*.bin
 *.pth
+*.pt
 *.ckpt
-*.data
-*.core
-core.*
-*.log
-*.gdb_history
-.env
-.env.*
-*.pem
-*.key
-token
-token.*
-EOF
+
+# Model cache
+.cache/
+huggingface_cache/
+
+# Compiled artifacts
+*.o
+*.a
+*.so
+*.out
+
+# Backup archives
+*.tar.gz
+*.zip
+
+# Temporary files
+*.tmp
+*.swp
+*~
+
+# Accidental checksum duplicate
+checksums.txtt
